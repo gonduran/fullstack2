@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alimento Mental</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Catálogo de Juegos de Mesa</h1>
+    </header>
+    <main>
+        <section id="catalogo">
+            <article class="juego">
+                <h2>Juego 1</h2>
+                <img src="images/juego1.jpg" alt="Imagen del Juego 1">
+                <p>Descripción breve del Juego 1.</p>
+                <button onclick="mostrarDetalles('Juego 1', 'Descripción completa del Juego 1.', 'images/juego1.jpg')">Ver Detalles</button>
+            </article>
+            <article class="juego">
+                <h2>Juego 2</h2>
+                <img src="images/juego2.jpg" alt="Imagen del Juego 2">
+                <p>Descripción breve del Juego 2.</p>
+                <button onclick="mostrarDetalles('Juego 2', 'Descripción completa del Juego 2.', 'images/juego2.jpg')">Ver Detalles</button>
+            </article>
+            <!-- Agregar más juegos aquí -->
+        </section>
+        <section id="detalles">
+            <h2 id="titulo-detalles"></h2>
+            <img id="imagen-detalles" src="" alt="">
+            <p id="descripcion-detalles"></p>
+            <button onclick="cerrarDetalles()">Cerrar</button>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
