@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alimento Mental</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Alimento Mental Juegos de Mesa</h1>
+        <nav>
+            <ul>
+                <li><a onclick="mostrar(this)" id="home"  href="#">Inicio</a></li>
+                <li><a onclick="mostrar(this)" id="product" href="#">Catalogo</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <article id="home_div">
+            <div>
+                <h1>Bienvenido a Alimento Mental.</h1>
+                <p>¡Donde los juegos de mesa son famosos por fortalecer habilidades mentales.!</p>
+            </div>
+        </article>
+        <article id="product_div" style="display: none;">
+            <h2>Catalogo</h2>
+            <div class="product-gallery">
+                <section id="catalogo">
+                    <article class="juego">
+                        <h2>Azul</h2>
+                        <img src="images/azul.png" alt="Azul">
+                        <p>Azul. $ 79.990.-</p>
+                        <button onclick="mostrarDetalles('Azul', 'Azul  invita a los artistas del azulejo a embellecer las paredes del Palacio Real de Évora. Cuando Manuel I el Afortunado, rey de Portugal, visitó el Palacio de la Alhambra, quedó cautivado por la imponente belleza de la decoración, formada por losetas de cerámica de procedencia árabe a las que llamaban “azulejos”. Aún fascinado por el esplendor del interior de la Alhambra, a su regreso a Portugal ordenó inmediatamente que las paredes de su palacio en Évora fueran decoradas del mismo modo. ¡Elige con cuidado tu estrategia para convertirte en el artista preferido del rey.', 'images/azul.png')">Ver Detalles</button>
+                    </article>
+                    <article class="juego">
+                        <h2>Mysterium</h2>
+                        <img src="images/mysterium.png" alt="Mysterium">
+                        <p>Mysterium. $ 49.990.-</p>
+                        <button onclick="mostrarDetalles('Mysterium', 'Mysterium es un juego de mesa cooperativo en el que tú y tus amigos se aventuran mentalmente en la mansión encantada de Mysterium. Un jugador representa el papel de fantasma mientras todos los demás son mediums. Para resolver el crimen, el fantasma debe primero recordar (con vuestra ayuda) los detalles y sospechosos. 1920, el Sr. MacDowell, el astrólogo , inmediatamente detectó un ser sobrenatural al entrar en su nueva casa en Escocia. Reunió a los mas eminentes mediums de su tiempo para una sesión de espiritismo extraordinaria, hay siete horas para contactar el fantasma e investigar cualquier pista que pueda proporcionar para desbloquear un antiguo misterio. Incapaz de hablar, el fantasma amnésico se comunica con los mediums a través de visiones, que se representan en el juego de mesa por las cartas ilustradas. Los mediums deben descifrar las imágenes para ayudar al fantasma a recordar cómo fue asesinado: ¿Quién perpetró el crimen? ¿Donde tuvo lugar? ¿Qué arma causó la muerte? Cuanto más cooperen y adivinen, más fácil será detener al culpable.', 'images/mysterium.png')">Ver Detalles</button>
+                    </article>
+                    <!-- Agregar más juegos aquí -->
+                </section>
+                <section id="detalles">
+                    <h2 id="titulo-detalles"></h2>
+                    <img id="imagen-detalles" src="" alt="">
+                    <p id="descripcion-detalles"></p>
+                    <button onclick="cerrarDetalles()">Cerrar</button>
+                </section>
+            </div>
+        </article>
+    </main>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <footer>
+        <p>Desarrollado por Gonzalo Durán para Alimento Mental</p>
+    </footer>
+    <div id="loading">
+        <div class="spinner"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
