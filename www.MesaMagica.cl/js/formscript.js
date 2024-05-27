@@ -29,19 +29,19 @@ document.getElementById('registroForm').addEventListener('submit', function(even
         return;
     }
     
-    const currentDate = new Date();
-    const birthDate = new Date(fechaNacimiento);
-    const age = currentDate.getFullYear() - birthDate.getFullYear();
-    const monthDiff = currentDate.getMonth() - birthDate.getMonth();
+    var currentDate = new Date();.
+    var birthDate = new Date(fechaNacimiento);
+    var age = currentDate.getFullYear() - birthDate.getFullYear();
+    var monthDiff = currentDate.getMonth() - birthDate.getMonth();
     if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthDate.getDate())) {
         age--;
     }
-    
+     
     if (age < 13) {
         alert('Debe tener al menos 13 años para registrarse.');
         return;
     }
-    
+	
     alert('Registro exitoso!');
     this.reset();
 });
