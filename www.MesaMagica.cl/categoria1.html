@@ -4,57 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mesa Mágica - Aventura</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header>
+    <header class="bg-primary text-white text-center py-3">
         <h1>¡Mesa Mágica! Juegos de Mesa</h1>
-        <nav>
-            <a href="index.html">Inicio</a>
-            <a href="categoria1.html">Aventura</a>
-            <a href="categoria2.html">Familiares</a>
-            <a href="categoria3.html">Para Niños</a>
-            <a href="categoria4.html">Cooperativo</a>
-            <a href="registro.html">Registro</a>
+        <nav class="nav justify-content-center">
+            <a class="nav-link text-white" href="index.html">Inicio</a>
+            <a class="nav-link text-white" href="categoria1.html">Aventura</a>
+            <a class="nav-link text-white" href="categoria2.html">Familiares</a>
+            <a class="nav-link text-white" href="categoria3.html">Para Niños</a>
+            <a class="nav-link text-white" href="categoria4.html">Cooperativo</a>
+            <a class="nav-link text-white" href="registro.html">Registro</a>
         </nav>
     </header>
-    <main>
+    <main class="container my-4">
         <section>
-            <h2>Juegos Aventura</h2>
-            <div class="game-card">
-                <img src="images/arkham_horror_tercera_edicion.webp" alt="Arkham Horror (Tercera Edición)">
-                <h3>Arkham Horror (Tercera Edición)</h3>
-                <p>Terribles criaturas procedentes de más allá del tiempo y el espacio amenazan la ciudad de Arkham.</p>
-                <p>Precio: $63.990</p>
-                <p>Descuento: No</p>
-            </div>
-            <div class="game-card">
-                <img src="images/eldritch_horror.webp" alt="Eldritch Horror">
-                <h3>Eldritch Horror</h3>
-                <p>El mundo está al borde de la catástrofe. Estamos en 1926 y un ser de increíble poder amenaza con despertar de su largo letargo trayendo muerte y destrucción.</p>
-                <p>Precio: $59.990</p>
-                <p>Descuento: Sí</p>
-            </div>
-            <div class="game-card">
-                <img src="images/gloomhaven_fauces_del_leon.webp" alt="Gloomhaven - Fauces del León">
-                <h3>Gloomhaven - Fauces del León</h3>
-                <p>Es el más completo juego de mazmorreo, con un grupo de intrépidos aventureros enfrentándose a todo tipo de escenarios de fantasía, plagados de tesoros, enemigos de todo tipo y acertijos que resolver.</p>
-                <p>Precio: $69.990</p>
-                <p>Descuento: No</p>
-            </div>
-            <div class="game-card">
-                <img src="images/la_isla_prohibida.webp" alt="La Isla Prohibida">
-                <h3>La Isla Prohibida</h3>
-                <p>En La Isla Prohibida, los jugadores deberán trabajar juntos para salvar todos los tesoros de la isla, ¡antes que se hunda! Cada jugador toma el papel de un aventurero (piloto, explorador, ingeniero, etc.) y tiene que usar su poder especial para ayudar a su equipo.</p>
-                <p>Precio: $19.990</p>
-                <p>Descuento: No</p>
+            <h2 class="mb-4">Juegos Aventura</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="images/arkham_horror_tercera_edicion.webp" class="card-img-top" alt="Arkham Horror (Tercera Edición)">
+                        <div class="card-body">
+                            <h4 class="card-title">Arkham Horror (Tercera Edición)</h4>
+                            <p class="card-text">Terribles criaturas procedentes de más allá del tiempo y el espacio amenazan la ciudad de Arkham.</p>
+                            <p class="card-text">Precio: $63.990</p>
+                            <p class="card-text">Descuento: No</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="images/eldritch_horror.webp" class="card-img-top" alt="Eldritch Horror">
+                        <div class="card-body">
+                            <h4 class="card-title">Eldritch Horror</h4>
+                            <p class="card-text">El mundo está al borde de la catástrofe. Estamos en 1926 y un ser de increíble poder amenaza con despertar de su largo letargo trayendo muerte y destrucción.</p>
+                            <p class="card-text">Precio: $59.990</p>
+                            <p class="card-text">Descuento: Sí</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="images/gloomhaven_fauces_del_leon.webp" class="card-img-top" alt="Gloomhaven - Fauces del León">
+                        <div class="card-body">
+                            <h4 class="card-title">Gloomhaven - Fauces del León</h4>
+                            <p class="card-text">Es el más completo juego de mazmorreo, con un grupo de intrépidos aventureros enfrentándose a todo tipo de escenarios de fantasía, plagados de tesoros, enemigos de todo tipo y acertijos que resolver.</p>
+                            <p class="card-text">Precio: $69.990</p>
+                            <p class="card-text">Descuento: No</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="images/la_isla_prohibida.webp" class="card-img-top" alt="La Isla Prohibida">
+                        <div class="card-body">
+                            <h4 class="card-title">La Isla Prohibida</h4>
+                            <p class="card-text">En La Isla Prohibida, los jugadores deberán trabajar juntos para salvar todos los tesoros de la isla, ¡antes que se hunda! Cada jugador toma el papel de un aventurero (piloto, explorador, ingeniero, etc.) y tiene que usar su poder especial para ayudar a su equipo.</p>
+                            <p class="card-text">Precio: $19.990</p>
+                            <p class="card-text">Descuento: No</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
+    
+    <!-- Footer -->
+    <footer class="bg-primary text-white text-center py-3">
+        <p>&copy; 2024 Mesa Mágica. Todos los derechos reservados.</p>
+        <p>
+            <a href="index.html" class="text-white">Inicio</a> |
+            <a href="categoria1.html" class="text-white">Aventura</a> |
+            <a href="categoria2.html" class="text-white">Familiares</a> |
+            <a href="categoria3.html" class="text-white">Para Niños</a> |
+            <a href="categoria4.html" class="text-white">Cooperativo</a> |
+            <a href="registro.html" class="text-white">Registro</a>
+        </p>
+    </footer>
+    
     <!-- Loading Screen -->
-    <div id="loading-screen">
+    <div id="loading-screen" class="d-flex justify-content-center align-items-center">
         <div class="loader"></div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
 </body>
 </html>

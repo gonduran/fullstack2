@@ -1,5 +1,4 @@
-// Show loading screen on navigation
-document.querySelectorAll('nav a').forEach(link => {
+document.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', function(event) {
         event.preventDefault();
         const href = this.getAttribute('href');
