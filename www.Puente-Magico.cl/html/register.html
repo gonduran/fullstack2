@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Puente Mágico - Register</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Puente Mágico - Registro Cliente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="../css/bootstrap-2.css" rel="stylesheet">
 </head>
 <body>
@@ -19,13 +19,13 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="../index.html">Home</a>
+                            <a class="nav-link" href="../index.html">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="login.html">Login</a>
+                            <a class="nav-link" href="login.html">Iniciar Sesión</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link active" href="register.html">Register</a>
+                            <a class="nav-link active" href="register.html">Registro Cliente</a>
                         </li>
                     </ul>
                 </div>
@@ -37,25 +37,37 @@
     <main class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h2>Register</h2>
+                <h2>Registro Cliente</h2>
                 <form id="registerForm">
                     <div class="mb-3">
-                        <label for="username" class="form-label">Username:</label>
-                        <input type="text" class="form-control" id="username" required>
+                        <label for="clientName" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="clientName" name="clientName" required>
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email address:</label>
-                        <input type="email" class="form-control" id="email" required>
+                        <label for="clientSurname" class="form-label">Apellidos:</label>
+                        <input type="text" class="form-control" id="clientSurname" name="clientSurname" required>
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password:</label>
-                        <input type="password" class="form-control" id="password" required>
+                        <label for="email" class="form-label">Dirección de correo electrónico:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
                     </div>
                     <div class="mb-3">
-                        <label for="confirmPassword" class="form-label">Confirm Password:</label>
-                        <input type="password" class="form-control" id="confirmPassword" required>
+                        <label for="password" class="form-label">Contraseña:</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Register</button>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirmar Contraseña:</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="birthdate" class="form-label">Fecha de Nacimiento:</label>
+                        <input type="date" class="form-control" id="birthdate" name="birthdate" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dispatchAddress" class="form-label">Dirección de Despacho:</label>
+                        <input type="text" class="form-control" id="dispatchAddress" name="dispatchaddress">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                 </form>
             </div>
         </div>
@@ -64,26 +76,12 @@
     <!-- Footer -->
     <footer class="bg-light text-center text-lg-start mt-5">
         <div class="container p-4">
-            <p>&copy; 2024 My Web App. All Rights Reserved.</p>
+            <p>&copy; 2024 Puente Mágico. Reservados todos los derechos.</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/scripts.js"></script>
-    <script>
-        document.getElementById('registerForm').addEventListener('submit', function(event) {
-            var password = document.getElementById('password').value;
-            var confirmPassword = document.getElementById('confirmPassword').value;
-
-            if (password !== confirmPassword) {
-                event.preventDefault();
-                alert('Passwords do not match.');
-            } else {
-                // Registration logic here
-                alert('Registration successful.');
-            }
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="../js/register.js"></script>
 </body>
 </html>
