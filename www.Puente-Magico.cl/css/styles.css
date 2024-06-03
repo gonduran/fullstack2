@@ -1,124 +1,35 @@
-/* styles.css */
-
-/* General Styles */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-    padding: 0;
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
 }
 
-header {
-    margin-bottom: 30px;
+#loading-screen.active {
+    opacity: 1;
+    visibility: visible;
 }
 
-footer {
-    background-color: #f8f9fa;
-    padding: 10px 0;
-    text-align: center;
-    border-top: 1px solid #e7e7e7;
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid var(--primary-color);
+    border-bottom: 16px solid var(--secondary-color);
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
 }
 
-/* Navbar Styles */
-.navbar {
-    background-color: #ffffff;
-    border-bottom: 1px solid #e7e7e7;
-}
-
-.nav-link {
-    color: #007bff !important;
-}
-
-.nav-link:hover {
-    color: #0056b3 !important;
-}
-
-.navbar-brand {
-    font-weight: bold;
-}
-
-/* Form Styles */
-.form-control {
-    border-radius: 0.25rem;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-}
-
-.btn-danger {
-    background-color: #dc3545;
-    border-color: #dc3545;
-}
-
-.btn-danger:hover {
-    background-color: #c82333;
-    border-color: #bd2130;
-}
-
-.btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
-}
-
-.btn-success:hover {
-    background-color: #218838;
-    border-color: #1e7e34;
-}
-
-/* Table Styles */
-.table {
-    background-color: #ffffff;
-    border: 1px solid #e7e7e7;
-}
-
-.table th, .table td {
-    text-align: center;
-    vertical-align: middle;
-}
-
-.table thead th {
-    background-color: #f8f9fa;
-}
-
-/* Modal Styles */
-.modal-header {
-    background-color: #f8f9fa;
-}
-
-.modal-title {
-    font-weight: bold;
-}
-
-/* Miscellaneous Styles */
-.container {
-    padding-top: 30px;
-}
-
-h2 {
-    margin-bottom: 30px;
-}
-
-.mt-5 {
-    margin-top: 3rem !important;
-}
-
-.text-center {
-    text-align: center !important;
-}
-
-.text-lg-start {
-    text-align: left !important;
-}
-
-@media (max-width: 576px) {
-    .navbar-nav {
-        text-align: center;
-    }
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
