@@ -26,7 +26,7 @@ document.getElementById('editProductForm').addEventListener('submit', function(e
 
     var editProductModal = bootstrap.Modal.getInstance(document.getElementById('editProductModal'));
     editProductModal.hide();
-    alert('Product details updated successfully.');
+    alert('Detalles del producto actualizados exitosamente.');
     // Aquí puedes añadir la lógica para actualizar el producto en el backend
 });
 
@@ -49,6 +49,6 @@ document.getElementById('addProductForm').addEventListener('submit', function(ev
     `;
     var addProductModal = bootstrap.Modal.getInstance(document.getElementById('addProductModal'));
     addProductModal.hide();
-    alert('New product added successfully.');
+    alert('Nuevo producto agregado exitosamente.');
     // Aquí puedes añadir la lógica para añadir el nuevo producto en el backend
 });

@@ -29,7 +29,7 @@ document.getElementById('editOrderForm').addEventListener('submit', function(eve
 
     var editOrderModal = bootstrap.Modal.getInstance(document.getElementById('editOrderModal'));
     editOrderModal.hide();
-    alert('Order details updated successfully.');
+    alert('Detalles del pedido actualizados exitosamente.');
     // Aquí puedes añadir la lógica para actualizar el pedido en el backend
 });
 
@@ -54,6 +54,6 @@ document.getElementById('addOrderForm').addEventListener('submit', function(even
     `;
     var addOrderModal = bootstrap.Modal.getInstance(document.getElementById('addOrderModal'));
     addOrderModal.hide();
-    alert('New order added successfully.');
+    alert('Nuevo pedido agregado exitosamente.');
     // Aquí puedes añadir la lógica para añadir el nuevo pedido en el backend
 });

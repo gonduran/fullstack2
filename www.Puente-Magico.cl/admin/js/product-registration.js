@@ -7,6 +7,6 @@ document.getElementById('productRegistrationForm').addEventListener('submit', fu
 
     // Aquí puedes añadir la lógica para registrar el producto en el backend
 
-    alert('Product registered successfully.');
+    alert('Producto registrado exitosamente.');
     document.getElementById('productRegistrationForm').reset();
 });

@@ -49,7 +49,7 @@ document.getElementById('profileForm').addEventListener('submit', function(event
     var customers = JSON.parse(localStorage.getItem('customers')) || [];
     var loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
 
-    var userIndex = customers.findIndex(customer => customer.username === loggedInUser.username && customer.email === loggedInUser.email);
+    var userIndex = customers.findIndex(customer => customer.clientName === loggedInUser.clientName && customer.email === loggedInUser.email);
     if (userIndex !== -1) {
         if (password === '') {
             console.log('Cliente no cambia su contraseña');

@@ -20,7 +20,7 @@ document.getElementById('editProfileForm').addEventListener('submit', function(e
 
     var editProfileModal = bootstrap.Modal.getInstance(document.getElementById('editProfileModal'));
     editProfileModal.hide();
-    alert('Profile details updated successfully.');
+    alert('Detalles del perfil actualizados exitosamente.');
     // Aquí puedes añadir la lógica para actualizar el perfil en el backend
 });
 
@@ -39,6 +39,6 @@ document.getElementById('addProfileForm').addEventListener('submit', function(ev
     `;
     var addProfileModal = bootstrap.Modal.getInstance(document.getElementById('addProfileModal'));
     addProfileModal.hide();
-    alert('New profile added successfully.');
+    alert('Nuevo perfil agregado exitosamente.');
     // Aquí puedes añadir la lógica para añadir el nuevo perfil en el backend
 });
