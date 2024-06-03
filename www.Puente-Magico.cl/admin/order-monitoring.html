@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Puente Mágico - Order Monitoring</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Puente Mágico - Monitoreo Pedidos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/styles.css" rel="stylesheet"></head>
 </head>
 <body>
     <!-- Header -->
@@ -22,25 +23,25 @@
                             <a class="nav-link" href="index.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="user-management.html">User Management</a>
+                            <a class="nav-link" href="profile-management.html">Gestión Perfiles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="profile-management.html">Profile Management</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="client-management.html">Client Management</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="product-registration.html">Product Registration</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="product-modification.html">Product Modification</a>
+                            <a class="nav-link" href="user-management.html">Gestión Usuarios</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link active" href="order-monitoring.html">Order Monitoring</a>
+                            <a class="nav-link active" href="client-management.html">Gestión Clientes</a>
+                        </li>
+                        <!--<li class="nav-item">
+                            <a class="nav-link" href="product-registration.html">Registro Producto</a>
+                        </li>-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="product-modification.html">Gestión Productos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="inventory.html">Inventory</a>
+                            <a class="nav-link" href="inventory.html">Gestión Inventario</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link active" href="order-monitoring.html">Monitoreo Pedidos</a>
                         </li>
                     </ul>
                 </div>
@@ -50,18 +51,18 @@
 
     <!-- Main content -->
     <main class="container mt-5">
-        <h2>Order Monitoring</h2>
+        <h2>Monitoreo Pedidos</h2>
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Order ID</th>
-                            <th>Client Name</th>
-                            <th>Product</th>
-                            <th>Quantity</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th>ID Pedido</th>
+                            <th>Nombre Cliente</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="orderTable">
@@ -73,8 +74,8 @@
                             <td>2</td>
                             <td>Pending</td>
                             <td>
-                                <button class="btn btn-primary btn-sm" onclick="editOrder(this)">Edit</button>
-                                <button class="btn btn-danger btn-sm" onclick="removeOrder(this)">Remove</button>
+                                <button class="btn btn-primary btn-sm" onclick="editOrder(this)">Editar</button>
+                                <button class="btn btn-danger btn-sm" onclick="removeOrder(this)">Eliminar</button>
                             </td>
                         </tr>
                         <!-- Example order -->
@@ -85,55 +86,48 @@
                             <td>1</td>
                             <td>Shipped</td>
                             <td>
-                                <button class="btn btn-primary btn-sm" onclick="editOrder(this)">Edit</button>
-                                <button class="btn btn-danger btn-sm" onclick="removeOrder(this)">Remove</button>
+                                <button class="btn btn-primary btn-sm" onclick="editOrder(this)">Editar</button>
+                                <button class="btn btn-danger btn-sm" onclick="removeOrder(this)">Eliminar</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addOrderModal">Add New Order</button>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addOrderModal">Agregar Nueva Orden</button>
             </div>
         </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="bg-light text-center text-lg-start mt-5">
-        <div class="container p-4">
-            <p>&copy; 2024 My Web App. All Rights Reserved.</p>
-        </div>
-    </footer>
 
     <!-- Modals -->
     <div class="modal fade" id="editOrderModal" tabindex="-1" aria-labelledby="editOrderModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editOrderModalLabel">Edit Order</h5>
+                    <h5 class="modal-title" id="editOrderModalLabel">Editar Pedido</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="editOrderForm">
                         <div class="mb-3">
-                            <label for="editClientName" class="form-label">Client Name:</label>
+                            <label for="editClientName" class="form-label">Nombre Cliente:</label>
                             <input type="text" class="form-control" id="editClientName" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editProductName" class="form-label">Product Name:</label>
+                            <label for="editProductName" class="form-label">Nombre Producto:</label>
                             <input type="text" class="form-control" id="editProductName" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editQuantity" class="form-label">Quantity:</label>
+                            <label for="editQuantity" class="form-label">Cantidad:</label>
                             <input type="number" class="form-control" id="editQuantity" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editStatus" class="form-label">Status:</label>
+                            <label for="editStatus" class="form-label">Estado:</label>
                             <select class="form-control" id="editStatus" required>
-                                <option value="Pending">Pending</option>
-                                <option value="Shipped">Shipped</option>
-                                <option value="Delivered">Delivered</option>
+                                <option value="Pending">Pendiente</option>
+                                <option value="Shipped">Enviado</option>
+                                <option value="Delivered">Entregado</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                     </form>
                 </div>
             </div>
@@ -144,101 +138,53 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addOrderModalLabel">Add New Order</h5>
+                    <h5 class="modal-title" id="addOrderModalLabel">Agregar Nuevo Pedido</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="addOrderForm">
                         <div class="mb-3">
-                            <label for="addClientName" class="form-label">Client Name:</label>
+                            <label for="addClientName" class="form-label">Nombre Cliente:</label>
                             <input type="text" class="form-control" id="addClientName" required>
                         </div>
                         <div class="mb-3">
-                            <label for="addProductName" class="form-label">Product Name:</label>
+                            <label for="addProductName" class="form-label">Nombre Producto:</label>
                             <input type="text" class="form-control" id="addProductName" required>
                         </div>
                         <div class="mb-3">
-                            <label for="addQuantity" class="form-label">Quantity:</label>
+                            <label for="addQuantity" class="form-label">Cantidad:</label>
                             <input type="number" class="form-control" id="addQuantity" required>
                         </div>
                         <div class="mb-3">
-                            <label for="addStatus" class="form-label">Status:</label>
+                            <label for="addStatus" class="form-label">Estado:</label>
                             <select class="form-control" id="addStatus" required>
-                                <option value="Pending">Pending</option>
-                                <option value="Shipped">Shipped</option>
-                                <option value="Delivered">Delivered</option>
+                                <option value="Pending">Pendiente</option>
+                                <option value="Shipped">Enviado</option>
+                                <option value="Delivered">Entregado</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-success">Add Order</button>
+                        <button type="submit" class="btn btn-success">Agregar Pedido</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <p>&copy; 2024 Puente Mágico. Reservados todos los derechos.</p>
+        </div>
+    </footer>
+    
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="d-flex justify-content-center align-items-center">
+        <div class="loader"></div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/scripts.js"></script>
-    <script>
-        function editOrder(button) {
-            var row = button.closest('tr');
-            var clientName = row.cells[1].innerText;
-            var productName = row.cells[2].innerText;
-            var quantity = row.cells[3].innerText;
-            var status = row.cells[4].innerText;
-
-            document.getElementById('editClientName').value = clientName;
-            document.getElementById('editProductName').value = productName;
-            document.getElementById('editQuantity').value = quantity;
-            document.getElementById('editStatus').value = status;
-
-            var editOrderModal = new bootstrap.Modal(document.getElementById('editOrderModal'));
-            editOrderModal.show();
-        }
-
-        function removeOrder(button) {
-            var row = button.closest('tr');
-            row.remove();
-        }
-
-        document.getElementById('editOrderForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var row = document.querySelector('#orderTable tr td:first-child').closest('tr');
-            row.cells[1].innerText = document.getElementById('editClientName').value;
-            row.cells[2].innerText = document.getElementById('editProductName').value;
-            row.cells[3].innerText = document.getElementById('editQuantity').value;
-            row.cells[4].innerText = document.getElementById('editStatus').value;
-
-            var editOrderModal = bootstrap.Modal.getInstance(document.getElementById('editOrderModal'));
-            editOrderModal.hide();
-            alert('Order details updated successfully.');
-            // Aquí puedes añadir la lógica para actualizar el pedido en el backend
-        });
-
-        document.getElementById('addOrderForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var clientName = document.getElementById('addClientName').value;
-            var productName = document.getElementById('addProductName').value;
-            var quantity = document.getElementById('addQuantity').value;
-            var status = document.getElementById('addStatus').value;
-            var orderTable = document.getElementById('orderTable');
-            var newRow = orderTable.insertRow();
-            newRow.innerHTML = `
-                <td>New</td>
-                <td>${clientName}</td>
-                <td>${productName}</td>
-                <td>${quantity}</td>
-                <td>${status}</td>
-                <td>
-                    <button class="btn btn-primary btn-sm" onclick="editOrder(this)">Edit</button>
-                    <button class="btn btn-danger btn-sm" onclick="removeOrder(this)">Remove</button>
-                </td>
-            `;
-            var addOrderModal = bootstrap.Modal.getInstance(document.getElementById('addOrderModal'));
-            addOrderModal.hide();
-            alert('New order added successfully.');
-            // Aquí puedes añadir la lógica para añadir el nuevo pedido en el backend
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="js/order-monitoring.js"></script>
+    <script src="../js/scripts.js"></script>
 </body>
 </html>
