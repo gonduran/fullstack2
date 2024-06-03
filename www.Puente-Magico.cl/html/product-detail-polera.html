@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Puente Mágico - Cerrar Sesión</title>
+    <title>Puente Mágico - Detalle Producto</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="../css/bootstrap-2.css" rel="stylesheet">
 </head>
@@ -23,14 +23,14 @@
                         <li class="nav-item">
                             <a class="nav-link" href="../index.html">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="product-catalog.html">Ver Catalogo</a>
+                        <li class="nav-item active">
+                            <a class="nav-link active" href="product-catalog.html">Ver Catalogo</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="contact.html">Contacto</a>
                         </li>
                         <li class="nav-item" id="loginMenu">
-                            <a class="nav-link " id="loginMenu" href="login.html">Iniciar Sesión</a>
+                            <a class="nav-link" id="loginMenu" href="login.html">Iniciar Sesión</a>
                         </li>
                         <li class="nav-item" id="registerMenu">
                             <a class="nav-link" id="registerMenu" href="register.html">Registro Cliente</a>
@@ -38,8 +38,8 @@
                         <li class="nav-item" id="profileMenu" style="display: none;">
                             <a class="nav-link" id="profileMenu" href="profile.html">Perfil Cliente</a>
                         </li>
-                        <li class="nav-item active" id="logoutMenu" style="display: none;">
-                            <a class="nav-link active" id="logoutMenu" href="logout.html">Cerrar Sesión</a>
+                        <li class="nav-item" id="logoutMenu" style="display: none;">
+                            <a class="nav-link" id="logoutMenu" href="logout.html">Cerrar Sesión</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="cart.html">Carro Compra</a>
@@ -52,14 +52,46 @@
 
     <!-- Main content -->
     <main class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6 text-center">
-                <h2>Cerrar sesión exitosamente</h2>
-                <p class="lead">Has cerrado tu sesión correctamente.</p>
-                <a href="login.html" class="btn btn-primary">Iniciar Sesión</a>
-                <a href="../index.html" class="btn btn-secondary">Ir a Home</a>
+        <div class="row">
+            <div class="col-md-6">
+
+                <!-- Carrusel de imágenes del producto -->
+                <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="../img/polera1.png" class="d-block w-100" alt="Libreta personalizada">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../img/polera2.png" class="d-block w-100" alt="Libreta personalizada">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2>Polera personalizada</h2>
+                <p class="text-muted">Categoria: Estampado y sublimación</p>
+                <p><strong>Precio: $ 15.000</strong></p>
+                <p>Personaliza tu polera, contactanos y conversemos sobre la elección de tu motivo.</p>
+                <form id="addToCartForm">
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Cantidad:</label>
+                        <input type="number" class="form-control" id="quantity" value="1" min="1" max="10" required>
+                    </div>
+                    <!-- Botón para agregar al carrito -->
+                    <button class="btn btn-primary" id="addToCartButton">Agregar al Carro</button>
+                </form>
             </div>
         </div>
+        <!-- Botón Volver -->
+        <button class="btn btn-secondary" id="backButton">Volver</button>
     </main>
 
     <!-- Footer -->
@@ -71,6 +103,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="../js/logout.js"></script>
+    <script src="../js/product-detail-polera.js"></script>
 </body>
 </html>
