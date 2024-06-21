@@ -11,7 +11,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                        <a class="nav-link" routerLink="/index">Home</a>
+                        <a class="nav-link" routerLink="/home">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" routerLink="/product-catalog">Ver Catalogo</a>
@@ -43,28 +43,35 @@
     <!-- Main content -->
     <div class="container mt-5">
         <h2>Contáctanos</h2>
-        <form id="contactForm">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
                 <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="name" required>
+                <input type="text" class="form-control" id="name" formControlName="name" required>
+                <div *ngIf="contactForm.get('name')?.hasError('required')"> 
+                    Nombre es obligatorio
+                </div>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Dirección de correo electrónico</label>
-                <input type="email" class="form-control" id="email" required>
+                <input type="email" class="form-control" id="email" formControlName="email" required>
+                <div *ngIf="contactForm.get('email')?.hasError('email')">
+                    Email no valido
+                </div>
             </div>
             <div class="mb-3">
                 <label for="phone" class="form-label">Teléfono</label>
-                <input type="text" class="form-control" id="phone">
+                <input type="text" class="form-control" id="phone" formControlName="phone">
             </div>
             <div class="mb-3">
                 <label for="subject" class="form-label">Asunto</label>
-                <input type="text" class="form-control" id="subject" required>
+                <input type="text" class="form-control" id="subject" formControlName="subject" required>
             </div>
             <div class="mb-3">
                 <label for="message" class="form-label">Mensaje</label>
-                <textarea class="form-control" id="message" rows="3" required></textarea>
+                <textarea class="form-control" id="message" rows="3" formControlName="message" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Enviar</button>
+            <button type="button" class="btn btn-secondary" (click)="onReset()">Limpiar</button>
         </form>
     </div>
 
