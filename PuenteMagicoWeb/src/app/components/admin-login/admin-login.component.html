@@ -1,0 +1,53 @@
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" routerLink="/">
+                    <img id="brandImage" src="assets/images/logo_puente_magico.ico" alt="Puente Mágico">
+                    Puente Mágico</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+						<li class="nav-item active">
+							<a class="nav-link active" routerLink="/admin-login">Login Administrador</a>
+						</li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main content -->
+    <main class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2>Login Administrador</h2>
+                <form id="adminLoginForm">
+                    <div class="form-group">
+                        <label for="adminUsername">Email:</label>
+                        <input type="email" class="form-control" id="adminUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPassword">Contraseña:</label>
+                        <input type="password" class="form-control" id="adminPassword" required>
+                    </div>
+					<br/>
+                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <p>&copy; 2024 Puente Mágico. Reservados todos los derechos.</p>
+        </div>
+    </footer>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="d-flex justify-content-center align-items-center">
+        <div class="loader"></div>
+    </div>

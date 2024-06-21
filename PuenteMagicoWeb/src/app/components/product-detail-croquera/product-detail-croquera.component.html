@@ -1,0 +1,103 @@
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" routerLink="/">
+                    <img id="brandImage" src="assets/images/logo_puente_magico.ico" alt="Puente Mágico">
+                    Puente Mágico</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/home">Home</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link active"routerLink="/product-catalog">Ver Catalogo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/contact">Contacto</a>
+                        </li>
+                        <li class="nav-item" id="loginMenu">
+                            <a class="nav-link" id="loginMenu" routerLink="/login">Iniciar Sesión</a>
+                        </li>
+                        <li class="nav-item" id="registerMenu">
+                            <a class="nav-link" id="registerMenu" routerLink="/register">Registro Cliente</a>
+                        </li>
+                        <li class="nav-item" id="profileMenu" style="display: none;">
+                            <a class="nav-link" id="profileMenu" routerLink="/profile">Perfil Cliente</a>
+                        </li>
+                        <li class="nav-item" id="logoutMenu" style="display: none;">
+                            <a class="nav-link" id="logoutMenu" routerLink="/logout">Cerrar Sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/cart">Carro Compra</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main content -->
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+
+                <!-- Carrusel de imágenes del producto -->
+                <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="assets/images/croquera1.png" class="d-block w-100" alt="Croquera personalizada">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/images/croquera2.png" class="d-block w-100" alt="Croquera personalizada">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2>Croquera personalizada</h2>
+                <p class="text-muted">Categoria: Papelería</p>
+                <p><strong>Precio: $ 7.000</strong></p>
+                <p>Personaliza tu croquera, contactanos y conversemos sobre la elección de tu motivo.</p>
+                <p>Croquera Dibujos</p>
+                <p>Tapa Dura Laminada</p>
+                <p>Tamaño B5 18,1x25,5cm</p>
+                <p>Anillado Metálico</p>
+                <p>80 hojas 140grs</p>
+                <p>Hojas blancas</p>
+                <form id="addToCartForm">
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Cantidad:</label>
+                        <input type="number" class="form-control" id="quantity" value="1" min="1" max="10" required>
+                    </div>
+                    <!-- Botón para agregar al carrito -->
+                    <button class="btn btn-primary" id="addToCartButton">Agregar al Carro</button>
+                </form>
+            </div>
+        </div>
+        <!-- Botón Volver -->
+        <button class="btn btn-secondary" id="backButton">Volver</button>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <p>&copy; 2024 Puente Mágico. Reservados todos los derechos.</p>
+        </div>
+    </footer>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="d-flex justify-content-center align-items-center">
+        <div class="loader"></div>
+    </div>

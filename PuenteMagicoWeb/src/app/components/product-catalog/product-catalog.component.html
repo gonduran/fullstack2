@@ -1,0 +1,121 @@
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" routerLink="/">
+                    <img id="brandImage" src="assets/images/logo_puente_magico.ico" alt="Puente Mágico">
+                    Puente Mágico</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/home">Home</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link active" routerLink="/product-catalog">Ver Catalogo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/contact">Contacto</a>
+                        </li>
+                        <li class="nav-item" id="loginMenu">
+                            <a class="nav-link" id="loginMenu" routerLink="/login">Iniciar Sesión</a>
+                        </li>
+                        <li class="nav-item" id="registerMenu">
+                            <a class="nav-link" id="registerMenu" routerLink="/register">Registro Cliente</a>
+                        </li>
+                        <li class="nav-item" id="profileMenu" style="display: none;">
+                            <a class="nav-link" id="profileMenu" routerLink="/profile">Perfil Cliente</a>
+                        </li>
+                        <li class="nav-item" id="logoutMenu" style="display: none;">
+                            <a class="nav-link" id="logoutMenu" routerLink="/logout">Cerrar Sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/cart">Carro Compra</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main content -->
+    <main class="container mt-5">
+        <h2>Catalogo Productos</h2>
+        <div class="row">
+            <!-- Example product card -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="assets/images/cuaderno1.png" class="card-img-top" alt="Cuaderno personalizado">
+                    <div class="card-body">
+                        <h5 class="card-title">Cuadernos personalizados</h5>
+                        <p class="card-text">$ 9.000</p>
+                        <a routerLink="/product-detail-cuaderno" class="btn btn-primary">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="assets/images/libreta1.png" class="card-img-top" alt="Libreta personalizada">
+                    <div class="card-body">
+                        <h5 class="card-title">Libretas personalizadas</h5>
+                        <p class="card-text">$ 4.500</p>
+                        <a routerLink="/product-detail-libreta" class="btn btn-primary">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="assets/images/croquera1.png" class="card-img-top" alt="Croquera personalizada">
+                    <div class="card-body">
+                        <h5 class="card-title">Croqueras personalizadas</h5>
+                        <p class="card-text">$ 7.000</p>
+                        <a routerLink="/product-detail-croquera" class="btn btn-primary">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="assets/images/polera1.png" class="card-img-top" alt="Polera Personalizada">
+                    <div class="card-body">
+                        <h5 class="card-title">Poleras personalizadas</h5>
+                        <p class="card-text">$ 15.000</p>
+                        <a routerLink="/product-detail-polera" class="btn btn-primary">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="assets/images/lamina_aluminio1.png" class="card-img-top" alt="Lamina Aluminio">
+                    <div class="card-body">
+                        <h5 class="card-title">Lamina Aluminio</h5>
+                        <p class="card-text">$ 10.000</p>
+                        <a routerLink="/product-detail-aluminio" class="btn btn-primary">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="assets/images/carpinteria1.png" class="card-img-top" alt="Tabla Madera">
+                    <div class="card-body">
+                        <h5 class="card-title">Tabla de Madera</h5>
+                        <p class="card-text">$ 30.000</p>
+                        <a routerLink="/product-detail-tabla" class="btn btn-primary">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <p>&copy; 2024 Puente Mágico. Reservados todos los derechos.</p>
+        </div>
+    </footer>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="d-flex justify-content-center align-items-center">
+        <div class="loader"></div>
+    </div>

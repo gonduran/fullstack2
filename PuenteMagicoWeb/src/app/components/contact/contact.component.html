@@ -1,0 +1,81 @@
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" routerLink="/">
+                    <img id="brandImage" src="assets/images/logo_puente_magico.ico" alt="Puente Mágico">
+                    Puente Mágico</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                        <a class="nav-link" routerLink="/index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/product-catalog">Ver Catalogo</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link active" routerLink="/contact">Contacto</a>
+                        </li>
+                        <li class="nav-item" id="loginMenu">
+                            <a class="nav-link" id="loginMenu" routerLink="/login">Iniciar Sesión</a>
+                        </li>
+                        <li class="nav-item" id="registerMenu">
+                            <a class="nav-link" id="registerMenu" routerLink="/register">Registro Cliente</a>
+                        </li>
+                        <li class="nav-item" id="profileMenu" style="display: none;">
+                            <a class="nav-link" id="profileMenu" routerLink="/profile">Perfil Cliente</a>
+                        </li>
+                        <li class="nav-item" id="logoutMenu" style="display: none;">
+                            <a class="nav-link" id="logoutMenu" routerLink="/logout">Cerrar Sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/cart">Carro Compra</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main content -->
+    <div class="container mt-5">
+        <h2>Contáctanos</h2>
+        <form id="contactForm">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Dirección de correo electrónico</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" id="phone">
+            </div>
+            <div class="mb-3">
+                <label for="subject" class="form-label">Asunto</label>
+                <input type="text" class="form-control" id="subject" required>
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">Mensaje</label>
+                <textarea class="form-control" id="message" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <p>&copy; 2024 Puente Mágico. Reservados todos los derechos.</p>
+        </div>
+    </footer>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="d-flex justify-content-center align-items-center">
+        <div class="loader"></div>
+    </div>
