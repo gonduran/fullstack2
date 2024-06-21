@@ -28,16 +28,9 @@ export class ContactComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit(): void {
-    // Lógica que debe ejecutarse cuando el componente se inicializa
-    console.log('ngOnInit ejecutado');
-  }
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void {
-    // Lógica que debe ejecutarse después de que la vista del componente se ha inicializado
-    console.log('ngAfterViewInit ejecutado');
-    this.setupFormInteractivity();
-    this.addFormSubmitListener();
     if (isPlatformBrowser(this.platformId)) {
       const links = document.querySelectorAll('a');
       links.forEach(link => {
@@ -55,49 +48,24 @@ export class ContactComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     if (this.contactForm.valid) {
-      console.log('Form Submitted!', this.contactForm.value);
-      // Aquí puedes manejar el envío del formulario, por ejemplo, enviando los datos a un servidor
+      console.log('Formulario enviado!', this.contactForm.value);
+      const contactData = {
+        name: this.contactForm.value.name,
+        email: this.contactForm.value.email,
+        phone: this.contactForm.value.phone,
+        subject: this.contactForm.value.subject,
+        message: this.contactForm.value.message
+      };
+
+      localStorage.setItem('contact', JSON.stringify(contactData));
+      alert('Su mensaje ha sido enviado!');
       this.contactForm.reset();
     } else {
-      console.log('Form is invalid');
+      console.log('Formulario invalido');
     }
   }
 
   onReset() {
     this.contactForm.reset();
   }
-
-  private setupFormInteractivity() {
-    // Ejemplo de alguna lógica que necesita acceder a elementos del DOM
-    const nameInput = document.getElementById('name');
-    if (nameInput) {
-      nameInput.addEventListener('input', () => {
-        console.log('Name input value:', (nameInput as HTMLInputElement).value);
-      });
-    }
-  }
-
-  private addFormSubmitListener() {
-    const form = document.getElementById('contactForm');
-    if (form) {
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-
-        const name = (document.getElementById('name') as HTMLInputElement).value.trim();
-        const email = (document.getElementById('email') as HTMLInputElement).value.trim();
-        const subject = (document.getElementById('subject') as HTMLInputElement).value.trim();
-        const message = (document.getElementById('message') as HTMLInputElement).value.trim();
-
-        if (name === '' || email === '' || subject === '' || message === '') {
-          alert('Por favor rellene todos los campos.');
-          return;
-        }
-
-        // Aquí se debe agregar el código para enviar el formulario a un servidor o manejarlo de otra manera
-        alert('Tu mensaje ha sido enviado!');
-        this.contactForm.reset();
-      });
-    }
-  }
-
 }
