@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { NavigationService } from '../../navigation.service';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-product-detail-aluminio',
@@ -15,8 +16,7 @@ export class ProductDetailAluminioComponent implements AfterViewInit {
 
   constructor(
     private navigationService: NavigationService,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+    @Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -31,6 +31,16 @@ export class ProductDetailAluminioComponent implements AfterViewInit {
           }
         });
       });
+      //Inicializar Carousel() de imagenes
+      if (typeof document !== 'undefined') {
+        const carouselElement = document.querySelector('#productCarousel') as HTMLElement;
+        if (carouselElement) {
+          const carousel = new bootstrap.Carousel(carouselElement, {
+            interval: 3000, // Cambia de imagen cada 2 segundos
+            ride: 'carousel'
+          });
+        }
+      }
     }
   }
 }
