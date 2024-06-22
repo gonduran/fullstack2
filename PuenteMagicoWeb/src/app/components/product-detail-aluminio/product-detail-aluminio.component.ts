@@ -6,21 +6,32 @@ import { NavigationService } from '../../services/navigation.service';
 declare var bootstrap: any;
 import { CustomersService } from '../../services/customers.service';
 import { Router } from '@angular/router';
+import { OrdersService } from '../../services/orders.service';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-product-detail-aluminio',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './product-detail-aluminio.component.html',
   styleUrl: './product-detail-aluminio.component.scss'
 })
 export class ProductDetailAluminioComponent implements OnInit, AfterViewInit {
+  addToCartForm: FormGroup;
+  quantity: number = 1;
+  minQuantity: number = 1;
+  maxQuantity: number = 10;
 
   constructor(
     private navigationService: NavigationService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private customersService: CustomersService,
-    private router: Router) { }
+    private router: Router,
+    private ordersService: OrdersService,
+	  private fb: FormBuilder) {
+      this.addToCartForm = this.fb.group({
+      quantity: ['', [Validators.required]]}); 
+  }
 
   ngOnInit(): void {
     this.checkLoginState();
@@ -74,5 +85,23 @@ export class ProductDetailAluminioComponent implements OnInit, AfterViewInit {
 
   goBack(): void {
     this.router.navigate(['/product-catalog']);
+  }
+
+  addToCart(): void {
+    let quantity: number = 1;
+    if (this.addToCartForm.valid) {
+      quantity = this.addToCartForm.value.quantity;
+    }
+
+    const price: number = 10000;
+    const total = quantity * price;
+    const product = 'Lamina alumnio';
+    const image = 'assets/images/lamina_aluminio1.png';
+    const registroExitoso = this.ordersService.registerCarts(product, image, price, quantity, total);
+    if (registroExitoso) {
+      console.log('Registro exitoso:', { product, image, price, quantity, total });
+    } else {
+      console.log('Error en el registro.');
+    }
   }
 }

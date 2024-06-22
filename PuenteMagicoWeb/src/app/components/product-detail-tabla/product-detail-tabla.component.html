@@ -72,13 +72,16 @@
                 <p>Contactanos y conversemos sobre la elección de tu motivo.</p>
                 <p>Tabla Madera Nativa de Roble</p>
                 <p>50cm largo - 30cm ancho - 03cm espesor </p>
-                <form id="addToCartForm">
+                <form [formGroup]="addToCartForm">
                     <div class="mb-3">
                         <label for="quantity" class="form-label">Cantidad:</label>
-                        <input type="number" class="form-control" id="quantity" value="1" min="1" max="10" required>
+                        <input type="number" class="form-control" id="quantity" [(ngModel)]="quantity" name="quantity" [min]="minQuantity" [max]="maxQuantity" formControlName="quantity" required>
+                        <div *ngIf="addToCartForm.get('quantity')?.invalid && addToCartForm.get('quantity')?.touched" class="text-danger">
+                            <small *ngIf="addToCartForm.get('quantity')?.errors?.['required']">Cantidad es obligatoria.</small>
+                        </div>
                     </div>
                     <!-- Botón para agregar al carrito -->
-                    <button class="btn btn-primary" id="addToCartButton">Agregar al Carro</button>
+                    <button class="btn btn-primary" (click)="addToCart()">Agregar al Carro</button>
                 </form>
             </div>
         </div>

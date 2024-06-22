@@ -90,30 +90,30 @@ export class OrdersService {
     return true;
   }
 
-  updateOrders(email: string, id: number): boolean {
+  updateOrders(email: string, id: number, total: number, estado: string): boolean {
     console.log('Intentando actualizar orden cliente:', { email, id });
-    const orderExisting = this.orders.find(contact => contact.id === id);
+    const orderExisting = this.orders.find(order => order.id === id);
     const fecha = new Date();
-    const estado = 'Resuelto';
+
     if (orderExisting) {
-      const contactIndex = this.orders.findIndex(contact => contact.id === id);
-      if (contactIndex !== -1) {
-        console.log('Se actualiza estado contacto cliente');
-        this.orders[contactIndex] = { name: name, email: email, phone: phone, subject: subject, message: message, fecha: fecha, estado : estado, id : id };
+      const orderIndex = this.orders.findIndex(contact => contact.id === id);
+      if (orderIndex !== -1) {
+        console.log('Se actualiza estado orden cliente');
+        this.orders[orderIndex] = { email: email, id: id, total: total, fecha: fecha, estado : estado };
         localStorage.setItem('orders', JSON.stringify(this.orders));
 
-        this.mostrarAlerta('Contacto cliente actualizado exitosamente.', 'success');
-        console.log('Contacto cliente actualizado exitosamente:', this.orders[contactIndex]);
+        //this.mostrarAlerta('Orden cliente actualizado exitosamente.', 'success');
+        console.log('Orden cliente actualizado exitosamente:', this.orders[orderIndex]);
         return true;
       } else {
-          this.mostrarAlerta('Error al actualizar el contacto cliente.', 'danger');
-          console.log('Error al actualizar el contacto cliente:', email);
+          //this.mostrarAlerta('Error al actualizar el orden cliente.', 'danger');
+          console.log('Error al actualizar el orden cliente:', email);
           return false;
       } 
     }
 
-    this.mostrarAlerta('Contacto cliente no actualizado.', 'danger');
-    console.log('Contacto cliente no actualizado:', email);
+    this.mostrarAlerta('Orden cliente no actualizado.', 'danger');
+    console.log('Orden cliente no actualizado:', email);
     return false;
   }
 
@@ -150,16 +150,16 @@ export class OrdersService {
     }
   }
 
-  findContact(id: number): boolean {
-    console.log('Buscando contacto cliente:', { id });
-    const contact = this.contacts.find(contact => contact.id === id);
-    if (contact) {
-      this.mostrarAlerta('Contacto cliente encontrado.', 'success');
-      console.log('Contacto cliente encontrado:', contact);
+  findOrder(id: number): boolean {
+    console.log('Buscando orden cliente:', { id });
+    const order = this.orders.find(order => order.id === id);
+    if (order) {
+      this.mostrarAlerta('Orden cliente encontrado.', 'success');
+      console.log('Orden cliente encontrado:', order);
       return true;
     } else {
-      this.mostrarAlerta('Contacto cliente no encontrado.', 'danger');
-      console.log('Contacto cliente no encontrado.');
+      this.mostrarAlerta('Orden cliente no encontrado.', 'danger');
+      console.log('Orden cliente no encontrado.');
       return false;
     }
   }
