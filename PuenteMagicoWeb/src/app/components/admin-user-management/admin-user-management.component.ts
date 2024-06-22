@@ -2,7 +2,7 @@ import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { NavigationService } from '../../navigation.service';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: 'app-admin-user-management',

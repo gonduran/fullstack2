@@ -1,8 +1,9 @@
-import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { NavigationService } from '../../navigation.service';
+import { NavigationService } from '../../services/navigation.service';
+import { CustomersService } from '../../services/customers.service';
 
 @Component({
   selector: 'app-logout',
@@ -11,12 +12,17 @@ import { NavigationService } from '../../navigation.service';
   templateUrl: './logout.component.html',
   styleUrl: './logout.component.scss'
 })
-export class LogoutComponent implements AfterViewInit {
+export class LogoutComponent implements OnInit, AfterViewInit {
 
   constructor(
     private navigationService: NavigationService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private customersService: CustomersService
   ) { }
+
+  ngOnInit(): void {
+    this.checkLoginState();
+  }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -31,6 +37,28 @@ export class LogoutComponent implements AfterViewInit {
           }
         });
       });
+    }
+    this.customersService.logout();
+    this.checkLoginState();
+  }
+
+  checkLoginState(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.customersService.checkLoginState()) {
+        // Ocultar el menú "Iniciar Sesión" y "Registro Cliente"
+        document.getElementById('loginMenu')!.style.display = 'none';
+        document.getElementById('registerMenu')!.style.display = 'none';
+        // Mostrar el menú "Perfil Cliente" y "Cerrar Sesión"
+        document.getElementById('profileMenu')!.style.display = 'block';
+        document.getElementById('logoutMenu')!.style.display = 'block';
+      } else {
+        // Ocultar el menú "Perfil Cliente" y "Cerrar Sesión"
+        document.getElementById('profileMenu')!.style.display = 'none';
+        document.getElementById('logoutMenu')!.style.display = 'none';
+        // Mostrar el menú "Iniciar Sesión" y "Registro Cliente"
+        document.getElementById('loginMenu')!.style.display = 'block';
+        document.getElementById('registerMenu')!.style.display = 'block';
+      }
     }
   }
 }

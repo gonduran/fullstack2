@@ -2,8 +2,11 @@ import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID } from '@angular/
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { NavigationService } from '../../navigation.service';
+import { NavigationService } from '../../services/navigation.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CustomersService } from '../../services/customers.service';
+import { Renderer2, ElementRef } from '@angular/core';
+import { CryptoService } from '../../services/crypto.service';
 
 @Component({
   selector: 'app-register',
@@ -18,18 +21,25 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   constructor(
     private navigationService: NavigationService,
     @Inject(PLATFORM_ID) private platformId: Object,
-	  private fb: FormBuilder) { 
+    private fb: FormBuilder,
+    private customersService: CustomersService,
+    private renderer: Renderer2,
+    private el: ElementRef,
+    private cryptoService: CryptoService) { 
       this.registerForm = this.fb.group({
       clientName: ['', Validators.required],
       clientSurname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.pattern('(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{6,18}$')]],
       confirmPassword: ['', Validators.required],
-      birthDate: ['', Validators.required]
+      birthDate: ['', Validators.required],
+      dispatchAddress: ['']
       }, { validator: this.passwordMatchValidator });
 	}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.checkLoginState();
+  }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -70,16 +80,22 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         return;
       }
 
-      const userData = {
-        clientName: this.registerForm.value.clientName,
-        clientSurname: this.registerForm.value.clientSurname,
-        email: this.registerForm.value.email,
-        birthDate: this.registerForm.value.birthDate
-      };
+      const clientName = this.registerForm.value.clientName;
+      const clientSurname = this.registerForm.value.clientSurname;
+      const email = this.registerForm.value.email;
+      const password = this.cryptoService.encrypt(this.registerForm.value.password);
+      const birthDate = this.formatToStorageDate(this.registerForm.value.birthDate);
+      const dispatchAddress = this.registerForm.value.dispatchAddress;
 
-      localStorage.setItem('user', JSON.stringify(userData));
-      alert('Registro exitoso!');
-      this.registerForm.reset();
+      //localStorage.setItem('user', JSON.stringify(userData));
+      const registroExitoso = this.customersService.registerCustomer(clientName, clientSurname, email, password, birthDate, dispatchAddress);
+      if (registroExitoso) {
+        console.log('Registro exitoso:', { clientName, clientSurname, email, password, birthDate, dispatchAddress });
+        alert('Registro exitoso!');
+        this.registerForm.reset();
+      } else {
+        console.log('Error en el registro.');
+      }
     } else {
       console.log('Formulario invalido');
     }
@@ -87,5 +103,35 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   onReset() {
     this.registerForm.reset();
+  }
+
+  checkLoginState(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.customersService.checkLoginState()) {
+        // Ocultar el menú "Iniciar Sesión" y "Registro Cliente"
+        document.getElementById('loginMenu')!.style.display = 'none';
+        document.getElementById('registerMenu')!.style.display = 'none';
+        // Mostrar el menú "Perfil Cliente" y "Cerrar Sesión"
+        document.getElementById('profileMenu')!.style.display = 'block';
+        document.getElementById('logoutMenu')!.style.display = 'block';
+      } else {
+        // Ocultar el menú "Perfil Cliente" y "Cerrar Sesión"
+        document.getElementById('profileMenu')!.style.display = 'none';
+        document.getElementById('logoutMenu')!.style.display = 'none';
+        // Mostrar el menú "Iniciar Sesión" y "Registro Cliente"
+        document.getElementById('loginMenu')!.style.display = 'block';
+        document.getElementById('registerMenu')!.style.display = 'block';
+      }
+    }
+  }
+
+  formatToFormDate(date: string): string {
+    const [year, month, day] = date.split('-');
+    return `${day}-${month}-${year}`;
+  }
+
+  formatToStorageDate(date: string): string {
+    const [day, month, year] = date.split('-');
+    return `${year}-${month}-${day}`;
   }
 }

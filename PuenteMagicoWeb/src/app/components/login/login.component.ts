@@ -1,22 +1,41 @@
-import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { NavigationService } from '../../navigation.service';
+import { NavigationService } from '../../services/navigation.service';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CustomersService } from '../../services/customers.service';
+import { Renderer2, ElementRef } from '@angular/core';
+import { CryptoService } from '../../services/crypto.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements AfterViewInit {
-
+export class LoginComponent implements OnInit, AfterViewInit {
+  loginForm: FormGroup;
+  
   constructor(
     private navigationService: NavigationService,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+    @Inject(PLATFORM_ID) private platformId: Object,
+	  private fb: FormBuilder,
+    private customersService: CustomersService,
+    private renderer: Renderer2,
+    private el: ElementRef,
+    private cryptoService: CryptoService,
+    private router: Router) { 
+      this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]});
+	}
+
+  ngOnInit(): void {
+    this.checkLoginState();
+  }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -31,6 +50,46 @@ export class LoginComponent implements AfterViewInit {
           }
         });
       });
+    }
+  }
+
+  onSubmit() {
+    if (this.loginForm.valid) {
+      const email = this.loginForm.value.email;
+      const password = this.loginForm.value.password;
+
+      //localStorage.setItem('user', JSON.stringify(userData));
+      const loginExitoso = this.customersService.iniciarSesion(email, password);
+      if (loginExitoso) {
+        console.log('Inicio de sesión exitoso:', { email });
+        alert('Inicio de sesión exitoso!');
+        // Redirigir al perfil del usuario
+        this.router.navigate(['/profile']);
+      } else {
+        console.log('Error en el inicio de sesión.');
+      }
+    } else {
+      console.log('Formulario invalido');
+    }
+  }
+
+  checkLoginState(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.customersService.checkLoginState()) {
+        // Ocultar el menú "Iniciar Sesión" y "Registro Cliente"
+        document.getElementById('loginMenu')!.style.display = 'none';
+        document.getElementById('registerMenu')!.style.display = 'none';
+        // Mostrar el menú "Perfil Cliente" y "Cerrar Sesión"
+        document.getElementById('profileMenu')!.style.display = 'block';
+        document.getElementById('logoutMenu')!.style.display = 'block';
+      } else {
+        // Ocultar el menú "Perfil Cliente" y "Cerrar Sesión"
+        document.getElementById('profileMenu')!.style.display = 'none';
+        document.getElementById('logoutMenu')!.style.display = 'none';
+        // Mostrar el menú "Iniciar Sesión" y "Registro Cliente"
+        document.getElementById('loginMenu')!.style.display = 'block';
+        document.getElementById('registerMenu')!.style.display = 'block';
+      }
     }
   }
 }
