@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CustomersService } from '../../services/customers.service';
 import { Renderer2, ElementRef } from '@angular/core';
 import { CryptoService } from '../../services/crypto.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -25,14 +26,15 @@ export class ProfileComponent implements AfterViewInit {
     private customersService: CustomersService,
     private renderer: Renderer2,
     private el: ElementRef,
-    private cryptoService: CryptoService) { 
+    private cryptoService: CryptoService,
+    private router: Router) { 
       this.profileForm = this.fb.group({
       clientName: ['', Validators.required],
       clientSurname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.pattern('(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{6,18}$')]],
       confirmPassword: [''],
-      birthDate: ['', Validators.required],
+      birthdate: ['', Validators.required],
       dispatchAddress: ['']
       }, { validator: this.passwordMatchValidator });
 	}
@@ -65,9 +67,9 @@ export class ProfileComponent implements AfterViewInit {
     return true;
   }
 
-  calculateAge(birthDate: string): number {
+  calculateAge(birthdate: string): number {
     const today = new Date();
-    const birth = new Date(birthDate);
+    const birth = new Date(birthdate);
     let age = today.getFullYear() - birth.getFullYear();
     const monthDiff = today.getMonth() - birth.getMonth();
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
@@ -78,7 +80,7 @@ export class ProfileComponent implements AfterViewInit {
 
   onSubmit() {
     if (this.profileForm.valid) {
-      const age = this.calculateAge(this.profileForm.value.birthDate);
+      const age = this.calculateAge(this.profileForm.value.birthdate);
       if (age < 13) {
         alert('Debe tener al menos 13 años para registrarse.');
         return;
@@ -88,15 +90,15 @@ export class ProfileComponent implements AfterViewInit {
       const clientSurname = this.profileForm.value.clientSurname;
       const email = this.profileForm.value.email;
       const password = this.profileForm.value.password;
-      const birthDate = this.formatToStorageDate(this.profileForm.value.birthDate);
+      const birthdate = this.formatToStorageDate(this.profileForm.value.birthdate);
       const dispatchAddress = this.profileForm.value.dispatchAddress;
 
       //localStorage.setItem('user', JSON.stringify(userData));
-      const updateExitoso = this.customersService.updateCustomer(clientName, clientSurname, email, password, birthDate, dispatchAddress);
+      const updateExitoso = this.customersService.updateCustomer(clientName, clientSurname, email, password, birthdate, dispatchAddress);
       if (updateExitoso) {
-        console.log('Actualizacion exitosa:', { clientName, clientSurname, email, password, birthDate, dispatchAddress });
+        console.log('Actualizacion exitosa:', { clientName, clientSurname, email, password, birthdate, dispatchAddress });
         alert('Actualizacion exitosa!');
-        this.profileForm.reset();
+        //this.profileForm.reset();
       } else {
         console.log('Error en la actualización.');
       }
@@ -125,6 +127,8 @@ export class ProfileComponent implements AfterViewInit {
         // Mostrar el menú "Iniciar Sesión" y "Registro Cliente"
         document.getElementById('loginMenu')!.style.display = 'block';
         document.getElementById('registerMenu')!.style.display = 'block';
+        // Redirigir al registrar del cliente
+        this.router.navigate(['/register']);
       }
     }
   }
@@ -141,7 +145,7 @@ export class ProfileComponent implements AfterViewInit {
           email: userData.email || '',
           password: '',
           confirmPassword: '',
-          birthDate: userData.birthDate ? this.formatToFormDate(userData.birthDate) : '',
+          birthdate: userData.birthdate ? this.formatToFormDate(userData.birthdate) : '',
           dispatchAddress: userData.dispatchAddress || ''
         });
       }

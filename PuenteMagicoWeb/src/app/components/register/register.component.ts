@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CustomersService } from '../../services/customers.service';
 import { Renderer2, ElementRef } from '@angular/core';
 import { CryptoService } from '../../services/crypto.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -25,14 +26,15 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     private customersService: CustomersService,
     private renderer: Renderer2,
     private el: ElementRef,
-    private cryptoService: CryptoService) { 
+    private cryptoService: CryptoService,
+    private router: Router) { 
       this.registerForm = this.fb.group({
       clientName: ['', Validators.required],
       clientSurname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.pattern('(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{6,18}$')]],
       confirmPassword: ['', Validators.required],
-      birthDate: ['', Validators.required],
+      birthdate: ['', Validators.required],
       dispatchAddress: ['']
       }, { validator: this.passwordMatchValidator });
 	}
@@ -61,9 +63,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     return form.get('password')?.value === form.get('confirmPassword')?.value ? null : { mismatch: true };
   }
 
-  calculateAge(birthDate: string): number {
+  calculateAge(birthdate: string): number {
     const today = new Date();
-    const birth = new Date(birthDate);
+    const birth = new Date(birthdate);
     let age = today.getFullYear() - birth.getFullYear();
     const monthDiff = today.getMonth() - birth.getMonth();
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
@@ -74,7 +76,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      const age = this.calculateAge(this.registerForm.value.birthDate);
+      const age = this.calculateAge(this.registerForm.value.birthdate);
       if (age < 13) {
         alert('Debe tener al menos 13 años para registrarse.');
         return;
@@ -84,13 +86,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       const clientSurname = this.registerForm.value.clientSurname;
       const email = this.registerForm.value.email;
       const password = this.cryptoService.encrypt(this.registerForm.value.password);
-      const birthDate = this.formatToStorageDate(this.registerForm.value.birthDate);
+      const birthdate = this.formatToStorageDate(this.registerForm.value.birthdate);
       const dispatchAddress = this.registerForm.value.dispatchAddress;
 
       //localStorage.setItem('user', JSON.stringify(userData));
-      const registroExitoso = this.customersService.registerCustomer(clientName, clientSurname, email, password, birthDate, dispatchAddress);
+      const registroExitoso = this.customersService.registerCustomer(clientName, clientSurname, email, password, birthdate, dispatchAddress);
       if (registroExitoso) {
-        console.log('Registro exitoso:', { clientName, clientSurname, email, password, birthDate, dispatchAddress });
+        console.log('Registro exitoso:', { clientName, clientSurname, email, password, birthdate, dispatchAddress });
         alert('Registro exitoso!');
         this.registerForm.reset();
       } else {
@@ -114,6 +116,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         // Mostrar el menú "Perfil Cliente" y "Cerrar Sesión"
         document.getElementById('profileMenu')!.style.display = 'block';
         document.getElementById('logoutMenu')!.style.display = 'block';
+        // Redirigir al perfil del cliente
+        this.router.navigate(['/profile']);
       } else {
         // Ocultar el menú "Perfil Cliente" y "Cerrar Sesión"
         document.getElementById('profileMenu')!.style.display = 'none';
