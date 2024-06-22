@@ -143,6 +143,14 @@ export class CustomersService {
     return false;
   }
 
+  getLoggedInClientEmail(): string {
+    if (this.isLocalStorageAvailable()) {
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInClient') || '');
+      return loggedInUser ? loggedInUser.email : '';
+    }
+    return '';
+  }
+
   logout(): void {
     if (this.isLocalStorageAvailable()) {
       console.log('Logout cliente.');

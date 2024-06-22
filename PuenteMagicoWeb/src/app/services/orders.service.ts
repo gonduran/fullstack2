@@ -16,13 +16,8 @@ interface Order {
   estado: string;
 }
 
-interface OrderDetail {
-  id: number;
-  product: string;
-  image: string;
-  price: number;
-  quantity: number;
-  total: number;
+interface OrderDetail extends Cart {
+  id: string;
 }
 
 @Injectable({
@@ -61,7 +56,21 @@ export class OrdersService {
     return true;
   }
 
-  registerOrders(email: string, total: number): boolean {
+  clearCart(): void {
+    this.carts = [];
+    if (this.isLocalStorageAvailable()) {
+      localStorage.removeItem('carts');
+    }
+  }
+
+  removeFromCart(index: number): void {
+    this.carts.splice(index, 1);
+    if (this.isLocalStorageAvailable()) {
+      localStorage.setItem('carts', JSON.stringify(this.carts));
+    }
+  }
+
+  registerOrders(email: string, total: number): number {
     console.log('Intentando registrar contacto cliente:', { email, total });
     const fecha = new Date();
     const estado = 'Ingresada';
@@ -70,24 +79,31 @@ export class OrdersService {
     const newOrder: Order = { email, id, total, fecha, estado };
     this.orders.push(newOrder);
     if (this.isLocalStorageAvailable()) {
-      localStorage.setItem('contacts', JSON.stringify(this.orders));
+      localStorage.setItem('orders', JSON.stringify(this.orders));
     }
-    this.mostrarAlerta('Orden cliente registrado exitosamente.', 'success');
+    //this.mostrarAlerta('Orden cliente registrado exitosamente.', 'success');
     console.log('Orden cliente registrado exitosamente:', newOrder);
-    return true;
+    return id;
   }
 
-  registerOrderdetails(id : number, product: string, image: string, price: number, quantity: number, total: number): boolean {
-    console.log('Intentando registrar detalle compra:', { id, product, image, price, quantity, total });
-
-    const newOrderDetail: OrderDetail = { id, product, image, price, quantity, total };
-    this.orderdetails.push(newOrderDetail);
+  registerOrderdetails(id: number): boolean {
     if (this.isLocalStorageAvailable()) {
-      localStorage.setItem('orderdetails', JSON.stringify(this.orderdetails));
+      const cart = JSON.parse(localStorage.getItem('carts') || '[]');
+      const orderDetail = cart.map((item: any) => ({
+        ...item,
+        id: id
+      }));
+
+      const existingItems = JSON.parse(localStorage.getItem('orderdetails') || '[]');
+      const updatedItems = existingItems.concat(orderDetail);
+      
+      localStorage.setItem('orderdetails', JSON.stringify(updatedItems));
+
+      //this.mostrarAlerta('Detalle compra registrado exitosamente.', 'success');
+      console.log('Detalle compra registrado exitosamente:', orderDetail);
+      return true;
     }
-    //this.mostrarAlerta('Detalle compra registrado exitosamente.', 'success');
-    console.log('Detalle compra registrado exitosamente:', newOrderDetail);
-    return true;
+    return false;
   }
 
   updateOrders(email: string, id: number, total: number, estado: string): boolean {
