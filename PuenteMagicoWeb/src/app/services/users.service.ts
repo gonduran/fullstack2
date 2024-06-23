@@ -1,93 +1,115 @@
 import { Injectable } from '@angular/core';
 import { CryptoService } from './crypto.service';
 
-interface User {
-  userName: string;
-  clientSurname: string;
+interface Users {
+  name: string;
   email: string;
   password: string;
-  birthdate: string;
-  dispatchAddress: string;
+  profile: string;
+}
+
+interface Profile {
+  id: number;
+  name: string;
+}
+
+interface User {
+  name: string;
+  email: string;
+  password: string;
+  profile: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-  private customers: User[] = [];
+  private users: Users[] = [];
+  private profiles: Profile[] = [];
 
   constructor(private cryptoService: CryptoService) {
     if (this.isLocalStorageAvailable()) {
-      const customersSaved = localStorage.getItem('customers');
-      this.customers = customersSaved ? JSON.parse(customersSaved) : [];
+      const profilesSaved = localStorage.getItem('profiles');
+      this.profiles = profilesSaved ? JSON.parse(profilesSaved) : [];
+      const usersSaved = localStorage.getItem('users');
+      this.users = usersSaved ? JSON.parse(usersSaved) : [];
     } else {
-      this.customers = [];
+      this.users = [];
+      this.profiles = [];
     }
   }
 
-  registerCustomer(userName: string, clientSurname: string, email: string, password: string, birthdate: string, dispatchAddress: string): boolean {
-    console.log('Intentando registrar cliente:', { userName, clientSurname, email, birthdate, dispatchAddress });
-    const customerExisting = this.customers.find(customer => customer.email === email);
-    if (customerExisting) {
-      this.mostrarAlerta('El cliente ya existe.', 'danger');
-      console.log('El cliente ya existe.');
+  registerProfile(id: number, name: string): boolean {
+    console.log('Intentando registrar perfil de usuario:', { id, name });
+    const profileExisting = this.profiles.find(profile => profile.id === id);
+    if (profileExisting) {
+      this.mostrarAlerta('El perfil de usuario ya existe.', 'danger');
+      console.log('El perfil de usuario ya existe.');
       return false;
     }
 
-    const newCustomer: User = { userName, clientSurname, email, password, birthdate, dispatchAddress };
-    this.customers.push(newCustomer);
+    const newProfile: Profile = { id, name };
+    this.profiles.push(newProfile);
     if (this.isLocalStorageAvailable()) {
-      localStorage.setItem('customers', JSON.stringify(this.customers));
+      localStorage.setItem('profiles', JSON.stringify(this.profiles));
     }
-    this.mostrarAlerta('Cliente registrado exitosamente.', 'success');
-    console.log('Cliente registrado exitosamente:', newCustomer);
+    this.mostrarAlerta('Perfil de usuario registrado exitosamente.', 'success');
+    console.log('Perfil de usuario registrado exitosamente:', newProfile);
     return true;
   }
 
-  updateCustomer(clientName: string, clientSurname: string, email: string, password: string, birthdate: string, dispatchAddress: string): boolean {
-    console.log('Intentando actualizar cliente:', { clientName, clientSurname, email, birthdate, dispatchAddress });
-    const customerExisting = this.customers.find(customer => customer.email === email);
-    if (customerExisting) {
-      const loggedInClient = JSON.parse(localStorage.getItem('loggedInClient') || 'null');
-      const clientIndex = this.customers.findIndex(customer => customer.userName === loggedInClient.clientName && customer.email === loggedInClient.email);
-      if (clientIndex !== -1) {
-          if (password === '') {
-              console.log('Cliente no cambia su contraseña');
-              const passwordSC = loggedInClient.password;
-              this.customers[clientIndex] = { userName: userName, clientSurname: clientSurname, email: email, password: passwordSC, birthdate: birthdate, dispatchAddress: dispatchAddress };
-          }
-          else {
-              console.log('Cliente cambia su contraseña');
-              password = this.cryptoService.encrypt(password);
-              this.customers[clientIndex] = { userName: userName, clientSurname: clientSurname, email: email, password: password, birthdate: birthdate, dispatchAddress: dispatchAddress };
-          }
-          localStorage.setItem('customers', JSON.stringify(this.customers));
+  registerUser(name: string, email: string, password: string, profile: string): boolean {
+    console.log('Intentando registrar usuario:', { name, email, profile });
+    const userExisting = this.users.find(user => user.email === email);
+    if (userExisting) {
+      this.mostrarAlerta('El usuario ya existe.', 'danger');
+      console.log('El usuario ya existe.');
+      return false;
+    }
+
+    const newUser: Users = { name, email, password, profile };
+    this.users.push(newUser);
+    if (this.isLocalStorageAvailable()) {
+      localStorage.setItem('users', JSON.stringify(this.users));
+    }
+    this.mostrarAlerta('Usuario registrado exitosamente.', 'success');
+    console.log('Usuario registrado exitosamente:', newUser);
+    return true;
+  }
+
+  updatedUser(name: string, email: string, password: string, profile: string): boolean {
+    console.log('Intentando actualizar usuario:', { name, email, password, profile });
+    const userExisting = this.users.find(user => user.email === email);
+    if (userExisting) {
+      const userIndex = this.users.findIndex(user => user.email === email);
+      if (userIndex !== -1) {
+          password = this.cryptoService.encrypt(password);
+          this.users[userIndex] = { name: name, email: email, password: password, profile: profile };
+          localStorage.setItem('users', JSON.stringify(this.users));
   
-          // Actualizar los datos del cliente logueado en localStorage
-          localStorage.setItem('loggedInClient', JSON.stringify(this.customers[clientIndex]));
-  
-          this.mostrarAlerta('Cliente actualizado exitosamente.', 'success');
-          console.log('Cliente actualizado exitosamente:', this.customers[clientIndex]);
+          this.mostrarAlerta('Usuario actualizado exitosamente.', 'success');
+          console.log('Usuario actualizado exitosamente:', this.users[userIndex]);
           return true;
       } else {
-          this.mostrarAlerta('Error al actualizar el perfil cliente.', 'danger');
-          console.log('Error al actualizar el perfil cliente:', email);
+          this.mostrarAlerta('Error al actualizar el usuario.', 'danger');
+          console.log('Error al actualizar el usuario:', email);
           return false;
       } 
     }
 
-    this.mostrarAlerta('Cliente no actualizado.', 'danger');
-    console.log('Cliente no actualizado:', email);
+    this.mostrarAlerta('Usuario no actualizado.', 'danger');
+    console.log('Usuario no actualizado:', email);
     return false;
   }
 
   iniciarSesion(email: string, password: string): boolean {
     console.log('Intentando iniciar sesión:', { email, password });
-    const customer = this.customers.find(customer => customer.email === email && this.cryptoService.decrypt(customer.password) === password);
-    if (customer) {
+    const user = this.users.find(user => user.email === email && user.password === password);
+    //const user = this.users.find(user => user.email === email && this.cryptoService.decrypt(user.password) === password);
+    if (user) {
       this.mostrarAlerta('Inicio de sesión exitoso.', 'success');
-      console.log('Inicio de sesión exitoso:', customer);
-      this.setLoginState(customer);
+      console.log('Inicio de sesión exitoso:', user);
+      this.setLoginState(user);
       return true;
     } else {
       this.mostrarAlerta('Email o contraseña incorrectos.', 'danger');
@@ -129,38 +151,62 @@ export class UsersService {
     }
   }
 
-  setLoginState(customer: any): void {
+  setLoginState(user: any): void {
     if (this.isLocalStorageAvailable()) {
-      localStorage.setItem('loggedInClient', JSON.stringify(customer));
+      localStorage.setItem('loggedInUser', JSON.stringify(user));
     }
   }
 
   checkLoginState(): boolean {
     if (this.isLocalStorageAvailable()) {
-      const loggedInClient = JSON.parse(localStorage.getItem('loggedInClient') || 'null');
-      return loggedInClient !== null;
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || 'null');
+      return loggedInUser !== null;
     }
     return false;
   }
 
   logout(): void {
     if (this.isLocalStorageAvailable()) {
-      console.log('Logout cliente.');
-      localStorage.removeItem('loggedInClient');
+      console.log('Logout usuario.');
+      localStorage.removeItem('loggedInUser');
     }
   }
 
-  findCustomer(email: string): boolean {
-    console.log('Buscando cliente:', { email });
-    const customer = this.customers.find(customer => customer.email === email);
-    if (customer) {
-      this.mostrarAlerta('Cliente encontrado.', 'success');
-      console.log('Cliente encontrado:', customer);
+  findUser(email: string): boolean {
+    console.log('Buscando usuario:', { email });
+    const user = this.users.find(user => user.email === email);
+    if (user) {
+      this.mostrarAlerta('Usuario encontrado.', 'success');
+      console.log('Usuario encontrado:', user);
       return true;
     } else {
-      this.mostrarAlerta('Cliente no encontrado.', 'danger');
-      console.log('Cliente no encontrado.');
+      this.mostrarAlerta('Usuario no encontrado.', 'danger');
+      console.log('Usuario no encontrado.');
       return false;
     }
+  }
+
+  private storageKey = 'users';
+
+  getUsers(): User[] {
+    return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+  }
+
+  addUser(user: User): void {
+    const users = this.getUsers();
+    users.push(user);
+    localStorage.setItem(this.storageKey, JSON.stringify(users));
+  }
+
+  updateUser(index: number, updatedUser: User): void {
+    const users = this.getUsers();
+    users[index] = updatedUser;
+    localStorage.setItem(this.storageKey, JSON.stringify(users));
+  }
+
+  deleteUser(index: number): void {
+    const users = this.getUsers();
+    users.splice(index, 1);
+    localStorage.setItem(this.storageKey, JSON.stringify(users));
   }
 }

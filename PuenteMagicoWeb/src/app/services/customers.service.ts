@@ -14,6 +14,7 @@ interface Customer {
   providedIn: 'root'
 })
 export class CustomersService {
+  private storageKey = 'customers';
   private customers: Customer[] = [];
 
   constructor(private cryptoService: CryptoService) {
@@ -170,5 +171,27 @@ export class CustomersService {
       console.log('Cliente no encontrado.');
       return false;
     }
+  }
+
+  getClients(): Customer[] {
+    return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+  }
+
+  addClient(client: Customer): void {
+    const clients = this.getClients();
+    clients.push(client);
+    localStorage.setItem(this.storageKey, JSON.stringify(clients));
+  }
+
+  updateClient(index: number, updatedClient: Customer): void {
+    const clients = this.getClients();
+    clients[index] = updatedClient;
+    localStorage.setItem(this.storageKey, JSON.stringify(clients));
+  }
+
+  deleteClient(index: number): void {
+    const clients = this.getClients();
+    clients.splice(index, 1);
+    localStorage.setItem(this.storageKey, JSON.stringify(clients));
   }
 }

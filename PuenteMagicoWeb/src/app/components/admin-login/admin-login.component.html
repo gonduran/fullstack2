@@ -24,17 +24,24 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <h2>Login Administrador</h2>
-                <form id="adminLoginForm">
-                    <div class="form-group">
-                        <label for="adminUsername">Email:</label>
-                        <input type="email" class="form-control" id="adminUsername" required>
+                <form [formGroup]="adminLoginForm" (ngSubmit)="onSubmit()">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo Electrónico:</label>
+                        <input type="email" class="form-control" id="email" name="email" formControlName="email">
+                        <div *ngIf="adminLoginForm.get('email')?.invalid && adminLoginForm.get('email')?.touched" class="text-danger">
+                            <small *ngIf="adminLoginForm.get('email')?.errors?.['required']">Correo Electrónico es obligatorio.</small>
+                            <small *ngIf="adminLoginForm.get('email')?.errors?.['email']">Formato de correo electrónico incorrecto.</small>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="adminPassword">Contraseña:</label>
-                        <input type="password" class="form-control" id="adminPassword" required>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña:</label>
+                        <input type="password" class="form-control" id="password" name="password" formControlName="password">
+                        <div *ngIf="adminLoginForm.get('password')?.invalid && adminLoginForm.get('password')?.touched" class="text-danger">
+                            <small *ngIf="adminLoginForm.get('password')?.errors?.['required']">Contraseña es obligatoria.</small>
+                        </div>
                     </div>
-					<br/>
-                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                    <br/>
+                    <button type="submit" class="btn btn-primary" [disabled]="adminLoginForm.invalid">Iniciar Sesión</button>
                 </form>
             </div>
         </div>

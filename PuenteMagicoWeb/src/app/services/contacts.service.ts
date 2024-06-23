@@ -16,6 +16,7 @@ interface Contact {
 })
 export class ContactsService {
   private contacts: Contact[] = [];
+  private storageKey = 'contacts';
 
   constructor() {
     if (this.isLocalStorageAvailable()) {
@@ -42,11 +43,11 @@ export class ContactsService {
     return true;
   }
 
-  updateContact(name: string, email: string, phone: string, subject: string, message: string, id: number): boolean {
+  updateContacts(name: string, email: string, phone: string, subject: string, message: string, id: number): boolean {
     console.log('Intentando actualizar contacto cliente:', { name, email, phone, subject, message, id });
     const contactExisting = this.contacts.find(contact => contact.id === id);
     const fecha = new Date();
-    const estado = 'Resuelto';
+    const estado = 'Procesado';
     if (contactExisting) {
       const contactIndex = this.contacts.findIndex(contact => contact.id === id);
       if (contactIndex !== -1) {
@@ -91,7 +92,7 @@ export class ContactsService {
     }
   }
 
-  private isLocalStorageAvailable(): boolean {
+  isLocalStorageAvailable(): boolean {
     try {
       const test = '__test__';
       localStorage.setItem(test, test);
@@ -124,5 +125,27 @@ export class ContactsService {
   private formatToStorageDate(date: string): string {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`;
+  }
+
+  getContacts(): Contact[] {
+    return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+  }
+
+  addContact(contact: Contact): void {
+    const contacts = this.getContacts();
+    contacts.push(contact);
+    localStorage.setItem(this.storageKey, JSON.stringify(contacts));
+  }
+
+  updateContact(index: number, updatedContact: Contact): void {
+    const contacts = this.getContacts();
+    contacts[index] = updatedContact;
+    localStorage.setItem(this.storageKey, JSON.stringify(contacts));
+  }
+
+  deleteContact(index: number): void {
+    const contacts = this.getContacts();
+    contacts.splice(index, 1);
+    localStorage.setItem(this.storageKey, JSON.stringify(contacts));
   }
 }

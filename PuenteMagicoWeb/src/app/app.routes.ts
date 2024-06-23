@@ -19,8 +19,8 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 import { AdminLogoutComponent } from './components/admin-logout/admin-logout.component';
 import { AdminClientManagementComponent } from './components/admin-client-management/admin-client-management.component';
 import { AdminOrderMonitoringComponent } from './components/admin-order-monitoring/admin-order-monitoring.component';
-import { AdminProfileManagementComponent } from './components/admin-profile-management/admin-profile-management.component';
 import { AdminUserManagementComponent } from './components/admin-user-management/admin-user-management.component';
+import { AdminContactManagementComponent } from './components/admin-contact-management/admin-contact-management.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -44,6 +44,6 @@ export const routes: Routes = [
     { path: 'admin-logout', component: AdminLogoutComponent },
     { path: 'admin-client-management', component: AdminClientManagementComponent },
     { path: 'admin-order-monitoring', component: AdminOrderMonitoringComponent },
-    { path: 'admin-profile-management', component: AdminProfileManagementComponent },
-    { path: 'admin-user-management', component: AdminUserManagementComponent }
+    { path: 'admin-user-management', component: AdminUserManagementComponent },
+    { path: 'admin-contact-management', component: AdminContactManagementComponent }
 ];
