@@ -222,6 +222,12 @@
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Constructor del servicio. Carga los carros de compra, órdenes y detalles de órdenes desde localStorage.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -251,19 +257,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="59"
-                                    class="link-to-prism">src/app/services/orders.service.ts:59</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="81"
+                                    class="link-to-prism">src/app/services/orders.service.ts:81</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Limpia el carro de compra.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -288,14 +299,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="169"
-                                    class="link-to-prism">src/app/services/orders.service.ts:169</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="240"
+                                    class="link-to-prism">src/app/services/orders.service.ts:240</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Busca una orden por su ID.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -306,6 +319,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -320,6 +334,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El ID de la orden.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -329,7 +349,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>Retorna true si la orden fue encontrada, de lo contrario false.</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -357,14 +380,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="183"
-                                    class="link-to-prism">src/app/services/orders.service.ts:183</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="261"
+                                    class="link-to-prism">src/app/services/orders.service.ts:261</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Formatea una fecha en formato YYYY-MM-DD a DD-MM-YYYY.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -375,6 +400,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -389,6 +415,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>La fecha en formato YYYY-MM-DD.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -398,7 +430,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>La fecha formateada en formato DD-MM-YYYY.</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -426,14 +461,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="188"
-                                    class="link-to-prism">src/app/services/orders.service.ts:188</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="273"
+                                    class="link-to-prism">src/app/services/orders.service.ts:273</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Formatea una fecha en formato DD-MM-YYYY a YYYY-MM-DD.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -444,6 +481,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -458,6 +496,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>La fecha en formato DD-MM-YYYY.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -467,7 +511,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>La fecha formateada en formato YYYY-MM-DD.</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -495,19 +542,27 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="158"
-                                    class="link-to-prism">src/app/services/orders.service.ts:158</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="222"
+                                    class="link-to-prism">src/app/services/orders.service.ts:222</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Verifica si localStorage está disponible.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
                         </div>
+                            <div class="io-description">
+                                <ul>
+<li>Retorna true si localStorage está disponible, de lo contrario false.</li>
+</ul>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -534,14 +589,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="136"
-                                    class="link-to-prism">src/app/services/orders.service.ts:136</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="194"
+                                    class="link-to-prism">src/app/services/orders.service.ts:194</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Muestra una alerta en la interfaz de usuario.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -552,6 +609,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -566,6 +624,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El mensaje de la alerta.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>tipo</td>
@@ -578,6 +642,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El tipo de alerta (e.g., &#39;success&#39;, &#39;danger&#39;).</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -613,14 +683,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="46"
-                                    class="link-to-prism">src/app/services/orders.service.ts:46</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="62"
+                                    class="link-to-prism">src/app/services/orders.service.ts:62</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Registra un nuevo producto en el carro de compra.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -631,6 +703,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -645,6 +718,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El nombre del producto.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>image</td>
@@ -657,6 +736,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>La URL de la imagen del producto.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>price</td>
@@ -669,6 +754,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El precio del producto.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>quantity</td>
@@ -681,6 +772,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>La cantidad del producto.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>total</td>
@@ -693,6 +790,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El total del producto.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -702,7 +805,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>Retorna true si el producto fue registrado exitosamente en el carro, de lo contrario false.</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -728,14 +834,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="89"
-                                    class="link-to-prism">src/app/services/orders.service.ts:89</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="132"
+                                    class="link-to-prism">src/app/services/orders.service.ts:132</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Registra los detalles de una orden.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -746,6 +854,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -760,6 +869,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El ID de la orden.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -769,7 +884,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>Retorna true si los detalles de la orden fueron registrados exitosamente, de lo contrario false.</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -795,14 +913,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="73"
-                                    class="link-to-prism">src/app/services/orders.service.ts:73</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="110"
+                                    class="link-to-prism">src/app/services/orders.service.ts:110</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Registra una nueva orden.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -813,6 +933,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -827,6 +948,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El correo electrónico del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>total</td>
@@ -839,6 +966,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El total de la orden.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -848,7 +981,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>Retorna el ID de la nueva orden registrada.</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -874,14 +1010,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="66"
-                                    class="link-to-prism">src/app/services/orders.service.ts:66</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="95"
+                                    class="link-to-prism">src/app/services/orders.service.ts:95</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Elimina un producto del carro de compra.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -892,6 +1030,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -906,6 +1045,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El índice del producto a eliminar.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -941,14 +1086,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="109"
-                                    class="link-to-prism">src/app/services/orders.service.ts:109</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="161"
+                                    class="link-to-prism">src/app/services/orders.service.ts:161</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Actualiza una orden existente.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -959,6 +1106,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -973,6 +1121,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El correo electrónico del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>id</td>
@@ -985,6 +1139,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El ID de la orden.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>total</td>
@@ -997,6 +1157,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El total de la orden.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>estado</td>
@@ -1009,6 +1175,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El estado de la orden.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1018,7 +1190,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>Retorna true si la orden fue actualizada exitosamente, de lo contrario false.</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -1162,6 +1337,11 @@ export class OrdersService {
   private orders: Order[] &#x3D; [];
   private orderdetails: OrderDetail[] &#x3D; [];
 
+  /**
+   * @description 
+   * Constructor del servicio. Carga los carros de compra, órdenes y detalles de órdenes desde localStorage.
+   * 
+   */
   constructor() {
     if (this.isLocalStorageAvailable()) {
       const cartsSaved &#x3D; localStorage.getItem(&#x27;carts&#x27;);
@@ -1177,6 +1357,17 @@ export class OrdersService {
     }
   }
 
+  /**
+   * @description 
+   * Registra un nuevo producto en el carro de compra.
+   * 
+   * @param {string} product - El nombre del producto.
+   * @param {string} image - La URL de la imagen del producto.
+   * @param {number} price - El precio del producto.
+   * @param {number} quantity - La cantidad del producto.
+   * @param {number} total - El total del producto.
+   * @return {boolean} - Retorna true si el producto fue registrado exitosamente en el carro, de lo contrario false.
+   */
   registerCarts(product: string, image: string, price: number, quantity: number, total: number): boolean {
     console.log(&#x27;Intentando registrar producto en carro compra:&#x27;, { product, image, price, quantity, total });
 
@@ -1190,6 +1381,12 @@ export class OrdersService {
     return true;
   }
 
+  /**
+   * @description 
+   * Limpia el carro de compra.
+   * 
+   * @return {void}
+   */
   clearCart(): void {
     this.carts &#x3D; [];
     if (this.isLocalStorageAvailable()) {
@@ -1197,6 +1394,13 @@ export class OrdersService {
     }
   }
 
+  /**
+   * @description 
+   * Elimina un producto del carro de compra.
+   * 
+   * @param {number} index - El índice del producto a eliminar.
+   * @return {void}
+   */
   removeFromCart(index: number): void {
     this.carts.splice(index, 1);
     if (this.isLocalStorageAvailable()) {
@@ -1204,8 +1408,16 @@ export class OrdersService {
     }
   }
 
+  /**
+   * @description 
+   * Registra una nueva orden.
+   * 
+   * @param {string} email - El correo electrónico del cliente.
+   * @param {number} total - El total de la orden.
+   * @return {number} - Retorna el ID de la nueva orden registrada.
+   */
   registerOrders(email: string, total: number): number {
-    console.log(&#x27;Intentando registrar contacto cliente:&#x27;, { email, total });
+    console.log(&#x27;Intentando registrar orden cliente:&#x27;, { email, total });
     const fecha &#x3D; new Date();
     const estado &#x3D; &#x27;Ingresada&#x27;;
     const id &#x3D; this.orders.length + 1;
@@ -1215,11 +1427,17 @@ export class OrdersService {
     if (this.isLocalStorageAvailable()) {
       localStorage.setItem(&#x27;orders&#x27;, JSON.stringify(this.orders));
     }
-    //this.mostrarAlerta(&#x27;Orden cliente registrado exitosamente.&#x27;, &#x27;success&#x27;);
     console.log(&#x27;Orden cliente registrado exitosamente:&#x27;, newOrder);
     return id;
   }
 
+  /**
+   * @description 
+   * Registra los detalles de una orden.
+   * 
+   * @param {number} id - El ID de la orden.
+   * @return {boolean} - Retorna true si los detalles de la orden fueron registrados exitosamente, de lo contrario false.
+   */
   registerOrderdetails(id: number): boolean {
     if (this.isLocalStorageAvailable()) {
       const cart &#x3D; JSON.parse(localStorage.getItem(&#x27;carts&#x27;) || &#x27;[]&#x27;);
@@ -1233,13 +1451,22 @@ export class OrdersService {
       
       localStorage.setItem(&#x27;orderdetails&#x27;, JSON.stringify(updatedItems));
 
-      //this.mostrarAlerta(&#x27;Detalle compra registrado exitosamente.&#x27;, &#x27;success&#x27;);
       console.log(&#x27;Detalle compra registrado exitosamente:&#x27;, orderDetail);
       return true;
     }
     return false;
   }
 
+  /**
+   * @description 
+   * Actualiza una orden existente.
+   * 
+   * @param {string} email - El correo electrónico del cliente.
+   * @param {number} id - El ID de la orden.
+   * @param {number} total - El total de la orden.
+   * @param {string} estado - El estado de la orden.
+   * @return {boolean} - Retorna true si la orden fue actualizada exitosamente, de lo contrario false.
+   */
   updateOrders(email: string, id: number, total: number, estado: string): boolean {
     console.log(&#x27;Intentando actualizar orden cliente:&#x27;, { email, id });
     const orderExisting &#x3D; this.orders.find(order &#x3D;&gt; order.id &#x3D;&#x3D;&#x3D; id);
@@ -1252,13 +1479,11 @@ export class OrdersService {
         this.orders[orderIndex] &#x3D; { email: email, id: id, total: total, fecha: fecha, estado : estado };
         localStorage.setItem(&#x27;orders&#x27;, JSON.stringify(this.orders));
 
-        //this.mostrarAlerta(&#x27;Orden cliente actualizado exitosamente.&#x27;, &#x27;success&#x27;);
         console.log(&#x27;Orden cliente actualizado exitosamente:&#x27;, this.orders[orderIndex]);
         return true;
       } else {
-          //this.mostrarAlerta(&#x27;Error al actualizar el orden cliente.&#x27;, &#x27;danger&#x27;);
-          console.log(&#x27;Error al actualizar el orden cliente:&#x27;, email);
-          return false;
+        console.log(&#x27;Error al actualizar el orden cliente:&#x27;, email);
+        return false;
       } 
     }
 
@@ -1267,6 +1492,14 @@ export class OrdersService {
     return false;
   }
 
+  /**
+   * @description 
+   * Muestra una alerta en la interfaz de usuario.
+   * 
+   * @param {string} mensaje - El mensaje de la alerta.
+   * @param {string} tipo - El tipo de alerta (e.g., &#x27;success&#x27;, &#x27;danger&#x27;).
+   * @return {void}
+   */
   private mostrarAlerta(mensaje: string, tipo: string): void {
     const alertaDiv &#x3D; document.createElement(&#x27;div&#x27;);
     alertaDiv.className &#x3D; &#x60;alert alert-${tipo}&#x60;;
@@ -1289,6 +1522,12 @@ export class OrdersService {
     }
   }
 
+  /**
+   * @description 
+   * Verifica si localStorage está disponible.
+   * 
+   * @return {boolean} - Retorna true si localStorage está disponible, de lo contrario false.
+   */
   private isLocalStorageAvailable(): boolean {
     try {
       const test &#x3D; &#x27;__test__&#x27;;
@@ -1300,6 +1539,13 @@ export class OrdersService {
     }
   }
 
+  /**
+   * @description 
+   * Busca una orden por su ID.
+   * 
+   * @param {number} id - El ID de la orden.
+   * @return {boolean} - Retorna true si la orden fue encontrada, de lo contrario false.
+   */
   findOrder(id: number): boolean {
     console.log(&#x27;Buscando orden cliente:&#x27;, { id });
     const order &#x3D; this.orders.find(order &#x3D;&gt; order.id &#x3D;&#x3D;&#x3D; id);
@@ -1314,11 +1560,25 @@ export class OrdersService {
     }
   }
 
+  /**
+   * @description 
+   * Formatea una fecha en formato YYYY-MM-DD a DD-MM-YYYY.
+   * 
+   * @param {string} date - La fecha en formato YYYY-MM-DD.
+   * @return {string} - La fecha formateada en formato DD-MM-YYYY.
+   */
   private formatToFormDate(date: string): string {
     const [year, month, day] &#x3D; date.split(&#x27;-&#x27;);
     return &#x60;${day}-${month}-${year}&#x60;;
   }
 
+  /**
+   * @description 
+   * Formatea una fecha en formato DD-MM-YYYY a YYYY-MM-DD.
+   * 
+   * @param {string} date - La fecha en formato DD-MM-YYYY.
+   * @return {string} - La fecha formateada en formato YYYY-MM-DD.
+   */
   private formatToStorageDate(date: string): string {
     const [day, month, year] &#x3D; date.split(&#x27;-&#x27;);
     return &#x60;${year}-${month}-${day}&#x60;;

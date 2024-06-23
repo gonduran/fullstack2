@@ -6,6 +6,7 @@ import { NavigationService } from '../../services/navigation.service';
 import { UsersService } from '../../services/users.service';
 declare var bootstrap: any;
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 interface User {
   name: string;
@@ -21,12 +22,14 @@ interface User {
   templateUrl: './admin-user-management.component.html',
   styleUrl: './admin-user-management.component.scss'
 })
-export class AdminUserManagementComponent implements AfterViewInit {
+export class AdminUserManagementComponent implements OnInit, AfterViewInit {
 
   constructor(
     private navigationService: NavigationService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private userService: UsersService
+    private userService: UsersService,
+    private usersService: UsersService,
+    private router: Router
   ) { }
 
   ngAfterViewInit(): void {
@@ -54,6 +57,7 @@ export class AdminUserManagementComponent implements AfterViewInit {
     if (this.userService.isLocalStorageAvailable()) {
       this.loadUsers();
     }
+    this.checkLoginState();
   }
 
   loadUsers(): void {
@@ -94,5 +98,19 @@ export class AdminUserManagementComponent implements AfterViewInit {
   deleteUser(index: number): void {
     this.userService.deleteUser(index);
     this.loadUsers();
+  }
+
+  checkLoginState(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.usersService.checkLoginState()) {
+        // Redirigir al administrador
+        //this.router.navigate(['/admin-user-management']);
+        console.log('Usuario logueado.');
+      } else {
+        // Redirigir al administrador
+        this.router.navigate(['/admin-login']);
+        console.log('Usuario no logueado.');
+      }
+    }
   }
 }

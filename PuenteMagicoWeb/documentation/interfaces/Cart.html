@@ -381,6 +381,11 @@ export class OrdersService {
   private orders: Order[] &#x3D; [];
   private orderdetails: OrderDetail[] &#x3D; [];
 
+  /**
+   * @description 
+   * Constructor del servicio. Carga los carros de compra, órdenes y detalles de órdenes desde localStorage.
+   * 
+   */
   constructor() {
     if (this.isLocalStorageAvailable()) {
       const cartsSaved &#x3D; localStorage.getItem(&#x27;carts&#x27;);
@@ -396,6 +401,17 @@ export class OrdersService {
     }
   }
 
+  /**
+   * @description 
+   * Registra un nuevo producto en el carro de compra.
+   * 
+   * @param {string} product - El nombre del producto.
+   * @param {string} image - La URL de la imagen del producto.
+   * @param {number} price - El precio del producto.
+   * @param {number} quantity - La cantidad del producto.
+   * @param {number} total - El total del producto.
+   * @return {boolean} - Retorna true si el producto fue registrado exitosamente en el carro, de lo contrario false.
+   */
   registerCarts(product: string, image: string, price: number, quantity: number, total: number): boolean {
     console.log(&#x27;Intentando registrar producto en carro compra:&#x27;, { product, image, price, quantity, total });
 
@@ -409,6 +425,12 @@ export class OrdersService {
     return true;
   }
 
+  /**
+   * @description 
+   * Limpia el carro de compra.
+   * 
+   * @return {void}
+   */
   clearCart(): void {
     this.carts &#x3D; [];
     if (this.isLocalStorageAvailable()) {
@@ -416,6 +438,13 @@ export class OrdersService {
     }
   }
 
+  /**
+   * @description 
+   * Elimina un producto del carro de compra.
+   * 
+   * @param {number} index - El índice del producto a eliminar.
+   * @return {void}
+   */
   removeFromCart(index: number): void {
     this.carts.splice(index, 1);
     if (this.isLocalStorageAvailable()) {
@@ -423,8 +452,16 @@ export class OrdersService {
     }
   }
 
+  /**
+   * @description 
+   * Registra una nueva orden.
+   * 
+   * @param {string} email - El correo electrónico del cliente.
+   * @param {number} total - El total de la orden.
+   * @return {number} - Retorna el ID de la nueva orden registrada.
+   */
   registerOrders(email: string, total: number): number {
-    console.log(&#x27;Intentando registrar contacto cliente:&#x27;, { email, total });
+    console.log(&#x27;Intentando registrar orden cliente:&#x27;, { email, total });
     const fecha &#x3D; new Date();
     const estado &#x3D; &#x27;Ingresada&#x27;;
     const id &#x3D; this.orders.length + 1;
@@ -434,11 +471,17 @@ export class OrdersService {
     if (this.isLocalStorageAvailable()) {
       localStorage.setItem(&#x27;orders&#x27;, JSON.stringify(this.orders));
     }
-    //this.mostrarAlerta(&#x27;Orden cliente registrado exitosamente.&#x27;, &#x27;success&#x27;);
     console.log(&#x27;Orden cliente registrado exitosamente:&#x27;, newOrder);
     return id;
   }
 
+  /**
+   * @description 
+   * Registra los detalles de una orden.
+   * 
+   * @param {number} id - El ID de la orden.
+   * @return {boolean} - Retorna true si los detalles de la orden fueron registrados exitosamente, de lo contrario false.
+   */
   registerOrderdetails(id: number): boolean {
     if (this.isLocalStorageAvailable()) {
       const cart &#x3D; JSON.parse(localStorage.getItem(&#x27;carts&#x27;) || &#x27;[]&#x27;);
@@ -452,13 +495,22 @@ export class OrdersService {
       
       localStorage.setItem(&#x27;orderdetails&#x27;, JSON.stringify(updatedItems));
 
-      //this.mostrarAlerta(&#x27;Detalle compra registrado exitosamente.&#x27;, &#x27;success&#x27;);
       console.log(&#x27;Detalle compra registrado exitosamente:&#x27;, orderDetail);
       return true;
     }
     return false;
   }
 
+  /**
+   * @description 
+   * Actualiza una orden existente.
+   * 
+   * @param {string} email - El correo electrónico del cliente.
+   * @param {number} id - El ID de la orden.
+   * @param {number} total - El total de la orden.
+   * @param {string} estado - El estado de la orden.
+   * @return {boolean} - Retorna true si la orden fue actualizada exitosamente, de lo contrario false.
+   */
   updateOrders(email: string, id: number, total: number, estado: string): boolean {
     console.log(&#x27;Intentando actualizar orden cliente:&#x27;, { email, id });
     const orderExisting &#x3D; this.orders.find(order &#x3D;&gt; order.id &#x3D;&#x3D;&#x3D; id);
@@ -471,13 +523,11 @@ export class OrdersService {
         this.orders[orderIndex] &#x3D; { email: email, id: id, total: total, fecha: fecha, estado : estado };
         localStorage.setItem(&#x27;orders&#x27;, JSON.stringify(this.orders));
 
-        //this.mostrarAlerta(&#x27;Orden cliente actualizado exitosamente.&#x27;, &#x27;success&#x27;);
         console.log(&#x27;Orden cliente actualizado exitosamente:&#x27;, this.orders[orderIndex]);
         return true;
       } else {
-          //this.mostrarAlerta(&#x27;Error al actualizar el orden cliente.&#x27;, &#x27;danger&#x27;);
-          console.log(&#x27;Error al actualizar el orden cliente:&#x27;, email);
-          return false;
+        console.log(&#x27;Error al actualizar el orden cliente:&#x27;, email);
+        return false;
       } 
     }
 
@@ -486,6 +536,14 @@ export class OrdersService {
     return false;
   }
 
+  /**
+   * @description 
+   * Muestra una alerta en la interfaz de usuario.
+   * 
+   * @param {string} mensaje - El mensaje de la alerta.
+   * @param {string} tipo - El tipo de alerta (e.g., &#x27;success&#x27;, &#x27;danger&#x27;).
+   * @return {void}
+   */
   private mostrarAlerta(mensaje: string, tipo: string): void {
     const alertaDiv &#x3D; document.createElement(&#x27;div&#x27;);
     alertaDiv.className &#x3D; &#x60;alert alert-${tipo}&#x60;;
@@ -508,6 +566,12 @@ export class OrdersService {
     }
   }
 
+  /**
+   * @description 
+   * Verifica si localStorage está disponible.
+   * 
+   * @return {boolean} - Retorna true si localStorage está disponible, de lo contrario false.
+   */
   private isLocalStorageAvailable(): boolean {
     try {
       const test &#x3D; &#x27;__test__&#x27;;
@@ -519,6 +583,13 @@ export class OrdersService {
     }
   }
 
+  /**
+   * @description 
+   * Busca una orden por su ID.
+   * 
+   * @param {number} id - El ID de la orden.
+   * @return {boolean} - Retorna true si la orden fue encontrada, de lo contrario false.
+   */
   findOrder(id: number): boolean {
     console.log(&#x27;Buscando orden cliente:&#x27;, { id });
     const order &#x3D; this.orders.find(order &#x3D;&gt; order.id &#x3D;&#x3D;&#x3D; id);
@@ -533,11 +604,25 @@ export class OrdersService {
     }
   }
 
+  /**
+   * @description 
+   * Formatea una fecha en formato YYYY-MM-DD a DD-MM-YYYY.
+   * 
+   * @param {string} date - La fecha en formato YYYY-MM-DD.
+   * @return {string} - La fecha formateada en formato DD-MM-YYYY.
+   */
   private formatToFormDate(date: string): string {
     const [year, month, day] &#x3D; date.split(&#x27;-&#x27;);
     return &#x60;${day}-${month}-${year}&#x60;;
   }
 
+  /**
+   * @description 
+   * Formatea una fecha en formato DD-MM-YYYY a YYYY-MM-DD.
+   * 
+   * @param {string} date - La fecha en formato DD-MM-YYYY.
+   * @return {string} - La fecha formateada en formato YYYY-MM-DD.
+   */
   private formatToStorageDate(date: string): string {
     const [day, month, year] &#x3D; date.split(&#x27;-&#x27;);
     return &#x60;${year}-${month}-${day}&#x60;;

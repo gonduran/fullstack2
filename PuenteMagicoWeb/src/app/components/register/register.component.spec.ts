@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RegisterComponent } from './register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -10,6 +9,11 @@ describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
 
+  /**
+   * @description 
+   * Configura el entorno de pruebas antes de cada prueba.
+   * 
+   */
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RegisterComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule]
@@ -21,10 +25,20 @@ describe('RegisterComponent', () => {
     fixture.detectChanges();
   });
 
+  /**
+   * @description 
+   * Verifica que el componente se haya creado correctamente.
+   * 
+   */
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
+  /**
+   * @description 
+   * Verifica que el formulario tenga 6 controles.
+   * 
+   */
   it('should have a form with 6 controls', () => {
     expect(Object.keys(component.registerForm.controls)).toEqual([
       'clientName',
@@ -37,18 +51,33 @@ describe('RegisterComponent', () => {
     ]);
   });
 
+  /**
+   * @description 
+   * Verifica que el control de clientName sea obligatorio.
+   * 
+   */
   it('should make the clientName control required', () => {
     let control = component.registerForm.get('clientName');
     control?.setValue('');
     expect(control?.valid).toBeFalsy();
   });
 
+  /**
+   * @description 
+   * Verifica que el control de clientSurname sea obligatorio.
+   * 
+   */
   it('should make the clientSurname control required', () => {
     let control = component.registerForm.get('clientSurname');
     control?.setValue('');
     expect(control?.valid).toBeFalsy();
   });
 
+  /**
+   * @description 
+   * Verifica que el control de email sea obligatorio y valide el formato.
+   * 
+   */
   it('should make the email control required and validate format', () => {
     let control = component.registerForm.get('email');
     control?.setValue('');
@@ -59,6 +88,11 @@ describe('RegisterComponent', () => {
     expect(control?.valid).toBeTruthy();
   });
 
+  /**
+   * @description 
+   * Verifica que el control de password valide el patrón.
+   * 
+   */
   it('should validate password pattern', () => {
     let control = component.registerForm.get('password');
     control?.setValue('password');
@@ -67,6 +101,11 @@ describe('RegisterComponent', () => {
     expect(control?.valid).toBeTruthy();
   });
 
+  /**
+   * @description 
+   * Verifica que las contraseñas coincidan.
+   * 
+   */
   it('should check if passwords match', () => {
     let passwordControl = component.registerForm.get('password');
     let confirmPasswordControl = component.registerForm.get('confirmPassword');
@@ -77,12 +116,22 @@ describe('RegisterComponent', () => {
     expect(component.registerForm.hasError('mismatch')).toBeFalsy();
   });
 
+  /**
+   * @description 
+   * Verifica que el control de birthdate sea obligatorio.
+   * 
+   */
   it('should make the birthdate control required', () => {
     let control = component.registerForm.get('birthdate');
     control?.setValue('');
     expect(control?.valid).toBeFalsy();
   });
 
+  /**
+   * @description 
+   * Verifica que la contraseña sea encriptada al enviar el formulario.
+   * 
+   */
   it('should encrypt the password on submit', () => {
     const form = component.registerForm;
     form.controls['clientName'].setValue('John');
@@ -99,6 +148,11 @@ describe('RegisterComponent', () => {
     expect(spy).toHaveBeenCalledWith('Password1', 'Pu3nt3M4g1c0');
   });
 
+  /**
+   * @description 
+   * Verifica que el formulario no se envíe si es inválido.
+   * 
+   */
   it('should not submit if form is invalid', () => {
     const form = component.registerForm;
     form.controls['clientName'].setValue('');
@@ -115,6 +169,11 @@ describe('RegisterComponent', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
+  /**
+   * @description 
+   * Verifica que el formulario se restablezca al llamar a onReset.
+   * 
+   */
   it('should call onReset and reset the form', () => {
     component.registerForm.setValue({
       clientName: 'John',
@@ -138,33 +197,4 @@ describe('RegisterComponent', () => {
       dispatchAddress: ''
     });
   });
-
-/*  it('should call onSubmit and save the data to localStorage', () => {
-    spyOn(localStorage, 'setItem').and.callThrough();
-    spyOn(window, 'alert');
-    component.registerForm.setValue({
-      clientName: 'John',
-      clientSurname: 'Doe',
-      email: 'john@example.com',
-      password: 'Password1',
-      confirmPassword: 'Password1',
-      birthdate: '2000-01-01',
-      dispatchAddress: 'Address'
-    });
-
-    component.onSubmit();
-
-    const encryptedPassword = CryptoJS.AES.encrypt('Password1', 'Pu3nt3M4g1c0').toString();
-    const expectedData = JSON.stringify([{
-      clientName: 'John',
-      clientSurname: 'Doe',
-      email: 'john@example.com',
-      password: encryptedPassword,
-      birthdate: '2000-01-01',
-      dispatchAddress: 'Address'
-    }]);
-
-    expect(localStorage.setItem).toHaveBeenCalledWith('customers', expectedData);
-    expect(window.alert).toHaveBeenCalledWith('Registro exitoso!');
-  });*/
 });

@@ -226,6 +226,8 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Constructor del servicio. Carga los clientes desde localStorage.</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -234,6 +236,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -248,6 +251,12 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <ul>
+<li>Servicio de encriptación.</li>
+</ul>
+
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -283,14 +292,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="180"
-                                    class="link-to-prism">src/app/services/customers.service.ts:180</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="273"
+                                    class="link-to-prism">src/app/services/customers.service.ts:273</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Agrega un nuevo cliente a la lista y guarda en localStorage.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -301,6 +312,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -315,6 +327,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El cliente a agregar.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -350,19 +368,27 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="139"
-                                    class="link-to-prism">src/app/services/customers.service.ts:139</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="201"
+                                    class="link-to-prism">src/app/services/customers.service.ts:201</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Verifica el estado de inicio de sesión del cliente.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
                         </div>
+                            <div class="io-description">
+                                <ul>
+<li>Retorna true si el cliente ha iniciado sesión, de lo contrario false.</li>
+</ul>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -387,14 +413,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="192"
-                                    class="link-to-prism">src/app/services/customers.service.ts:192</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="300"
+                                    class="link-to-prism">src/app/services/customers.service.ts:300</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Elimina un cliente de la lista y de localStorage.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -405,6 +433,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -419,6 +448,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El índice del cliente a eliminar.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -454,14 +489,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="162"
-                                    class="link-to-prism">src/app/services/customers.service.ts:162</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="242"
+                                    class="link-to-prism">src/app/services/customers.service.ts:242</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Busca un cliente por su correo electrónico.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -472,6 +509,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -486,6 +524,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El correo electrónico del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -495,7 +539,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>Retorna true si el cliente fue encontrado, de lo contrario false.</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -521,19 +568,27 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="176"
-                                    class="link-to-prism">src/app/services/customers.service.ts:176</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="262"
+                                    class="link-to-prism">src/app/services/customers.service.ts:262</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Obtiene la lista de todos los clientes.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>    <code>Customer[]</code>
 
                         </div>
+                            <div class="io-description">
+                                <ul>
+<li>Un array de objetos Customer.</li>
+</ul>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -558,19 +613,27 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="147"
-                                    class="link-to-prism">src/app/services/customers.service.ts:147</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="215"
+                                    class="link-to-prism">src/app/services/customers.service.ts:215</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Obtiene el correo electrónico del cliente logueado.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                         </div>
+                            <div class="io-description">
+                                <ul>
+<li>Retorna el correo electrónico del cliente logueado.</li>
+</ul>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -595,14 +658,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="85"
-                                    class="link-to-prism">src/app/services/customers.service.ts:85</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="122"
+                                    class="link-to-prism">src/app/services/customers.service.ts:122</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Inicia sesión de un cliente.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -613,6 +678,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -627,6 +693,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Correo electrónico del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>password</td>
@@ -639,6 +711,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Contraseña del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -648,7 +726,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>Retorna true si el inicio de sesión fue exitoso, de lo contrario false.</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -674,19 +755,27 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="122"
-                                    class="link-to-prism">src/app/services/customers.service.ts:122</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="172"
+                                    class="link-to-prism">src/app/services/customers.service.ts:172</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Verifica si localStorage está disponible.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
                         </div>
+                            <div class="io-description">
+                                <ul>
+<li>Retorna true si localStorage está disponible, de lo contrario false.</li>
+</ul>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -711,14 +800,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="155"
-                                    class="link-to-prism">src/app/services/customers.service.ts:155</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="228"
+                                    class="link-to-prism">src/app/services/customers.service.ts:228</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Cierra la sesión del cliente.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -750,14 +841,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="100"
-                                    class="link-to-prism">src/app/services/customers.service.ts:100</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="144"
+                                    class="link-to-prism">src/app/services/customers.service.ts:144</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Muestra una alerta en la interfaz de usuario.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -768,6 +861,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -782,6 +876,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El mensaje de la alerta.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>tipo</td>
@@ -794,6 +894,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El tipo de alerta (e.g., &#39;success&#39;, &#39;danger&#39;).</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -829,14 +935,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="29"
-                                    class="link-to-prism">src/app/services/customers.service.ts:29</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="47"
+                                    class="link-to-prism">src/app/services/customers.service.ts:47</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Registra un nuevo cliente.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -847,6 +955,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -861,6 +970,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Nombre del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>clientSurname</td>
@@ -873,6 +988,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Apellido del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>email</td>
@@ -885,6 +1006,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Correo electrónico del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>password</td>
@@ -897,6 +1024,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Contraseña del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>birthdate</td>
@@ -909,6 +1042,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Fecha de nacimiento del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>dispatchAddress</td>
@@ -921,6 +1060,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Dirección de envío del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -930,7 +1075,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>Retorna true si el cliente fue registrado exitosamente, de lo contrario false.</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -956,14 +1104,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="133"
-                                    class="link-to-prism">src/app/services/customers.service.ts:133</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="189"
+                                    class="link-to-prism">src/app/services/customers.service.ts:189</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Establece el estado de inicio de sesión del cliente.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -974,6 +1124,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -988,6 +1139,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El cliente que ha iniciado sesión.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1023,14 +1180,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="186"
-                                    class="link-to-prism">src/app/services/customers.service.ts:186</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="287"
+                                    class="link-to-prism">src/app/services/customers.service.ts:287</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Actualiza un cliente existente.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1041,6 +1200,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1055,6 +1215,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>El índice del cliente a actualizar.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>updatedClient</td>
@@ -1067,6 +1233,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Los datos actualizados del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1102,14 +1274,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="48"
-                                    class="link-to-prism">src/app/services/customers.service.ts:48</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="78"
+                                    class="link-to-prism">src/app/services/customers.service.ts:78</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Actualiza un cliente existente.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1120,6 +1294,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1134,6 +1309,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Nombre del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>clientSurname</td>
@@ -1146,6 +1327,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Apellido del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>email</td>
@@ -1158,6 +1345,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Correo electrónico del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>password</td>
@@ -1170,6 +1363,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Contraseña del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>birthdate</td>
@@ -1182,6 +1381,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Fecha de nacimiento del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>dispatchAddress</td>
@@ -1194,6 +1399,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>Dirección de envío del cliente.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1203,7 +1414,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>Retorna true si el cliente fue actualizado exitosamente, de lo contrario false.</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -1304,6 +1518,12 @@ export class CustomersService {
   private storageKey &#x3D; &#x27;customers&#x27;;
   private customers: Customer[] &#x3D; [];
 
+  /**
+   * @description 
+   * Constructor del servicio. Carga los clientes desde localStorage.
+   * 
+   * @param {CryptoService} cryptoService - Servicio de encriptación.
+   */
   constructor(private cryptoService: CryptoService) {
     if (this.isLocalStorageAvailable()) {
       const customersSaved &#x3D; localStorage.getItem(&#x27;customers&#x27;);
@@ -1313,6 +1533,18 @@ export class CustomersService {
     }
   }
 
+  /**
+   * @description 
+   * Registra un nuevo cliente.
+   * 
+   * @param {string} clientName - Nombre del cliente.
+   * @param {string} clientSurname - Apellido del cliente.
+   * @param {string} email - Correo electrónico del cliente.
+   * @param {string} password - Contraseña del cliente.
+   * @param {string} birthdate - Fecha de nacimiento del cliente.
+   * @param {string} dispatchAddress - Dirección de envío del cliente.
+   * @return {boolean} - Retorna true si el cliente fue registrado exitosamente, de lo contrario false.
+   */
   registerCustomer(clientName: string, clientSurname: string, email: string, password: string, birthdate: string, dispatchAddress: string): boolean {
     console.log(&#x27;Intentando registrar cliente:&#x27;, { clientName, clientSurname, email, birthdate, dispatchAddress });
     const customerExisting &#x3D; this.customers.find(customer &#x3D;&gt; customer.email &#x3D;&#x3D;&#x3D; email);
@@ -1332,36 +1564,47 @@ export class CustomersService {
     return true;
   }
 
+  /**
+   * @description 
+   * Actualiza un cliente existente.
+   * 
+   * @param {string} clientName - Nombre del cliente.
+   * @param {string} clientSurname - Apellido del cliente.
+   * @param {string} email - Correo electrónico del cliente.
+   * @param {string} password - Contraseña del cliente.
+   * @param {string} birthdate - Fecha de nacimiento del cliente.
+   * @param {string} dispatchAddress - Dirección de envío del cliente.
+   * @return {boolean} - Retorna true si el cliente fue actualizado exitosamente, de lo contrario false.
+   */
   updateCustomer(clientName: string, clientSurname: string, email: string, password: string, birthdate: string, dispatchAddress: string): boolean {
     console.log(&#x27;Intentando actualizar cliente:&#x27;, { clientName, clientSurname, email, birthdate, dispatchAddress });
     const customerExisting &#x3D; this.customers.find(customer &#x3D;&gt; customer.email &#x3D;&#x3D;&#x3D; email);
     if (customerExisting) {
       const loggedInClient &#x3D; JSON.parse(localStorage.getItem(&#x27;loggedInClient&#x27;) || &#x27;null&#x27;);
-      const clientIndex &#x3D; this.customers.findIndex(customer &#x3D;&gt; customer.clientName &#x3D;&#x3D;&#x3D; loggedInClient.clientName &amp;&amp; customer.email &#x3D;&#x3D;&#x3D; loggedInClient.email);
+      const clientIndex &#x3D; this.customers.findIndex(customer &#x3D;&gt; customer.email &#x3D;&#x3D;&#x3D; loggedInClient.email);
       if (clientIndex !&#x3D;&#x3D; -1) {
-          if (password &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
-              console.log(&#x27;Cliente no cambia su contraseña&#x27;);
-              const passwordSC &#x3D; loggedInClient.password;
-              this.customers[clientIndex] &#x3D; { clientName: clientName, clientSurname: clientSurname, email: email, password: passwordSC, birthdate: birthdate, dispatchAddress: dispatchAddress };
-          }
-          else {
-              console.log(&#x27;Cliente cambia su contraseña&#x27;);
-              password &#x3D; this.cryptoService.encrypt(password);
-              this.customers[clientIndex] &#x3D; { clientName: clientName, clientSurname: clientSurname, email: email, password: password, birthdate: birthdate, dispatchAddress: dispatchAddress };
-          }
-          localStorage.setItem(&#x27;customers&#x27;, JSON.stringify(this.customers));
-  
-          // Actualizar los datos del cliente logueado en localStorage
-          localStorage.setItem(&#x27;loggedInClient&#x27;, JSON.stringify(this.customers[clientIndex]));
-  
-          this.mostrarAlerta(&#x27;Cliente actualizado exitosamente.&#x27;, &#x27;success&#x27;);
-          console.log(&#x27;Cliente actualizado exitosamente:&#x27;, this.customers[clientIndex]);
-          return true;
+        if (password &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
+          console.log(&#x27;Cliente no cambia su contraseña&#x27;);
+          const passwordSC &#x3D; loggedInClient.password;
+          this.customers[clientIndex] &#x3D; { clientName: clientName, clientSurname: clientSurname, email: email, password: passwordSC, birthdate: birthdate, dispatchAddress: dispatchAddress };
+        } else {
+          console.log(&#x27;Cliente cambia su contraseña&#x27;);
+          password &#x3D; this.cryptoService.encrypt(password);
+          this.customers[clientIndex] &#x3D; { clientName: clientName, clientSurname: clientSurname, email: email, password: password, birthdate: birthdate, dispatchAddress: dispatchAddress };
+        }
+        localStorage.setItem(&#x27;customers&#x27;, JSON.stringify(this.customers));
+
+        // Actualizar los datos del cliente logueado en localStorage
+        localStorage.setItem(&#x27;loggedInClient&#x27;, JSON.stringify(this.customers[clientIndex]));
+
+        this.mostrarAlerta(&#x27;Cliente actualizado exitosamente.&#x27;, &#x27;success&#x27;);
+        console.log(&#x27;Cliente actualizado exitosamente:&#x27;, this.customers[clientIndex]);
+        return true;
       } else {
-          this.mostrarAlerta(&#x27;Error al actualizar el perfil cliente.&#x27;, &#x27;danger&#x27;);
-          console.log(&#x27;Error al actualizar el perfil cliente:&#x27;, email);
-          return false;
-      } 
+        this.mostrarAlerta(&#x27;Error al actualizar el perfil cliente.&#x27;, &#x27;danger&#x27;);
+        console.log(&#x27;Error al actualizar el perfil cliente:&#x27;, email);
+        return false;
+      }
     }
 
     this.mostrarAlerta(&#x27;Cliente no actualizado.&#x27;, &#x27;danger&#x27;);
@@ -1369,9 +1612,17 @@ export class CustomersService {
     return false;
   }
 
+  /**
+   * @description 
+   * Inicia sesión de un cliente.
+   * 
+   * @param {string} email - Correo electrónico del cliente.
+   * @param {string} password - Contraseña del cliente.
+   * @return {boolean} - Retorna true si el inicio de sesión fue exitoso, de lo contrario false.
+   */
   iniciarSesion(email: string, password: string): boolean {
     console.log(&#x27;Intentando iniciar sesión:&#x27;, { email, password });
-    const customer &#x3D; this.customers.find(customer &#x3D;&gt; customer.email &#x3D;&#x3D;&#x3D; email &amp;&amp; this.cryptoService.decrypt(customer.password) &#x3D;&#x3D;&#x3D; password);
+    const customer &#x3D; this.customers.find(customer &#x3D;&gt; customer.email.trim() &#x3D;&#x3D;&#x3D; email.trim() &amp;&amp; this.cryptoService.decrypt(customer.password.trim()) &#x3D;&#x3D;&#x3D; password.trim());
     if (customer) {
       this.mostrarAlerta(&#x27;Inicio de sesión exitoso.&#x27;, &#x27;success&#x27;);
       console.log(&#x27;Inicio de sesión exitoso:&#x27;, customer);
@@ -1384,6 +1635,13 @@ export class CustomersService {
     }
   }
 
+  /**
+   * @description 
+   * Muestra una alerta en la interfaz de usuario.
+   * 
+   * @param {string} mensaje - El mensaje de la alerta.
+   * @param {string} tipo - El tipo de alerta (e.g., &#x27;success&#x27;, &#x27;danger&#x27;).
+   */
   private mostrarAlerta(mensaje: string, tipo: string): void {
     const alertaDiv &#x3D; document.createElement(&#x27;div&#x27;);
     alertaDiv.className &#x3D; &#x60;alert alert-${tipo}&#x60;;
@@ -1406,6 +1664,12 @@ export class CustomersService {
     }
   }
 
+  /**
+   * @description 
+   * Verifica si localStorage está disponible.
+   * 
+   * @return {boolean} - Retorna true si localStorage está disponible, de lo contrario false.
+   */
   isLocalStorageAvailable(): boolean {
     try {
       const test &#x3D; &#x27;__test__&#x27;;
@@ -1417,12 +1681,24 @@ export class CustomersService {
     }
   }
 
+  /**
+   * @description 
+   * Establece el estado de inicio de sesión del cliente.
+   * 
+   * @param {any} customer - El cliente que ha iniciado sesión.
+   */
   setLoginState(customer: any): void {
     if (this.isLocalStorageAvailable()) {
       localStorage.setItem(&#x27;loggedInClient&#x27;, JSON.stringify(customer));
     }
   }
 
+  /**
+   * @description 
+   * Verifica el estado de inicio de sesión del cliente.
+   * 
+   * @return {boolean} - Retorna true si el cliente ha iniciado sesión, de lo contrario false.
+   */
   checkLoginState(): boolean {
     if (this.isLocalStorageAvailable()) {
       const loggedInClient &#x3D; JSON.parse(localStorage.getItem(&#x27;loggedInClient&#x27;) || &#x27;null&#x27;);
@@ -1431,6 +1707,12 @@ export class CustomersService {
     return false;
   }
 
+  /**
+   * @description 
+   * Obtiene el correo electrónico del cliente logueado.
+   * 
+   * @return {string} - Retorna el correo electrónico del cliente logueado.
+   */
   getLoggedInClientEmail(): string {
     if (this.isLocalStorageAvailable()) {
       const loggedInUser &#x3D; JSON.parse(localStorage.getItem(&#x27;loggedInClient&#x27;) || &#x27;&#x27;);
@@ -1439,6 +1721,11 @@ export class CustomersService {
     return &#x27;&#x27;;
   }
 
+  /**
+   * @description 
+   * Cierra la sesión del cliente.
+   * 
+   */
   logout(): void {
     if (this.isLocalStorageAvailable()) {
       console.log(&#x27;Logout cliente.&#x27;);
@@ -1446,6 +1733,13 @@ export class CustomersService {
     }
   }
 
+  /**
+   * @description 
+   * Busca un cliente por su correo electrónico.
+   * 
+   * @param {string} email - El correo electrónico del cliente.
+   * @return {boolean} - Retorna true si el cliente fue encontrado, de lo contrario false.
+   */
   findCustomer(email: string): boolean {
     console.log(&#x27;Buscando cliente:&#x27;, { email });
     const customer &#x3D; this.customers.find(customer &#x3D;&gt; customer.email &#x3D;&#x3D;&#x3D; email);
@@ -1460,22 +1754,50 @@ export class CustomersService {
     }
   }
 
+  /**
+   * @description 
+   * Obtiene la lista de todos los clientes.
+   * 
+   * @return {Customer[]} - Un array de objetos Customer.
+   */
   getClients(): Customer[] {
     return JSON.parse(localStorage.getItem(this.storageKey) || &#x27;[]&#x27;);
   }
 
+  /**
+   * @description 
+   * Agrega un nuevo cliente a la lista y guarda en localStorage.
+   * 
+   * @param {Customer} client - El cliente a agregar.
+   * @return {void}
+   */
   addClient(client: Customer): void {
     const clients &#x3D; this.getClients();
     clients.push(client);
     localStorage.setItem(this.storageKey, JSON.stringify(clients));
   }
 
+  /**
+   * @description 
+   * Actualiza un cliente existente.
+   * 
+   * @param {number} index - El índice del cliente a actualizar.
+   * @param {Customer} updatedClient - Los datos actualizados del cliente.
+   * @return {void}
+   */
   updateClient(index: number, updatedClient: Customer): void {
     const clients &#x3D; this.getClients();
     clients[index] &#x3D; updatedClient;
     localStorage.setItem(this.storageKey, JSON.stringify(clients));
   }
 
+  /**
+   * @description 
+   * Elimina un cliente de la lista y de localStorage.
+   * 
+   * @param {number} index - El índice del cliente a eliminar.
+   * @return {void}
+   */
   deleteClient(index: number): void {
     const clients &#x3D; this.getClients();
     clients.splice(index, 1);

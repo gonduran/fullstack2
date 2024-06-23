@@ -19,6 +19,19 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit, AfterViewInit {
   registerForm: FormGroup;
 
+  /**
+   * @description 
+   * Constructor del componente RegisterComponent.
+   * 
+   * @param {NavigationService} navigationService - Servicio de navegación.
+   * @param {Object} platformId - Identificador de la plataforma.
+   * @param {FormBuilder} fb - Constructor de formularios reactivos.
+   * @param {CustomersService} customersService - Servicio de clientes.
+   * @param {Renderer2} renderer - Servicio de renderizado.
+   * @param {ElementRef} el - Referencia al elemento HTML.
+   * @param {CryptoService} cryptoService - Servicio de encriptación.
+   * @param {Router} router - Servicio de enrutamiento.
+   */
   constructor(
     private navigationService: NavigationService,
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -37,12 +50,24 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       birthdate: ['', Validators.required],
       dispatchAddress: ['']
       }, { validator: this.passwordMatchValidator });
-	}
+  }
 
+  /**
+   * @description 
+   * Hook de inicialización del componente. Verifica el estado de inicio de sesión.
+   * 
+   * @return {void}
+   */
   ngOnInit(): void {
     this.checkLoginState();
   }
 
+  /**
+   * @description 
+   * Hook que se ejecuta después de que la vista ha sido inicializada. Configura la navegación con retardo para los enlaces.
+   * 
+   * @return {void}
+   */
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const links = document.querySelectorAll('a');
@@ -59,10 +84,24 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * @description 
+   * Valida que las contraseñas coincidan.
+   * 
+   * @param {FormGroup} form - El formulario de registro.
+   * @return {null | Object} - Retorna null si las contraseñas coinciden, de lo contrario un objeto con el error.
+   */
   passwordMatchValidator(form: FormGroup) {
     return form.get('password')?.value === form.get('confirmPassword')?.value ? null : { mismatch: true };
   }
 
+  /**
+   * @description 
+   * Calcula la edad del cliente basado en su fecha de nacimiento.
+   * 
+   * @param {string} birthdate - La fecha de nacimiento del cliente.
+   * @return {number} - La edad del cliente.
+   */
   calculateAge(birthdate: string): number {
     const today = new Date();
     const birth = new Date(birthdate);
@@ -74,7 +113,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     return age;
   }
 
-  onSubmit() {
+  /**
+   * @description 
+   * Maneja el envío del formulario de registro. Realiza las validaciones y registra al cliente.
+   * 
+   * @return {void}
+   */
+  onSubmit(): void {
     if (this.registerForm.valid) {
       const age = this.calculateAge(this.registerForm.value.birthdate);
       if (age < 13) {
@@ -89,7 +134,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       const birthdate = this.formatToStorageDate(this.registerForm.value.birthdate);
       const dispatchAddress = this.registerForm.value.dispatchAddress;
 
-      //localStorage.setItem('user', JSON.stringify(userData));
       const registroExitoso = this.customersService.registerCustomer(clientName, clientSurname, email, password, birthdate, dispatchAddress);
       if (registroExitoso) {
         console.log('Registro exitoso:', { clientName, clientSurname, email, password, birthdate, dispatchAddress });
@@ -103,6 +147,12 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * @description 
+   * Restablece el formulario de registro.
+   * 
+   * @return {void}
+   */
   onReset(): void {
     this.registerForm.reset({
       clientName: '',
@@ -115,6 +165,12 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * @description 
+   * Verifica el estado de inicio de sesión del cliente y actualiza la interfaz de usuario en consecuencia.
+   * 
+   * @return {void}
+   */
   checkLoginState(): void {
     if (isPlatformBrowser(this.platformId)) {
       if (this.customersService.checkLoginState()) {
@@ -137,11 +193,25 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * @description 
+   * Formatea una fecha de almacenamiento en el formato DD-MM-YYYY.
+   * 
+   * @param {string} date - La fecha en formato YYYY-MM-DD.
+   * @return {string} - La fecha formateada en el formato DD-MM-YYYY.
+   */
   formatToFormDate(date: string): string {
     const [year, month, day] = date.split('-');
     return `${day}-${month}-${year}`;
   }
 
+  /**
+   * @description 
+   * Formatea una fecha de formulario en el formato YYYY-MM-DD.
+   * 
+   * @param {string} date - La fecha en formato DD-MM-YYYY.
+   * @return {string} - La fecha formateada en el formato YYYY-MM-DD.
+   */
   formatToStorageDate(date: string): string {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`;

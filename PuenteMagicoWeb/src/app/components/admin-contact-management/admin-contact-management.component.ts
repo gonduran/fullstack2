@@ -6,6 +6,8 @@ import { NavigationService } from '../../services/navigation.service';
 import { ContactsService } from '../../services/contacts.service';
 declare var bootstrap: any;
 import { FormsModule } from '@angular/forms';
+import { UsersService } from '../../services/users.service';
+import { Router } from '@angular/router';
 
 interface Contact {
   name: string;
@@ -25,12 +27,14 @@ interface Contact {
   templateUrl: './admin-contact-management.component.html',
   styleUrl: './admin-contact-management.component.scss'
 })
-export class AdminContactManagementComponent implements AfterViewInit {
+export class AdminContactManagementComponent implements OnInit, AfterViewInit {
 
   constructor(
     private navigationService: NavigationService,
     @Inject(PLATFORM_ID) private platformId: Object,
-	  private contactService: ContactsService
+	  private contactService: ContactsService,
+    private usersService: UsersService,
+    private router: Router
   ) { }
 
   ngAfterViewInit(): void {
@@ -55,6 +59,7 @@ export class AdminContactManagementComponent implements AfterViewInit {
     if (this.contactService.isLocalStorageAvailable()) {
       this.loadContacts();
     }
+    this.checkLoginState();
   }
 
   loadContacts(): void {
@@ -71,5 +76,19 @@ export class AdminContactManagementComponent implements AfterViewInit {
   deleteContact(index: number): void {
     this.contactService.deleteContact(index);
     this.loadContacts();
+  }
+
+  checkLoginState(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.usersService.checkLoginState()) {
+        // Redirigir al administrador
+        //this.router.navigate(['/admin-user-management']);
+        console.log('Usuario logueado.');
+      } else {
+        // Redirigir al administrador
+        this.router.navigate(['/admin-login']);
+        console.log('Usuario no logueado.');
+      }
+    }
   }
 }

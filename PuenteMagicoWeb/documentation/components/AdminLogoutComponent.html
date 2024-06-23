@@ -126,6 +126,7 @@
         <h3>Implements</h3>
     </p>
     <p class="comment">
+                <code>OnInit</code>
                 <code>AfterViewInit</code>
     </p>
 
@@ -201,7 +202,13 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#checkLoginState" >checkLoginState</a>
+                            </li>
+                            <li>
                                 <a href="#ngAfterViewInit" >ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
                             </li>
                         </ul>
                     </td>
@@ -221,12 +228,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(navigationService: <a href="../injectables/NavigationService.html" target="_self">NavigationService</a>, platformId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">Object</a>)</code>
+<code>constructor(navigationService: <a href="../injectables/NavigationService.html" target="_self">NavigationService</a>, platformId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">Object</a>, usersService: <a href="../injectables/UsersService.html" target="_self">UsersService</a>, router: Router)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/components/admin-logout/admin-logout.component.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/components/admin-logout/admin-logout.component.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -267,6 +274,30 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>usersService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UsersService.html" target="_self" >UsersService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -289,6 +320,43 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="checkLoginState"></a>
+                    <span class="name">
+                        <span ><b>checkLoginState</b></span>
+                        <a href="#checkLoginState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkLoginState()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="47"
+                                    class="link-to-prism">src/app/components/admin-logout/admin-logout.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="ngAfterViewInit"></a>
                     <span class="name">
                         <span ><b>ngAfterViewInit</b></span>
@@ -305,8 +373,45 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="21"
-                                    class="link-to-prism">src/app/components/admin-logout/admin-logout.component.ts:21</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="29"
+                                    class="link-to-prism">src/app/components/admin-logout/admin-logout.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="25"
+                                    class="link-to-prism">src/app/components/admin-logout/admin-logout.component.ts:25</a></div>
                         </td>
                     </tr>
 
@@ -328,11 +433,13 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, AfterViewInit, Inject, PLATFORM_ID } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule } from &#x27;@angular/router&#x27;;
 import { isPlatformBrowser } from &#x27;@angular/common&#x27;;
 import { NavigationService } from &#x27;../../services/navigation.service&#x27;;
+import { UsersService } from &#x27;../../services/users.service&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
 
 @Component({
   selector: &#x27;app-admin-logout&#x27;,
@@ -341,12 +448,18 @@ import { NavigationService } from &#x27;../../services/navigation.service&#x27;;
   templateUrl: &#x27;./admin-logout.component.html&#x27;,
   styleUrl: &#x27;./admin-logout.component.scss&#x27;
 })
-export class AdminLogoutComponent implements AfterViewInit {
+export class AdminLogoutComponent implements OnInit, AfterViewInit {
 
   constructor(
     private navigationService: NavigationService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private usersService: UsersService,
+    private router: Router
   ) { }
+
+  ngOnInit(): void {
+    this.checkLoginState();
+  }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -361,6 +474,22 @@ export class AdminLogoutComponent implements AfterViewInit {
           }
         });
       });
+    }
+    this.usersService.logout();
+    this.checkLoginState();
+  }
+
+  checkLoginState(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.usersService.checkLoginState()) {
+        // Redirigir al administrador
+        //this.router.navigate([&#x27;/admin-user-management&#x27;]);
+        console.log(&#x27;Usuario logueado.&#x27;);
+      } else {
+        // Redirigir al administrador
+        //this.router.navigate([&#x27;/admin-login&#x27;]);
+        console.log(&#x27;Usuario no logueado.&#x27;);
+      }
     }
   }
 }
@@ -393,7 +522,7 @@ export class AdminLogoutComponent implements AfterViewInit {
     &lt;main class&#x3D;&quot;container mt-5&quot;&gt;
         &lt;div class&#x3D;&quot;row justify-content-center&quot;&gt;
             &lt;div class&#x3D;&quot;col-md-6 text-center&quot;&gt;
-                &lt;h2&gt;Cerrar sesión administrador exitosamente&lt;/h2&gt;
+                &lt;h2&gt;Cerrar sesión administrador&lt;/h2&gt;
                 &lt;p class&#x3D;&quot;lead&quot;&gt;Has cerrado tu sesión de administrador correctamente.&lt;/p&gt;
                 &lt;a routerLink&#x3D;&quot;/admin-login&quot; class&#x3D;&quot;btn btn-primary&quot;&gt;Iniciar Sesión&lt;/a&gt;
             &lt;/div&gt;
@@ -440,7 +569,7 @@ export class AdminLogoutComponent implements AfterViewInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div>    <!-- Header -->    <header>        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">            <div class="container-fluid">                <a class="navbar-brand" routerLink="/">                    <img id="brandImage" src="assets/images/logo_puente_magico.ico" alt="Puente Mágico">                    Puente Mágico</a>                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">                    <span class="navbar-toggler-icon"></span>                </button>                <div class="collapse navbar-collapse" id="navbarNav">                    <ul class="navbar-nav ms-auto">						<li class="nav-item active">							<a class="nav-link active" routerLink="/admin-login">Login Administrador</a>						</li>                    </ul>                </div>            </div>        </nav>    </header>    <!-- Main content -->    <main class="container mt-5">        <div class="row justify-content-center">            <div class="col-md-6 text-center">                <h2>Cerrar sesión administrador exitosamente</h2>                <p class="lead">Has cerrado tu sesión de administrador correctamente.</p>                <a routerLink="/admin-login" class="btn btn-primary">Iniciar Sesión</a>            </div>        </div>    </main>    <!-- Footer -->    <footer class="bg-light text-center text-lg-start mt-5">        <div class="container p-4">            <p>&copy; 2024 Puente Mágico. Reservados todos los derechos.</p>        </div>    </footer>        <!-- Loading Screen -->    <div id="loading-screen" class="d-flex justify-content-center align-items-center">        <div class="loader"></div>    </div></div>'
+        var COMPONENT_TEMPLATE = '<div>    <!-- Header -->    <header>        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">            <div class="container-fluid">                <a class="navbar-brand" routerLink="/">                    <img id="brandImage" src="assets/images/logo_puente_magico.ico" alt="Puente Mágico">                    Puente Mágico</a>                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">                    <span class="navbar-toggler-icon"></span>                </button>                <div class="collapse navbar-collapse" id="navbarNav">                    <ul class="navbar-nav ms-auto">						<li class="nav-item active">							<a class="nav-link active" routerLink="/admin-login">Login Administrador</a>						</li>                    </ul>                </div>            </div>        </nav>    </header>    <!-- Main content -->    <main class="container mt-5">        <div class="row justify-content-center">            <div class="col-md-6 text-center">                <h2>Cerrar sesión administrador</h2>                <p class="lead">Has cerrado tu sesión de administrador correctamente.</p>                <a routerLink="/admin-login" class="btn btn-primary">Iniciar Sesión</a>            </div>        </div>    </main>    <!-- Footer -->    <footer class="bg-light text-center text-lg-start mt-5">        <div class="container p-4">            <p>&copy; 2024 Puente Mágico. Reservados todos los derechos.</p>        </div>    </footer>        <!-- Loading Screen -->    <div id="loading-screen" class="d-flex justify-content-center align-items-center">        <div class="loader"></div>    </div></div>'
     var COMPONENTS = [{'name': 'AdminClientManagementComponent', 'selector': 'app-admin-client-management'},{'name': 'AdminContactManagementComponent', 'selector': 'app-admin-contact-management'},{'name': 'AdminLoginComponent', 'selector': 'app-admin-login'},{'name': 'AdminLogoutComponent', 'selector': 'app-admin-logout'},{'name': 'AdminOrderMonitoringComponent', 'selector': 'app-admin-order-monitoring'},{'name': 'AdminUserManagementComponent', 'selector': 'app-admin-user-management'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CartComponent', 'selector': 'app-cart'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LogoutComponent', 'selector': 'app-logout'},{'name': 'PasswordRecoveryComponent', 'selector': 'app-password-recovery'},{'name': 'ProductCatalogComponent', 'selector': 'app-product-catalog'},{'name': 'ProductDetailAluminioComponent', 'selector': 'app-product-detail-aluminio'},{'name': 'ProductDetailCroqueraComponent', 'selector': 'app-product-detail-croquera'},{'name': 'ProductDetailCuadernoComponent', 'selector': 'app-product-detail-cuaderno'},{'name': 'ProductDetailLibretaComponent', 'selector': 'app-product-detail-libreta'},{'name': 'ProductDetailPoleraComponent', 'selector': 'app-product-detail-polera'},{'name': 'ProductDetailTablaComponent', 'selector': 'app-product-detail-tabla'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'AdminLogoutComponent'};

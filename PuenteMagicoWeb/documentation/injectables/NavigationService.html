@@ -224,14 +224,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="11"
-                                    class="link-to-prism">src/app/services/navigation.service.ts:11</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="19"
+                                    class="link-to-prism">src/app/services/navigation.service.ts:19</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Navega a una URL específica después de un retraso opcional, mostrando una pantalla de carga mientras tanto.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -243,6 +245,7 @@
                                                 <td>Type</td>
                                             <td>Optional</td>
                                                 <td>Default value</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -259,6 +262,12 @@
                                             <td>
                                             </td>
 
+                                            <td>
+                                                    <ul>
+<li>La URL a la que se debe navegar.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>delay</td>
@@ -274,6 +283,12 @@
                                                     <code>1000</code>
                                             </td>
 
+                                            <td>
+                                                    <ul>
+<li>El retraso en milisegundos antes de navegar. El valor predeterminado es 1000 ms.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -305,14 +320,22 @@ export class NavigationService {
 
   constructor(private router: Router) { }
 
-  navigateWithDelay(href: string, delay: number &#x3D; 1000) {
+  /**
+   * @description 
+   * Navega a una URL específica después de un retraso opcional, mostrando una pantalla de carga mientras tanto.
+   * 
+   * @param {string} href - La URL a la que se debe navegar.
+   * @param {number} [delay&#x3D;1000] - El retraso en milisegundos antes de navegar. El valor predeterminado es 1000 ms.
+   * @return {void}
+   */
+  navigateWithDelay(href: string, delay: number &#x3D; 1000): void {
     const loadingScreen &#x3D; document.getElementById(&#x27;loading-screen&#x27;);
     
     if (loadingScreen) {
       loadingScreen.classList.add(&#x27;active&#x27;);
     }
     
-  setTimeout(() &#x3D;&gt; {
+    setTimeout(() &#x3D;&gt; {
       // Verificar si el href es una URL relativa que debe ser manejada por el router
       if (href.startsWith(&#x27;/&#x27;)) {
         this.router.navigateByUrl(href).then(() &#x3D;&gt; {

@@ -126,6 +126,7 @@
         <h3>Implements</h3>
     </p>
     <p class="comment">
+                <code>OnInit</code>
                 <code>AfterViewInit</code>
     </p>
 
@@ -216,6 +217,9 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#checkLoginState" >checkLoginState</a>
+                            </li>
+                            <li>
                                 <a href="#deleteContact" >deleteContact</a>
                             </li>
                             <li>
@@ -248,12 +252,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(navigationService: <a href="../injectables/NavigationService.html" target="_self">NavigationService</a>, platformId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">Object</a>, contactService: <a href="../injectables/ContactsService.html" target="_self">ContactsService</a>)</code>
+<code>constructor(navigationService: <a href="../injectables/NavigationService.html" target="_self">NavigationService</a>, platformId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">Object</a>, contactService: <a href="../injectables/ContactsService.html" target="_self">ContactsService</a>, usersService: <a href="../injectables/UsersService.html" target="_self">UsersService</a>, router: Router)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:28</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:30</a></div>
                             </td>
                         </tr>
 
@@ -306,6 +310,30 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>usersService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UsersService.html" target="_self" >UsersService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -328,6 +356,43 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="checkLoginState"></a>
+                    <span class="name">
+                        <span ><b>checkLoginState</b></span>
+                        <a href="#checkLoginState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkLoginState()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="81"
+                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="deleteContact"></a>
                     <span class="name">
                         <span ><b>deleteContact</b></span>
@@ -344,8 +409,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="71"
-                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:71</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="76"
+                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:76</a></div>
                         </td>
                     </tr>
 
@@ -411,8 +476,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="60"
-                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:60</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="65"
+                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:65</a></div>
                         </td>
                     </tr>
 
@@ -448,8 +513,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="36"
-                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:36</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="40"
+                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:40</a></div>
                         </td>
                     </tr>
 
@@ -485,8 +550,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="54"
-                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:54</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="58"
+                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:58</a></div>
                         </td>
                     </tr>
 
@@ -522,8 +587,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="64"
-                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:64</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="69"
+                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:69</a></div>
                         </td>
                     </tr>
 
@@ -599,7 +664,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:52</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:56</a></div>
                         </td>
                     </tr>
 
@@ -620,6 +685,8 @@ import { NavigationService } from &#x27;../../services/navigation.service&#x27;;
 import { ContactsService } from &#x27;../../services/contacts.service&#x27;;
 declare var bootstrap: any;
 import { FormsModule } from &#x27;@angular/forms&#x27;;
+import { UsersService } from &#x27;../../services/users.service&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
 
 interface Contact {
   name: string;
@@ -639,12 +706,14 @@ interface Contact {
   templateUrl: &#x27;./admin-contact-management.component.html&#x27;,
   styleUrl: &#x27;./admin-contact-management.component.scss&#x27;
 })
-export class AdminContactManagementComponent implements AfterViewInit {
+export class AdminContactManagementComponent implements OnInit, AfterViewInit {
 
   constructor(
     private navigationService: NavigationService,
     @Inject(PLATFORM_ID) private platformId: Object,
-	  private contactService: ContactsService
+	  private contactService: ContactsService,
+    private usersService: UsersService,
+    private router: Router
   ) { }
 
   ngAfterViewInit(): void {
@@ -669,6 +738,7 @@ export class AdminContactManagementComponent implements AfterViewInit {
     if (this.contactService.isLocalStorageAvailable()) {
       this.loadContacts();
     }
+    this.checkLoginState();
   }
 
   loadContacts(): void {
@@ -686,8 +756,21 @@ export class AdminContactManagementComponent implements AfterViewInit {
     this.contactService.deleteContact(index);
     this.loadContacts();
   }
-}
-</code></pre>
+
+  checkLoginState(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.usersService.checkLoginState()) {
+        // Redirigir al administrador
+        //this.router.navigate([&#x27;/admin-user-management&#x27;]);
+        console.log(&#x27;Usuario logueado.&#x27;);
+      } else {
+        // Redirigir al administrador
+        this.router.navigate([&#x27;/admin-login&#x27;]);
+        console.log(&#x27;Usuario no logueado.&#x27;);
+      }
+    }
+  }
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
