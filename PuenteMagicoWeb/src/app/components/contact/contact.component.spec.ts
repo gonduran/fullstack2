@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ContactComponent } from './contact.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 describe('ContactComponent', () => {
   let component: ContactComponent;
@@ -8,7 +11,7 @@ describe('ContactComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactComponent]
+      imports: [ContactComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule]
     })
     .compileComponents();
 

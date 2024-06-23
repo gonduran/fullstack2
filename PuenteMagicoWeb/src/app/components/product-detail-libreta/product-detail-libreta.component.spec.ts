@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductDetailLibretaComponent } from './product-detail-libreta.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 describe('ProductDetailLibretaComponent', () => {
   let component: ProductDetailLibretaComponent;
@@ -8,7 +11,7 @@ describe('ProductDetailLibretaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductDetailLibretaComponent]
+      imports: [ProductDetailLibretaComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule]
     })
     .compileComponents();
 

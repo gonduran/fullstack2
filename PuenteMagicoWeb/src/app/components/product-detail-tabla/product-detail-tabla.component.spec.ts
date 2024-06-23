@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductDetailTablaComponent } from './product-detail-tabla.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 describe('ProductDetailTablaComponent', () => {
   let component: ProductDetailTablaComponent;
@@ -8,7 +11,7 @@ describe('ProductDetailTablaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductDetailTablaComponent]
+      imports: [ProductDetailTablaComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule]
     })
     .compileComponents();
 

@@ -63,7 +63,6 @@ export class ContactComponent implements OnInit, AfterViewInit {
       const phone = this.contactForm.value.phone;
       const subject = this.contactForm.value.suject;
       const message = this.contactForm.value.message;
-      const dispatchAddress = this.contactForm.value.dispatchAddress;
 
       const registroExitoso = this.contactsService.registerContacts(name, email, phone, subject, message);
       if (registroExitoso) {

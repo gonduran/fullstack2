@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductDetailCroqueraComponent } from './product-detail-croquera.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 describe('ProductDetailCroqueraComponent', () => {
   let component: ProductDetailCroqueraComponent;
@@ -8,7 +11,7 @@ describe('ProductDetailCroqueraComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductDetailCroqueraComponent]
+      imports: [ProductDetailCroqueraComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule]
     })
     .compileComponents();
 

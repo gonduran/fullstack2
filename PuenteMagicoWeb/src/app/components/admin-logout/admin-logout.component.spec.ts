@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminLogoutComponent } from './admin-logout.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 describe('AdminLogoutComponent', () => {
   let component: AdminLogoutComponent;
@@ -8,7 +11,7 @@ describe('AdminLogoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AdminLogoutComponent]
+      imports: [AdminLogoutComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule]
     })
     .compileComponents();
 

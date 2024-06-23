@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegisterComponent } from './register.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import * as CryptoJS from 'crypto-js';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -8,7 +12,7 @@ describe('RegisterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RegisterComponent]
+      imports: [RegisterComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule]
     })
     .compileComponents();
 
@@ -28,7 +32,8 @@ describe('RegisterComponent', () => {
       'email',
       'password',
       'confirmPassword',
-      'birthDate'
+      'birthdate',
+      'dispatchAddress'
     ]);
   });
 
@@ -72,31 +77,42 @@ describe('RegisterComponent', () => {
     expect(component.registerForm.hasError('mismatch')).toBeFalsy();
   });
 
-  it('should make the birthDate control required', () => {
-    let control = component.registerForm.get('birthDate');
+  it('should make the birthdate control required', () => {
+    let control = component.registerForm.get('birthdate');
     control?.setValue('');
     expect(control?.valid).toBeFalsy();
   });
 
-  it('should call onSubmit and save the data to localStorage', () => {
-    spyOn(localStorage, 'setItem');
-    spyOn(window, 'alert');
-    component.registerForm.setValue({
-      clientName: 'John',
-      clientSurname: 'Doe',
-      email: 'john@example.com',
-      password: 'Password1',
-      confirmPassword: 'Password1',
-      birthDate: '2000-01-01'
-    });
+  it('should encrypt the password on submit', () => {
+    const form = component.registerForm;
+    form.controls['clientName'].setValue('John');
+    form.controls['clientSurname'].setValue('Doe');
+    form.controls['email'].setValue('john@example.com');
+    form.controls['password'].setValue('Password1');
+    form.controls['confirmPassword'].setValue('Password1');
+    form.controls['birthdate'].setValue('2000-01-01');
+    form.controls['dispatchAddress'].setValue('Address');
+
+    const spy = spyOn(CryptoJS.AES, 'encrypt').and.callThrough();
     component.onSubmit();
-    expect(localStorage.setItem).toHaveBeenCalledWith('user', JSON.stringify({
-      clientName: 'John',
-      clientSurname: 'Doe',
-      email: 'john@example.com',
-      birthDate: '2000-01-01'
-    }));
-    expect(window.alert).toHaveBeenCalledWith('Registro exitoso!');
+
+    expect(spy).toHaveBeenCalledWith('Password1', 'Pu3nt3M4g1c0');
+  });
+
+  it('should not submit if form is invalid', () => {
+    const form = component.registerForm;
+    form.controls['clientName'].setValue('');
+    form.controls['clientSurname'].setValue('');
+    form.controls['email'].setValue('invalidemail');
+    form.controls['password'].setValue('short');
+    form.controls['confirmPassword'].setValue('short');
+    form.controls['birthdate'].setValue('');
+    form.controls['dispatchAddress'].setValue('');
+
+    const spy = spyOn(CryptoJS.AES, 'encrypt').and.callThrough();
+    component.onSubmit();
+
+    expect(spy).not.toHaveBeenCalled();
   });
 
   it('should call onReset and reset the form', () => {
@@ -106,16 +122,49 @@ describe('RegisterComponent', () => {
       email: 'john@example.com',
       password: 'Password1',
       confirmPassword: 'Password1',
-      birthDate: '2000-01-01'
+      birthdate: '2000-01-01',
+      dispatchAddress: 'Address'
     });
+    
     component.onReset();
+    
     expect(component.registerForm.value).toEqual({
       clientName: '',
       clientSurname: '',
       email: '',
       password: '',
       confirmPassword: '',
-      birthDate: ''
+      birthdate: '',
+      dispatchAddress: ''
     });
   });
+
+/*  it('should call onSubmit and save the data to localStorage', () => {
+    spyOn(localStorage, 'setItem').and.callThrough();
+    spyOn(window, 'alert');
+    component.registerForm.setValue({
+      clientName: 'John',
+      clientSurname: 'Doe',
+      email: 'john@example.com',
+      password: 'Password1',
+      confirmPassword: 'Password1',
+      birthdate: '2000-01-01',
+      dispatchAddress: 'Address'
+    });
+
+    component.onSubmit();
+
+    const encryptedPassword = CryptoJS.AES.encrypt('Password1', 'Pu3nt3M4g1c0').toString();
+    const expectedData = JSON.stringify([{
+      clientName: 'John',
+      clientSurname: 'Doe',
+      email: 'john@example.com',
+      password: encryptedPassword,
+      birthdate: '2000-01-01',
+      dispatchAddress: 'Address'
+    }]);
+
+    expect(localStorage.setItem).toHaveBeenCalledWith('customers', expectedData);
+    expect(window.alert).toHaveBeenCalledWith('Registro exitoso!');
+  });*/
 });

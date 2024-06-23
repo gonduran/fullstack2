@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductDetailPoleraComponent } from './product-detail-polera.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 describe('ProductDetailPoleraComponent', () => {
   let component: ProductDetailPoleraComponent;
@@ -8,7 +11,7 @@ describe('ProductDetailPoleraComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductDetailPoleraComponent]
+      imports: [ProductDetailPoleraComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule]
     })
     .compileComponents();
 

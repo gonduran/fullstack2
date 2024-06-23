@@ -103,8 +103,16 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onReset() {
-    this.registerForm.reset();
+  onReset(): void {
+    this.registerForm.reset({
+      clientName: '',
+      clientSurname: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      birthdate: '',
+      dispatchAddress: ''
+    });
   }
 
   checkLoginState(): void {
