@@ -1,8 +1,10 @@
-import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { NavigationService } from '../../services/navigation.service';
+import { UsersService } from '../../services/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-order-monitoring',
@@ -11,11 +13,13 @@ import { NavigationService } from '../../services/navigation.service';
   templateUrl: './admin-order-monitoring.component.html',
   styleUrl: './admin-order-monitoring.component.scss'
 })
-export class AdminOrderMonitoringComponent implements AfterViewInit {
+export class AdminOrderMonitoringComponent implements OnInit, AfterViewInit {
 
   constructor(
     private navigationService: NavigationService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private usersService: UsersService,
+    private router: Router
   ) { }
 
   ngAfterViewInit(): void {
@@ -31,6 +35,24 @@ export class AdminOrderMonitoringComponent implements AfterViewInit {
           }
         });
       });
+    }
+  }
+
+  ngOnInit(): void {
+    this.checkLoginState();
+  }
+
+  checkLoginState(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.usersService.checkLoginState()) {
+        // Redirigir al administrador
+        //this.router.navigate(['/admin-user-management']);
+        console.log('Usuario logueado.');
+      } else {
+        // Redirigir al administrador
+        this.router.navigate(['/admin-login']);
+        console.log('Usuario no logueado.');
+      }
     }
   }
 }
