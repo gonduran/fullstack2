@@ -1,0 +1,92 @@
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" routerLink="/">
+                    <img id="brandImage" src="assets/images/logo_puente_magico.ico" alt="Puente Mágico">
+                    Puente Mágico</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/product-catalog">Ver Catalogo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/contact">Contacto</a>
+                        </li>
+                        <li class="nav-item" id="loginMenu">
+                            <a class="nav-link" id="loginMenu" routerLink="/login">Iniciar Sesión</a>
+                        </li>
+                        <li class="nav-item" id="registerMenu">
+                            <a class="nav-link" id="registerMenu" routerLink="/register">Registro Cliente</a>
+                        </li>
+                        <li class="nav-item" id="profileMenu" style="display: none;">
+                            <a class="nav-link" id="profileMenu" routerLink="/profile">Perfil Cliente</a>
+                        </li>
+                        <li class="nav-item" id="logoutMenu" style="display: none;">
+                            <a class="nav-link" id="logoutMenu" routerLink="/logout">Cerrar Sesión</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link active" routerLink="/cart">Carro Compra</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main content -->
+    <main class="container mt-5">
+        <h2>Carro de Compra</h2>
+        <div class="row">
+            <div id="cartItems" *ngIf="cart.length > 0; else emptyCart">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                    <th>Acción</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of cart; let i = index">
+                    <td><img [src]="item.image" class="img-fluid" style="max-width: 50px;" alt="Product Image"> {{ item.product }}</td>
+                    <td>${{ item.price.toFixed(0) }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ (item.price * item.quantity).toFixed(0) }}</td>
+                    <td><button class="btn btn-danger btn-sm" (click)="removeFromCart(i)">Quitar</button></td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            <ng-template #emptyCart>
+            <p>Tu carrito está vacío.</p>
+            </ng-template>
+            <div id="cartTotal" class="mt-3" *ngIf="cart.length > 0">
+            <h4>Total a pagar: ${{ totalAmount.toFixed(0) }}</h4>
+            </div>
+            <div id="checkoutButtonContainer" class="mt-3" *ngIf="cart.length > 0">
+                <button class="btn btn-success" (click)="checkout()">Pagar</button>
+                <button class="btn btn-warning" (click)="clearCart()">Vaciar Carrito</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <p>&copy; 2024 Puente Mágico. Reservados todos los derechos.</p>
+        </div>
+    </footer>
+    
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="d-flex justify-content-center align-items-center">
+        <div class="loader"></div>
+    </div>

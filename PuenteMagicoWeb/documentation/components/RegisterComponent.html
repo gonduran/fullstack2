@@ -1,0 +1,1476 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>puente-magico-web documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">puente-magico-web documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  RegisterComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/register/register.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>AfterViewInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-register</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>RouterModule</code>
+                            <code>ReactiveFormsModule</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./register.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./register.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#registerForm" >registerForm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#calculateAge" >calculateAge</a>
+                            </li>
+                            <li>
+                                <a href="#checkLoginState" >checkLoginState</a>
+                            </li>
+                            <li>
+                                <a href="#formatToFormDate" >formatToFormDate</a>
+                            </li>
+                            <li>
+                                <a href="#formatToStorageDate" >formatToStorageDate</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewInit" >ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onReset" >onReset</a>
+                            </li>
+                            <li>
+                                <a href="#onSubmit" >onSubmit</a>
+                            </li>
+                            <li>
+                                <a href="#passwordMatchValidator" >passwordMatchValidator</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(navigationService: <a href="../injectables/NavigationService.html" target="_self">NavigationService</a>, platformId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">Object</a>, fb: FormBuilder, customersService: <a href="../injectables/CustomersService.html" target="_self">CustomersService</a>, renderer: Renderer2, el: ElementRef, cryptoService: <a href="../injectables/CryptoService.html" target="_self">CryptoService</a>, router: Router)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/components/register/register.component.ts:20</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Constructor del componente RegisterComponent.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>navigationService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/NavigationService.html" target="_self" >NavigationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Servicio de navegación.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>platformId</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank" >Object</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Identificador de la plataforma.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Constructor de formularios reactivos.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>customersService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CustomersService.html" target="_self" >CustomersService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Servicio de clientes.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>renderer</td>
+                                                  
+                                                        <td>
+                                                                    <code>Renderer2</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Servicio de renderizado.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>el</td>
+                                                  
+                                                        <td>
+                                                                    <code>ElementRef</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Referencia al elemento HTML.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>cryptoService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CryptoService.html" target="_self" >CryptoService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Servicio de encriptación.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Servicio de enrutamiento.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="calculateAge"></a>
+                    <span class="name">
+                        <span ><b>calculateAge</b></span>
+                        <a href="#calculateAge"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>calculateAge(birthdate: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="105"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:105</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Calcula la edad del cliente basado en su fecha de nacimiento.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>birthdate</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>La fecha de nacimiento del cliente.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>La edad del cliente.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkLoginState"></a>
+                    <span class="name">
+                        <span ><b>checkLoginState</b></span>
+                        <a href="#checkLoginState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkLoginState()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="174"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:174</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Verifica el estado de inicio de sesión del cliente y actualiza la interfaz de usuario en consecuencia.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatToFormDate"></a>
+                    <span class="name">
+                        <span ><b>formatToFormDate</b></span>
+                        <a href="#formatToFormDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatToFormDate(date: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="203"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:203</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Formatea una fecha de almacenamiento en el formato DD-MM-YYYY.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>date</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>La fecha en formato YYYY-MM-DD.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>La fecha formateada en el formato DD-MM-YYYY.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatToStorageDate"></a>
+                    <span class="name">
+                        <span ><b>formatToStorageDate</b></span>
+                        <a href="#formatToStorageDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatToStorageDate(date: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="215"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:215</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Formatea una fecha de formulario en el formato YYYY-MM-DD.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>date</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>La fecha en formato DD-MM-YYYY.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>La fecha formateada en el formato YYYY-MM-DD.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <span ><b>ngAfterViewInit</b></span>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="71"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:71</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Hook que se ejecuta después de que la vista ha sido inicializada. Configura la navegación con retardo para los enlaces.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="61"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Hook de inicialización del componente. Verifica el estado de inicio de sesión.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onReset"></a>
+                    <span class="name">
+                        <span ><b>onReset</b></span>
+                        <a href="#onReset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onReset()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="156"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:156</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Restablece el formulario de registro.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSubmit"></a>
+                    <span class="name">
+                        <span ><b>onSubmit</b></span>
+                        <a href="#onSubmit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSubmit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="122"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:122</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Maneja el envío del formulario de registro. Realiza las validaciones y registra al cliente.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="passwordMatchValidator"></a>
+                    <span class="name">
+                        <span ><b>passwordMatchValidator</b></span>
+                        <a href="#passwordMatchValidator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>passwordMatchValidator(form: FormGroup)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="94"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:94</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Valida que las contraseñas coincidan.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>form</td>
+                                            <td>
+                                                        <code>FormGroup</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>El formulario de registro.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>{ mismatch: boolean; }</code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>Retorna null si las contraseñas coinciden, de lo contrario un objeto con el error.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="registerForm"></a>
+                    <span class="name">
+                        <span ><b>registerForm</b></span>
+                        <a href="#registerForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/components/register/register.component.ts:20</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { RouterModule } from &#x27;@angular/router&#x27;;
+import { isPlatformBrowser } from &#x27;@angular/common&#x27;;
+import { NavigationService } from &#x27;../../services/navigation.service&#x27;;
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from &#x27;@angular/forms&#x27;;
+import { CustomersService } from &#x27;../../services/customers.service&#x27;;
+import { Renderer2, ElementRef } from &#x27;@angular/core&#x27;;
+import { CryptoService } from &#x27;../../services/crypto.service&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+
+@Component({
+  selector: &#x27;app-register&#x27;,
+  standalone: true,
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  templateUrl: &#x27;./register.component.html&#x27;,
+  styleUrl: &#x27;./register.component.scss&#x27;
+})
+export class RegisterComponent implements OnInit, AfterViewInit {
+  registerForm: FormGroup;
+
+  /**
+   * @description 
+   * Constructor del componente RegisterComponent.
+   * 
+   * @param {NavigationService} navigationService - Servicio de navegación.
+   * @param {Object} platformId - Identificador de la plataforma.
+   * @param {FormBuilder} fb - Constructor de formularios reactivos.
+   * @param {CustomersService} customersService - Servicio de clientes.
+   * @param {Renderer2} renderer - Servicio de renderizado.
+   * @param {ElementRef} el - Referencia al elemento HTML.
+   * @param {CryptoService} cryptoService - Servicio de encriptación.
+   * @param {Router} router - Servicio de enrutamiento.
+   */
+  constructor(
+    private navigationService: NavigationService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private fb: FormBuilder,
+    private customersService: CustomersService,
+    private renderer: Renderer2,
+    private el: ElementRef,
+    private cryptoService: CryptoService,
+    private router: Router) { 
+      this.registerForm &#x3D; this.fb.group({
+      clientName: [&#x27;&#x27;, Validators.required],
+      clientSurname: [&#x27;&#x27;, Validators.required],
+      email: [&#x27;&#x27;, [Validators.required, Validators.email]],
+      password: [&#x27;&#x27;, [Validators.required, Validators.pattern(&#x27;(?&#x3D;.*[A-Z])(?&#x3D;.*\\d)[A-Za-z\\d]{6,18}$&#x27;)]],
+      confirmPassword: [&#x27;&#x27;, Validators.required],
+      birthdate: [&#x27;&#x27;, Validators.required],
+      dispatchAddress: [&#x27;&#x27;]
+      }, { validator: this.passwordMatchValidator });
+  }
+
+  /**
+   * @description 
+   * Hook de inicialización del componente. Verifica el estado de inicio de sesión.
+   * 
+   * @return {void}
+   */
+  ngOnInit(): void {
+    this.checkLoginState();
+  }
+
+  /**
+   * @description 
+   * Hook que se ejecuta después de que la vista ha sido inicializada. Configura la navegación con retardo para los enlaces.
+   * 
+   * @return {void}
+   */
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const links &#x3D; document.querySelectorAll(&#x27;a&#x27;);
+      links.forEach(link &#x3D;&gt; {
+        link.addEventListener(&#x27;click&#x27;, (event: Event) &#x3D;&gt; {
+          event.preventDefault();
+          const target &#x3D; event.target as HTMLElement;
+          const href &#x3D; target.getAttribute(&#x27;href&#x27;);
+          if (href) {
+            this.navigationService.navigateWithDelay(href);
+          }
+        });
+      });
+    }
+  }
+
+  /**
+   * @description 
+   * Valida que las contraseñas coincidan.
+   * 
+   * @param {FormGroup} form - El formulario de registro.
+   * @return {null | Object} - Retorna null si las contraseñas coinciden, de lo contrario un objeto con el error.
+   */
+  passwordMatchValidator(form: FormGroup) {
+    return form.get(&#x27;password&#x27;)?.value &#x3D;&#x3D;&#x3D; form.get(&#x27;confirmPassword&#x27;)?.value ? null : { mismatch: true };
+  }
+
+  /**
+   * @description 
+   * Calcula la edad del cliente basado en su fecha de nacimiento.
+   * 
+   * @param {string} birthdate - La fecha de nacimiento del cliente.
+   * @return {number} - La edad del cliente.
+   */
+  calculateAge(birthdate: string): number {
+    const today &#x3D; new Date();
+    const birth &#x3D; new Date(birthdate);
+    let age &#x3D; today.getFullYear() - birth.getFullYear();
+    const monthDiff &#x3D; today.getMonth() - birth.getMonth();
+    if (monthDiff &lt; 0 || (monthDiff &#x3D;&#x3D;&#x3D; 0 &amp;&amp; today.getDate() &lt; birth.getDate())) {
+      age--;
+    }
+    return age;
+  }
+
+  /**
+   * @description 
+   * Maneja el envío del formulario de registro. Realiza las validaciones y registra al cliente.
+   * 
+   * @return {void}
+   */
+  onSubmit(): void {
+    if (this.registerForm.valid) {
+      const age &#x3D; this.calculateAge(this.registerForm.value.birthdate);
+      if (age &lt; 13) {
+        alert(&#x27;Debe tener al menos 13 años para registrarse.&#x27;);
+        return;
+      }
+
+      const clientName &#x3D; this.registerForm.value.clientName;
+      const clientSurname &#x3D; this.registerForm.value.clientSurname;
+      const email &#x3D; this.registerForm.value.email;
+      const password &#x3D; this.cryptoService.encrypt(this.registerForm.value.password);
+      const birthdate &#x3D; this.formatToStorageDate(this.registerForm.value.birthdate);
+      const dispatchAddress &#x3D; this.registerForm.value.dispatchAddress;
+
+      const registroExitoso &#x3D; this.customersService.registerCustomer(clientName, clientSurname, email, password, birthdate, dispatchAddress);
+      if (registroExitoso) {
+        console.log(&#x27;Registro exitoso:&#x27;, { clientName, clientSurname, email, password, birthdate, dispatchAddress });
+        alert(&#x27;Registro exitoso!&#x27;);
+        this.registerForm.reset();
+      } else {
+        console.log(&#x27;Error en el registro.&#x27;);
+      }
+    } else {
+      console.log(&#x27;Formulario invalido&#x27;);
+    }
+  }
+
+  /**
+   * @description 
+   * Restablece el formulario de registro.
+   * 
+   * @return {void}
+   */
+  onReset(): void {
+    this.registerForm.reset({
+      clientName: &#x27;&#x27;,
+      clientSurname: &#x27;&#x27;,
+      email: &#x27;&#x27;,
+      password: &#x27;&#x27;,
+      confirmPassword: &#x27;&#x27;,
+      birthdate: &#x27;&#x27;,
+      dispatchAddress: &#x27;&#x27;
+    });
+  }
+
+  /**
+   * @description 
+   * Verifica el estado de inicio de sesión del cliente y actualiza la interfaz de usuario en consecuencia.
+   * 
+   * @return {void}
+   */
+  checkLoginState(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.customersService.checkLoginState()) {
+        // Ocultar el menú &quot;Iniciar Sesión&quot; y &quot;Registro Cliente&quot;
+        document.getElementById(&#x27;loginMenu&#x27;)!.style.display &#x3D; &#x27;none&#x27;;
+        document.getElementById(&#x27;registerMenu&#x27;)!.style.display &#x3D; &#x27;none&#x27;;
+        // Mostrar el menú &quot;Perfil Cliente&quot; y &quot;Cerrar Sesión&quot;
+        document.getElementById(&#x27;profileMenu&#x27;)!.style.display &#x3D; &#x27;block&#x27;;
+        document.getElementById(&#x27;logoutMenu&#x27;)!.style.display &#x3D; &#x27;block&#x27;;
+        // Redirigir al perfil del cliente
+        this.router.navigate([&#x27;/profile&#x27;]);
+      } else {
+        // Ocultar el menú &quot;Perfil Cliente&quot; y &quot;Cerrar Sesión&quot;
+        document.getElementById(&#x27;profileMenu&#x27;)!.style.display &#x3D; &#x27;none&#x27;;
+        document.getElementById(&#x27;logoutMenu&#x27;)!.style.display &#x3D; &#x27;none&#x27;;
+        // Mostrar el menú &quot;Iniciar Sesión&quot; y &quot;Registro Cliente&quot;
+        document.getElementById(&#x27;loginMenu&#x27;)!.style.display &#x3D; &#x27;block&#x27;;
+        document.getElementById(&#x27;registerMenu&#x27;)!.style.display &#x3D; &#x27;block&#x27;;
+      }
+    }
+  }
+
+  /**
+   * @description 
+   * Formatea una fecha de almacenamiento en el formato DD-MM-YYYY.
+   * 
+   * @param {string} date - La fecha en formato YYYY-MM-DD.
+   * @return {string} - La fecha formateada en el formato DD-MM-YYYY.
+   */
+  formatToFormDate(date: string): string {
+    const [year, month, day] &#x3D; date.split(&#x27;-&#x27;);
+    return &#x60;${day}-${month}-${year}&#x60;;
+  }
+
+  /**
+   * @description 
+   * Formatea una fecha de formulario en el formato YYYY-MM-DD.
+   * 
+   * @param {string} date - La fecha en formato DD-MM-YYYY.
+   * @return {string} - La fecha formateada en el formato YYYY-MM-DD.
+   */
+  formatToStorageDate(date: string): string {
+    const [day, month, year] &#x3D; date.split(&#x27;-&#x27;);
+    return &#x60;${year}-${month}-${day}&#x60;;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">    &lt;!-- Header --&gt;
+    &lt;header&gt;
+        &lt;nav class&#x3D;&quot;navbar navbar-expand-lg bg-primary&quot; data-bs-theme&#x3D;&quot;dark&quot;&gt;
+            &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+                &lt;a class&#x3D;&quot;navbar-brand&quot; routerLink&#x3D;&quot;/&quot;&gt;
+                    &lt;img id&#x3D;&quot;brandImage&quot; src&#x3D;&quot;assets/images/logo_puente_magico.ico&quot; alt&#x3D;&quot;Puente Mágico&quot;&gt;
+                    Puente Mágico&lt;/a&gt;
+                &lt;button class&#x3D;&quot;navbar-toggler&quot; type&#x3D;&quot;button&quot; data-bs-toggle&#x3D;&quot;collapse&quot; data-bs-target&#x3D;&quot;#navbarNav&quot; aria-controls&#x3D;&quot;navbarNav&quot; aria-expanded&#x3D;&quot;false&quot; aria-label&#x3D;&quot;Toggle navigation&quot;&gt;
+                    &lt;span class&#x3D;&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;div class&#x3D;&quot;collapse navbar-collapse&quot; id&#x3D;&quot;navbarNav&quot;&gt;
+                    &lt;ul class&#x3D;&quot;navbar-nav ms-auto&quot;&gt;
+                        &lt;li class&#x3D;&quot;nav-item&quot;&gt;
+                            &lt;a class&#x3D;&quot;nav-link&quot; routerLink&#x3D;&quot;/home&quot;&gt;Home&lt;/a&gt;
+                        &lt;/li&gt;
+                        &lt;li class&#x3D;&quot;nav-item&quot;&gt;
+                            &lt;a class&#x3D;&quot;nav-link&quot; routerLink&#x3D;&quot;/product-catalog&quot;&gt;Ver Catalogo&lt;/a&gt;
+                        &lt;/li&gt;
+                        &lt;li class&#x3D;&quot;nav-item&quot;&gt;
+                            &lt;a class&#x3D;&quot;nav-link&quot; routerLink&#x3D;&quot;/contact&quot;&gt;Contacto&lt;/a&gt;
+                        &lt;/li&gt;
+                        &lt;li class&#x3D;&quot;nav-item&quot;&gt;
+                            &lt;a class&#x3D;&quot;nav-link&quot; id&#x3D;&quot;loginMenu&quot; routerLink&#x3D;&quot;/login&quot;&gt;Iniciar Sesión&lt;/a&gt;
+                        &lt;/li&gt;
+                        &lt;li class&#x3D;&quot;nav-item active&quot;&gt;
+                            &lt;a class&#x3D;&quot;nav-link active&quot; id&#x3D;&quot;registerMenu&quot; routerLink&#x3D;&quot;/register&quot;&gt;Registro Cliente&lt;/a&gt;
+                        &lt;/li&gt;
+                        &lt;li class&#x3D;&quot;nav-item&quot; style&#x3D;&quot;display: none;&quot;&gt;
+                            &lt;a class&#x3D;&quot;nav-link&quot; id&#x3D;&quot;profileMenu&quot; routerLink&#x3D;&quot;/profile&quot;&gt;Perfil Cliente&lt;/a&gt;
+                        &lt;/li&gt;
+                        &lt;li class&#x3D;&quot;nav-item&quot; style&#x3D;&quot;display: none;&quot;&gt;
+                            &lt;a class&#x3D;&quot;nav-link&quot; id&#x3D;&quot;logoutMenu&quot; routerLink&#x3D;&quot;/logout&quot;&gt;Cerrar Sesión&lt;/a&gt;
+                        &lt;/li&gt;
+                        &lt;li class&#x3D;&quot;nav-item&quot;&gt;
+                            &lt;a class&#x3D;&quot;nav-link&quot; routerLink&#x3D;&quot;/cart&quot;&gt;Carro Compra&lt;/a&gt;
+                        &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+
+    &lt;!-- Main content --&gt;
+    &lt;main class&#x3D;&quot;container mt-5&quot;&gt;
+        &lt;div class&#x3D;&quot;row justify-content-center&quot;&gt;
+            &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+                &lt;h2&gt;Registro Cliente&lt;/h2&gt;
+                &lt;form [formGroup]&#x3D;&quot;registerForm&quot; (ngSubmit)&#x3D;&quot;onSubmit()&quot;&gt;
+                    &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                        &lt;label for&#x3D;&quot;clientName&quot; class&#x3D;&quot;form-label&quot;&gt;Nombre:&lt;/label&gt;
+                        &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; id&#x3D;&quot;clientName&quot; name&#x3D;&quot;clientName&quot; formControlName&#x3D;&quot;clientName&quot;&gt;
+                        &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;clientName&#x27;)?.invalid &amp;&amp; registerForm.get(&#x27;clientName&#x27;)?.touched&quot; class&#x3D;&quot;text-danger&quot;&gt;
+                         Nombre es obligatorio.
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                        &lt;label for&#x3D;&quot;clientSurname&quot; class&#x3D;&quot;form-label&quot;&gt;Apellidos:&lt;/label&gt;
+                        &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; id&#x3D;&quot;clientSurname&quot; name&#x3D;&quot;clientSurname&quot; formControlName&#x3D;&quot;clientSurname&quot;&gt;
+                        &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;clientSurname&#x27;)?.invalid &amp;&amp; registerForm.get(&#x27;clientSurname&#x27;)?.touched&quot; class&#x3D;&quot;text-danger&quot;&gt;
+                         Apellidos es obligatorio.
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                        &lt;label for&#x3D;&quot;email&quot; class&#x3D;&quot;form-label&quot;&gt;Correo Electrónico:&lt;/label&gt;
+                        &lt;input type&#x3D;&quot;email&quot; class&#x3D;&quot;form-control&quot; id&#x3D;&quot;email&quot; name&#x3D;&quot;email&quot; formControlName&#x3D;&quot;email&quot;&gt;
+                        &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;email&#x27;)?.invalid &amp;&amp; registerForm.get(&#x27;email&#x27;)?.touched&quot; class&#x3D;&quot;text-danger&quot;&gt;
+                            &lt;small *ngIf&#x3D;&quot;registerForm.get(&#x27;email&#x27;)?.errors?.[&#x27;required&#x27;]&quot;&gt;Correo Electrónico es obligatorio.&lt;/small&gt;
+                            &lt;small *ngIf&#x3D;&quot;registerForm.get(&#x27;email&#x27;)?.errors?.[&#x27;email&#x27;]&quot;&gt;Formato de correo electrónico incorrecto.&lt;/small&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                        &lt;label for&#x3D;&quot;password&quot; class&#x3D;&quot;form-label&quot;&gt;Contraseña:&lt;/label&gt;
+                        &lt;input type&#x3D;&quot;password&quot; class&#x3D;&quot;form-control&quot; id&#x3D;&quot;password&quot; name&#x3D;&quot;password&quot; formControlName&#x3D;&quot;password&quot;&gt;
+                        &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;password&#x27;)?.invalid &amp;&amp; registerForm.get(&#x27;password&#x27;)?.touched&quot; class&#x3D;&quot;text-danger&quot;&gt;
+                            &lt;small *ngIf&#x3D;&quot;registerForm.get(&#x27;password&#x27;)?.errors?.[&#x27;required&#x27;]&quot;&gt;Contraseña es obligatoria.&lt;/small&gt;
+                            &lt;small *ngIf&#x3D;&quot;registerForm.get(&#x27;password&#x27;)?.errors?.[&#x27;pattern&#x27;]&quot;&gt;La contraseña debe tener entre 6 y 18 caracteres, al menos un número y una letra mayúscula.&lt;/small&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                        &lt;label for&#x3D;&quot;confirmPassword&quot; class&#x3D;&quot;form-label&quot;&gt;Confirmar Contraseña:&lt;/label&gt;
+                        &lt;input type&#x3D;&quot;password&quot; class&#x3D;&quot;form-control&quot; id&#x3D;&quot;confirmPassword&quot; name&#x3D;&quot;confirmPassword&quot; formControlName&#x3D;&quot;confirmPassword&quot;&gt;
+                        &lt;div *ngIf&#x3D;&quot;registerForm.hasError(&#x27;mismatch&#x27;) &amp;&amp; registerForm.get(&#x27;confirmPassword&#x27;)?.touched&quot; class&#x3D;&quot;text-danger&quot;&gt;
+                         Las contraseñas no coinciden.
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                        &lt;label for&#x3D;&quot;birthdate&quot; class&#x3D;&quot;form-label&quot;&gt;Fecha de Nacimiento:&lt;/label&gt;
+                        &lt;input type&#x3D;&quot;date&quot; class&#x3D;&quot;form-control&quot; id&#x3D;&quot;birthdate&quot; name&#x3D;&quot;birthdate&quot; formControlName&#x3D;&quot;birthdate&quot;&gt;
+                        &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;birthdate&#x27;)?.invalid &amp;&amp; registerForm.get(&#x27;birthdate&#x27;)?.touched&quot; class&#x3D;&quot;text-danger&quot;&gt;
+                         Fecha de Nacimiento es obligatoria.
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;mb-3&quot;&gt;
+                        &lt;label for&#x3D;&quot;dispatchAddress&quot; class&#x3D;&quot;form-label&quot;&gt;Dirección de Despacho:&lt;/label&gt;
+                        &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; id&#x3D;&quot;dispatchAddress&quot; name&#x3D;&quot;dispatchAddress&quot; formControlName&#x3D;&quot;dispatchAddress&quot;&gt;
+                    &lt;/div&gt;
+					&lt;br/&gt;
+                    &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;btn btn-primary&quot; [disabled]&#x3D;&quot;registerForm.invalid&quot;&gt;Registrar&lt;/button&gt;
+                    &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-secondary&quot; (click)&#x3D;&quot;onReset()&quot;&gt;Limpiar&lt;/button&gt;
+                &lt;/form&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/main&gt;
+
+    &lt;!-- Footer --&gt;
+    &lt;footer class&#x3D;&quot;bg-light text-center text-lg-start mt-5&quot;&gt;
+        &lt;div class&#x3D;&quot;container p-4&quot;&gt;
+            &lt;p&gt;&amp;copy; 2024 Puente Mágico. Reservados todos los derechos.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/footer&gt;
+
+    &lt;!-- Loading Screen --&gt;
+    &lt;div id&#x3D;&quot;loading-screen&quot; class&#x3D;&quot;d-flex justify-content-center align-items-center&quot;&gt;
+        &lt;div class&#x3D;&quot;loader&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div>    <!-- Header -->    <header>        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">            <div class="container-fluid">                <a class="navbar-brand" routerLink="/">                    <img id="brandImage" src="assets/images/logo_puente_magico.ico" alt="Puente Mágico">                    Puente Mágico</a>                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">                    <span class="navbar-toggler-icon"></span>                </button>                <div class="collapse navbar-collapse" id="navbarNav">                    <ul class="navbar-nav ms-auto">                        <li class="nav-item">                            <a class="nav-link" routerLink="/home">Home</a>                        </li>                        <li class="nav-item">                            <a class="nav-link" routerLink="/product-catalog">Ver Catalogo</a>                        </li>                        <li class="nav-item">                            <a class="nav-link" routerLink="/contact">Contacto</a>                        </li>                        <li class="nav-item">                            <a class="nav-link" id="loginMenu" routerLink="/login">Iniciar Sesión</a>                        </li>                        <li class="nav-item active">                            <a class="nav-link active" id="registerMenu" routerLink="/register">Registro Cliente</a>                        </li>                        <li class="nav-item" style="display: none;">                            <a class="nav-link" id="profileMenu" routerLink="/profile">Perfil Cliente</a>                        </li>                        <li class="nav-item" style="display: none;">                            <a class="nav-link" id="logoutMenu" routerLink="/logout">Cerrar Sesión</a>                        </li>                        <li class="nav-item">                            <a class="nav-link" routerLink="/cart">Carro Compra</a>                        </li>                    </ul>                </div>            </div>        </nav>    </header>    <!-- Main content -->    <main class="container mt-5">        <div class="row justify-content-center">            <div class="col-md-6">                <h2>Registro Cliente</h2>                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">                    <div class="mb-3">                        <label for="clientName" class="form-label">Nombre:</label>                        <input type="text" class="form-control" id="clientName" name="clientName" formControlName="clientName">                        <div *ngIf="registerForm.get(\'clientName\')?.invalid && registerForm.get(\'clientName\')?.touched" class="text-danger">                         Nombre es obligatorio.                        </div>                    </div>                    <div class="mb-3">                        <label for="clientSurname" class="form-label">Apellidos:</label>                        <input type="text" class="form-control" id="clientSurname" name="clientSurname" formControlName="clientSurname">                        <div *ngIf="registerForm.get(\'clientSurname\')?.invalid && registerForm.get(\'clientSurname\')?.touched" class="text-danger">                         Apellidos es obligatorio.                        </div>                    </div>                    <div class="mb-3">                        <label for="email" class="form-label">Correo Electrónico:</label>                        <input type="email" class="form-control" id="email" name="email" formControlName="email">                        <div *ngIf="registerForm.get(\'email\')?.invalid && registerForm.get(\'email\')?.touched" class="text-danger">                            <small *ngIf="registerForm.get(\'email\')?.errors?.[\'required\']">Correo Electrónico es obligatorio.</small>                            <small *ngIf="registerForm.get(\'email\')?.errors?.[\'email\']">Formato de correo electrónico incorrecto.</small>                        </div>                    </div>                    <div class="mb-3">                        <label for="password" class="form-label">Contraseña:</label>                        <input type="password" class="form-control" id="password" name="password" formControlName="password">                        <div *ngIf="registerForm.get(\'password\')?.invalid && registerForm.get(\'password\')?.touched" class="text-danger">                            <small *ngIf="registerForm.get(\'password\')?.errors?.[\'required\']">Contraseña es obligatoria.</small>                            <small *ngIf="registerForm.get(\'password\')?.errors?.[\'pattern\']">La contraseña debe tener entre 6 y 18 caracteres, al menos un número y una letra mayúscula.</small>                        </div>                    </div>                    <div class="mb-3">                        <label for="confirmPassword" class="form-label">Confirmar Contraseña:</label>                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" formControlName="confirmPassword">                        <div *ngIf="registerForm.hasError(\'mismatch\') && registerForm.get(\'confirmPassword\')?.touched" class="text-danger">                         Las contraseñas no coinciden.                        </div>                    </div>                    <div class="mb-3">                        <label for="birthdate" class="form-label">Fecha de Nacimiento:</label>                        <input type="date" class="form-control" id="birthdate" name="birthdate" formControlName="birthdate">                        <div *ngIf="registerForm.get(\'birthdate\')?.invalid && registerForm.get(\'birthdate\')?.touched" class="text-danger">                         Fecha de Nacimiento es obligatoria.                        </div>                    </div>                    <div class="mb-3">                        <label for="dispatchAddress" class="form-label">Dirección de Despacho:</label>                        <input type="text" class="form-control" id="dispatchAddress" name="dispatchAddress" formControlName="dispatchAddress">                    </div>					<br/>                    <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Registrar</button>                    <button type="button" class="btn btn-secondary" (click)="onReset()">Limpiar</button>                </form>            </div>        </div>    </main>    <!-- Footer -->    <footer class="bg-light text-center text-lg-start mt-5">        <div class="container p-4">            <p>&copy; 2024 Puente Mágico. Reservados todos los derechos.</p>        </div>    </footer>    <!-- Loading Screen -->    <div id="loading-screen" class="d-flex justify-content-center align-items-center">        <div class="loader"></div>    </div></div>'
+    var COMPONENTS = [{'name': 'AdminClientManagementComponent', 'selector': 'app-admin-client-management'},{'name': 'AdminContactManagementComponent', 'selector': 'app-admin-contact-management'},{'name': 'AdminLoginComponent', 'selector': 'app-admin-login'},{'name': 'AdminLogoutComponent', 'selector': 'app-admin-logout'},{'name': 'AdminOrderMonitoringComponent', 'selector': 'app-admin-order-monitoring'},{'name': 'AdminUserManagementComponent', 'selector': 'app-admin-user-management'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CartComponent', 'selector': 'app-cart'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LogoutComponent', 'selector': 'app-logout'},{'name': 'PasswordRecoveryComponent', 'selector': 'app-password-recovery'},{'name': 'ProductCatalogComponent', 'selector': 'app-product-catalog'},{'name': 'ProductDetailAluminioComponent', 'selector': 'app-product-detail-aluminio'},{'name': 'ProductDetailCroqueraComponent', 'selector': 'app-product-detail-croquera'},{'name': 'ProductDetailCuadernoComponent', 'selector': 'app-product-detail-cuaderno'},{'name': 'ProductDetailLibretaComponent', 'selector': 'app-product-detail-libreta'},{'name': 'ProductDetailPoleraComponent', 'selector': 'app-product-detail-polera'},{'name': 'ProductDetailTablaComponent', 'selector': 'app-product-detail-tabla'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegisterComponent', 'selector': 'app-register'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'RegisterComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'RegisterComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

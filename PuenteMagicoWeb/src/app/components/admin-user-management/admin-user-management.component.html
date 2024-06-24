@@ -1,0 +1,143 @@
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" routerLink="/">
+                    <img id="brandImage" src="assets/images/logo_puente_magico.ico" alt="Puente Mágico">
+                    Puente Mágico</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link active" routerLink="/admin-user-management">Gestión Usuarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/admin-client-management">Gestión Clientes</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" routerLink="/admin-contact-management">Gestión Contactos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/admin-order-monitoring">Monitoreo Pedidos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"routerLink="/admin-logout">Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main content -->
+    <div class="container mt-5">
+        <h2>Gestión Usuarios</h2>
+        <div class="row">
+          <div class="col-md-12">
+            <div *ngIf="users.length === 0">No hay Usuarios para mostrar.</div>
+            <table *ngIf="users.length > 0" class="table table-bordered" id="userTable">
+              <thead>
+                <tr>
+                  <th>Nombre Usuario</th>
+                  <th>Email</th>
+                  <th>Contraseña</th>
+                  <th>Perfil</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users; let i = index">
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.email }}</td>
+                  <td class="hidetext">{{ user.password }}</td>
+                  <td>{{ user.profile }}</td>
+                  <td>
+                    <button class="btn btn-primary btn-sm" (click)="editUser(i)">Editar</button>
+                    <button class="btn btn-danger btn-sm" (click)="deleteUser(i)">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#addUserModal">Agregar Nuevo Usuario</button>
+          </div>
+        </div>
+      
+        <!-- Modals -->
+        <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addUserModalLabel">Agregar Nuevo Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form (ngSubmit)="onAddUser()">
+                  <div class="mb-3">
+                    <label for="addName" class="form-label">Nombre Usuario:</label>
+                    <input type="text" class="form-control" [(ngModel)]="newUser.name" name="name" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="addEmail" class="form-label">Dirección de Correo Electrónico:</label>
+                    <input type="email" class="form-control" [(ngModel)]="newUser.email" name="email" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="addPassword" class="form-label">Contraseña:</label>
+                    <input type="password" class="form-control" [(ngModel)]="newUser.password" name="password" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="addProfile" class="form-label">Perfil Usuario:</label>
+                    <input type="text" class="form-control" [(ngModel)]="newUser.profile" name="profile" required>
+                  </div>
+                  <button type="submit" class="btn btn-success">Agregar Usuario</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editUserModalLabel">Editar Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form (ngSubmit)="onUpdateUser()">
+                  <div class="mb-3">
+                    <label for="editName" class="form-label">Nombre Usuario:</label>
+                    <input type="text" class="form-control" [(ngModel)]="selectedUser.name" name="name" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="editEmail" class="form-label">Dirección de Correo Electrónico:</label>
+                    <input type="email" class="form-control" [(ngModel)]="selectedUser.email" name="email" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="editPassword" class="form-label">Contraseña:</label>
+                    <input type="password" class="form-control" [(ngModel)]="selectedUser.password" name="password" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="editProfile" class="form-label">Perfil Usuario:</label>
+                    <input type="text" class="form-control" [(ngModel)]="selectedUser.profile" name="profile" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <p>&copy; 2024 Puente Mágico. Reservados todos los derechos.</p>
+        </div>
+    </footer>
+    
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="d-flex justify-content-center align-items-center">
+        <div class="loader"></div>
+    </div>

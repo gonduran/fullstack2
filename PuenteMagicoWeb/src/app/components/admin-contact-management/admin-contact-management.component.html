@@ -1,0 +1,85 @@
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" routerLink="/">
+                    <img id="brandImage" src="assets/images/logo_puente_magico.ico" alt="Puente Mágico">
+                    Puente Mágico</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/admin-user-management">Gestión Usuarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/admin-client-management">Gestión Clientes</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link active" routerLink="/admin-contact-management">Gestión Contactos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/admin-order-monitoring">Monitoreo Pedidos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/admin-logout">Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main content -->
+    <div class="container mt-5">
+        <h2>Gestión de Contactos</h2>
+        <div class="row">
+        <div class="col-md-12">
+            <div *ngIf="contacts.length === 0">No hay Contactos para mostrar.</div>
+            <table *ngIf="contacts.length > 0" class="table table-bordered">
+            <thead>
+                <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Asunto</th>
+                <th>Mensaje</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let contact of contacts; let i = index">
+                <td>{{ contact.id }}</td>
+                <td>{{ contact.email }}</td>
+                <td>{{ contact.name }}</td>
+                <td>{{ contact.phone }}</td>
+                <td>{{ contact.subject }}</td>
+                <td>{{ contact.message }}</td>
+                <td>{{ contact.estado }}</td>
+                <td>{{ contact.fecha }}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" (click)="toggleEstado(i)">Cambiar Estado</button>
+                    <button class="btn btn-danger btn-sm" (click)="deleteContact(i)">Eliminar</button>
+                </td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <p>&copy; 2024 Puente Mágico. Reservados todos los derechos.</p>
+        </div>
+    </footer>
+    
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="d-flex justify-content-center align-items-center">
+        <div class="loader"></div>
+    </div>

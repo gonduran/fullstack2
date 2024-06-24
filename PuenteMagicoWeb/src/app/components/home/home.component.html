@@ -1,0 +1,95 @@
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" routerLink="/">
+                    <img id="brandImage" src="assets/images/logo_puente_magico.ico" alt="Puente Mágico">
+                    Puente Mágico</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link active" routerLink="/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/product-catalog">Ver Catalogo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/contact">Contacto</a>
+                        </li>
+                        <li class="nav-item" id="loginMenu">
+                            <a class="nav-link" id="loginMenu" routerLink="/login">Iniciar Sesión</a>
+                        </li>
+                        <li class="nav-item" id="registerMenu">
+                            <a class="nav-link" id="registerMenu" routerLink="/register">Registro Cliente</a>
+                        </li>
+                        <li class="nav-item" id="profileMenu" style="display: none;">
+                            <a class="nav-link" id="profileMenu" routerLink="/profile">Perfil Cliente</a>
+                        </li>
+                        <li class="nav-item" id="logoutMenu" style="display: none;">
+                            <a class="nav-link" id="logoutMenu" routerLink="/logout">Cerrar Sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/cart">Carro Compra</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>        
+    </header>
+
+    <!-- Main content -->
+    <main class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <h1>Bienvenidos a Puente Mágico</h1>
+                <p class="lead">Papeleria, impresión, sublimación, carpinteria, la tecnologia CNC router y láser se unen para hacer tus regalos, pedidos y proyectos, algo especial y personalizado.</p>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="assets/images/cuaderno1.png" class="card-img-top" alt="Papelería">
+                    <div class="card-body">
+                        <h5 class="card-title">Papelería</h5>
+                        <p class="card-text">Cuadernos, libretas, agendas, stickers.</p>
+                        <a routerLink="/product-catalog" class="btn btn-primary">Ver Catalogo</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="assets/images/polera1.png" class="card-img-top" alt="Estampado y sublimación">
+                    <div class="card-body">
+                        <h5 class="card-title">Estampado y sublimación</h5>
+                        <p class="card-text">Textiles, accesorios, laminas aluminio.</p>
+                        <a routerLink="/product-catalog" class="btn btn-primary">Ver Catalogo</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="assets/images/carpinteria1.png" class="card-img-top" alt="Carpintería">
+                    <div class="card-body">
+                        <h5 class="card-title">Carpintería</h5>
+                        <p class="card-text">Tecnología router y láser.</p>
+                        <a routerLink="/product-catalog" class="btn btn-primary">Ver Catalogo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <p>&copy; 2024 Puente Mágico. Reservados todos los derechos.</p>
+        </div>
+    </footer>
+    
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="d-flex justify-content-center align-items-center">
+        <div class="loader"></div>
+    </div>
