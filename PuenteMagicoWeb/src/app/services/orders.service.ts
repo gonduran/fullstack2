@@ -17,7 +17,7 @@ interface Order {
 }
 
 interface OrderDetail extends Cart {
-  id: string;
+  id: number;
 }
 
 @Injectable({
@@ -27,6 +27,8 @@ export class OrdersService {
   private carts: Cart[] = [];
   private orders: Order[] = [];
   private orderdetails: OrderDetail[] = [];
+  private orderStorageKey = 'orders';
+  private orderDetailsStorageKey = 'orderdetails';
 
   /**
    * @description 
@@ -41,6 +43,7 @@ export class OrdersService {
       this.orders = ordersSaved ? JSON.parse(ordersSaved) : [];
       const orderdetailsSaved = localStorage.getItem('orderdetails');
       this.orderdetails = orderdetailsSaved ? JSON.parse(orderdetailsSaved) : [];
+      this.loadOrdersFromLocalStorage();
     } else {
       this.carts = [];
       this.orders = [];
@@ -110,7 +113,7 @@ export class OrdersService {
   registerOrders(email: string, total: number): number {
     console.log('Intentando registrar orden cliente:', { email, total });
     const fecha = new Date();
-    const estado = 'Ingresada';
+    const estado = 'Pendiente';
     const id = this.orders.length + 1;
 
     const newOrder: Order = { email, id, total, fecha, estado };
@@ -273,5 +276,65 @@ export class OrdersService {
   private formatToStorageDate(date: string): string {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`;
+  }
+
+  /**
+   * @description 
+   * Carga las órdenes y los detalles de las órdenes desde el localStorage.
+   * 
+   * @return {void}
+   */
+  private loadOrdersFromLocalStorage(): void {
+    const ordersSaved = localStorage.getItem(this.orderStorageKey);
+    const orderDetailsSaved = localStorage.getItem(this.orderDetailsStorageKey);
+    this.orders = ordersSaved ? JSON.parse(ordersSaved) : [];
+    this.orderdetails = orderDetailsSaved ? JSON.parse(orderDetailsSaved) : [];
+  }
+
+  /**
+   * @description 
+   * Obtiene todas las órdenes.
+   * 
+   * @return {Order[]} Lista de órdenes.
+   */
+  getOrders(): Order[] {
+    return this.orders;
+  }
+
+  /**
+   * @description 
+   * Obtiene los detalles de una orden específica.
+   * 
+   * @param {number} orderId - El ID de la orden.
+   * @return {OrderDetail[]} Lista de detalles de la orden.
+   */
+  getOrderDetails(orderId: number): OrderDetail[] {
+    return this.orderdetails.filter(detail => detail.id === orderId);
+  }
+
+  /**
+   * @description 
+   * Actualiza el estado de una orden.
+   * 
+   * @param {number} orderId - El ID de la orden.
+   * @param {string} status - El nuevo estado de la orden.
+   * @return {void}
+   */
+  updateOrderStatus(orderId: number, status: string): void {
+    const order = this.orders.find(o => o.id === orderId);
+    if (order) {
+      order.estado = status;
+      this.saveOrdersToLocalStorage();
+    }
+  }
+
+  /**
+   * @description 
+   * Guarda las órdenes en el localStorage.
+   * 
+   * @return {void}
+   */
+  saveOrdersToLocalStorage(): void {
+    localStorage.setItem(this.orderStorageKey, JSON.stringify(this.orders));
   }
 }

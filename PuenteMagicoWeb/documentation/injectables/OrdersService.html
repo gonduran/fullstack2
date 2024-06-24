@@ -144,7 +144,15 @@
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
+                                <a href="#orderDetailsStorageKey" >orderDetailsStorageKey</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
                                 <a href="#orders" >orders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#orderStorageKey" >orderStorageKey</a>
                             </li>
                         </ul>
                     </td>
@@ -173,8 +181,18 @@
                                 <a href="#formatToStorageDate" >formatToStorageDate</a>
                             </li>
                             <li>
+                                <a href="#getOrderDetails" >getOrderDetails</a>
+                            </li>
+                            <li>
+                                <a href="#getOrders" >getOrders</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Private</span>
                                 <a href="#isLocalStorageAvailable" >isLocalStorageAvailable</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#loadOrdersFromLocalStorage" >loadOrdersFromLocalStorage</a>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
@@ -193,7 +211,13 @@
                                 <a href="#removeFromCart" >removeFromCart</a>
                             </li>
                             <li>
+                                <a href="#saveOrdersToLocalStorage" >saveOrdersToLocalStorage</a>
+                            </li>
+                            <li>
                                 <a href="#updateOrders" >updateOrders</a>
+                            </li>
+                            <li>
+                                <a href="#updateOrderStatus" >updateOrderStatus</a>
                             </li>
                         </ul>
                     </td>
@@ -218,7 +242,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/services/orders.service.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/services/orders.service.ts:31</a></div>
                             </td>
                         </tr>
 
@@ -257,8 +281,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="81"
-                                    class="link-to-prism">src/app/services/orders.service.ts:81</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="84"
+                                    class="link-to-prism">src/app/services/orders.service.ts:84</a></div>
                         </td>
                     </tr>
 
@@ -299,8 +323,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="240"
-                                    class="link-to-prism">src/app/services/orders.service.ts:240</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="243"
+                                    class="link-to-prism">src/app/services/orders.service.ts:243</a></div>
                         </td>
                     </tr>
 
@@ -380,8 +404,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="261"
-                                    class="link-to-prism">src/app/services/orders.service.ts:261</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="264"
+                                    class="link-to-prism">src/app/services/orders.service.ts:264</a></div>
                         </td>
                     </tr>
 
@@ -461,8 +485,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="273"
-                                    class="link-to-prism">src/app/services/orders.service.ts:273</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="276"
+                                    class="link-to-prism">src/app/services/orders.service.ts:276</a></div>
                         </td>
                     </tr>
 
@@ -524,6 +548,126 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getOrderDetails"></a>
+                    <span class="name">
+                        <span ><b>getOrderDetails</b></span>
+                        <a href="#getOrderDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getOrderDetails(orderId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="311"
+                                    class="link-to-prism">src/app/services/orders.service.ts:311</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Obtiene los detalles de una orden específica.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>orderId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>El ID de la orden.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>OrderDetail[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Lista de detalles de la orden.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOrders"></a>
+                    <span class="name">
+                        <span ><b>getOrders</b></span>
+                        <a href="#getOrders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getOrders()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="300"
+                                    class="link-to-prism">src/app/services/orders.service.ts:300</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Obtiene todas las órdenes.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Order[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Lista de órdenes.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="isLocalStorageAvailable"></a>
                     <span class="name">
                             <span class="modifier">Private</span>
@@ -542,8 +686,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="222"
-                                    class="link-to-prism">src/app/services/orders.service.ts:222</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="225"
+                                    class="link-to-prism">src/app/services/orders.service.ts:225</a></div>
                         </td>
                     </tr>
 
@@ -571,6 +715,50 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="loadOrdersFromLocalStorage"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>loadOrdersFromLocalStorage</b></span>
+                        <a href="#loadOrdersFromLocalStorage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadOrdersFromLocalStorage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="287"
+                                    class="link-to-prism">src/app/services/orders.service.ts:287</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Carga las órdenes y los detalles de las órdenes desde el localStorage.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="mostrarAlerta"></a>
                     <span class="name">
                             <span class="modifier">Private</span>
@@ -589,8 +777,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="194"
-                                    class="link-to-prism">src/app/services/orders.service.ts:194</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="197"
+                                    class="link-to-prism">src/app/services/orders.service.ts:197</a></div>
                         </td>
                     </tr>
 
@@ -683,8 +871,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="62"
-                                    class="link-to-prism">src/app/services/orders.service.ts:62</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="65"
+                                    class="link-to-prism">src/app/services/orders.service.ts:65</a></div>
                         </td>
                     </tr>
 
@@ -834,8 +1022,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="132"
-                                    class="link-to-prism">src/app/services/orders.service.ts:132</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="135"
+                                    class="link-to-prism">src/app/services/orders.service.ts:135</a></div>
                         </td>
                     </tr>
 
@@ -913,8 +1101,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="110"
-                                    class="link-to-prism">src/app/services/orders.service.ts:110</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="113"
+                                    class="link-to-prism">src/app/services/orders.service.ts:113</a></div>
                         </td>
                     </tr>
 
@@ -1010,8 +1198,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="95"
-                                    class="link-to-prism">src/app/services/orders.service.ts:95</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="98"
+                                    class="link-to-prism">src/app/services/orders.service.ts:98</a></div>
                         </td>
                     </tr>
 
@@ -1070,6 +1258,48 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="saveOrdersToLocalStorage"></a>
+                    <span class="name">
+                        <span ><b>saveOrdersToLocalStorage</b></span>
+                        <a href="#saveOrdersToLocalStorage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>saveOrdersToLocalStorage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="337"
+                                    class="link-to-prism">src/app/services/orders.service.ts:337</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Guarda las órdenes en el localStorage.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="updateOrders"></a>
                     <span class="name">
                         <span ><b>updateOrders</b></span>
@@ -1086,8 +1316,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="161"
-                                    class="link-to-prism">src/app/services/orders.service.ts:161</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="164"
+                                    class="link-to-prism">src/app/services/orders.service.ts:164</a></div>
                         </td>
                     </tr>
 
@@ -1199,6 +1429,100 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateOrderStatus"></a>
+                    <span class="name">
+                        <span ><b>updateOrderStatus</b></span>
+                        <a href="#updateOrderStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateOrderStatus(orderId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, status: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="323"
+                                    class="link-to-prism">src/app/services/orders.service.ts:323</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Actualiza el estado de una orden.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>orderId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>El ID de la orden.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>status</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>El nuevo estado de la orden.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
             <section data-compodoc="block-properties">
     
@@ -1273,6 +1597,38 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="orderDetailsStorageKey"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>orderDetailsStorageKey</b></span>
+                        <a href="#orderDetailsStorageKey"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;orderdetails&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/services/orders.service.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="orders"></a>
                     <span class="name">
                             <span class="modifier">Private</span>
@@ -1283,7 +1639,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Order.html" target="_self" >Order[]</a></code>
+                        <i>Type : </i>    <code>Order[]</code>
 
                     </td>
                 </tr>
@@ -1295,6 +1651,38 @@
                     <tr>
                         <td class="col-md-4">
                                 <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/services/orders.service.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="orderStorageKey"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>orderStorageKey</b></span>
+                        <a href="#orderStorageKey"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;orders&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/services/orders.service.ts:30</a></div>
                         </td>
                     </tr>
 
@@ -1326,7 +1714,7 @@ interface Order {
 }
 
 interface OrderDetail extends Cart {
-  id: string;
+  id: number;
 }
 
 @Injectable({
@@ -1336,6 +1724,8 @@ export class OrdersService {
   private carts: Cart[] &#x3D; [];
   private orders: Order[] &#x3D; [];
   private orderdetails: OrderDetail[] &#x3D; [];
+  private orderStorageKey &#x3D; &#x27;orders&#x27;;
+  private orderDetailsStorageKey &#x3D; &#x27;orderdetails&#x27;;
 
   /**
    * @description 
@@ -1350,6 +1740,7 @@ export class OrdersService {
       this.orders &#x3D; ordersSaved ? JSON.parse(ordersSaved) : [];
       const orderdetailsSaved &#x3D; localStorage.getItem(&#x27;orderdetails&#x27;);
       this.orderdetails &#x3D; orderdetailsSaved ? JSON.parse(orderdetailsSaved) : [];
+      this.loadOrdersFromLocalStorage();
     } else {
       this.carts &#x3D; [];
       this.orders &#x3D; [];
@@ -1419,7 +1810,7 @@ export class OrdersService {
   registerOrders(email: string, total: number): number {
     console.log(&#x27;Intentando registrar orden cliente:&#x27;, { email, total });
     const fecha &#x3D; new Date();
-    const estado &#x3D; &#x27;Ingresada&#x27;;
+    const estado &#x3D; &#x27;Pendiente&#x27;;
     const id &#x3D; this.orders.length + 1;
 
     const newOrder: Order &#x3D; { email, id, total, fecha, estado };
@@ -1582,6 +1973,66 @@ export class OrdersService {
   private formatToStorageDate(date: string): string {
     const [day, month, year] &#x3D; date.split(&#x27;-&#x27;);
     return &#x60;${year}-${month}-${day}&#x60;;
+  }
+
+  /**
+   * @description 
+   * Carga las órdenes y los detalles de las órdenes desde el localStorage.
+   * 
+   * @return {void}
+   */
+  private loadOrdersFromLocalStorage(): void {
+    const ordersSaved &#x3D; localStorage.getItem(this.orderStorageKey);
+    const orderDetailsSaved &#x3D; localStorage.getItem(this.orderDetailsStorageKey);
+    this.orders &#x3D; ordersSaved ? JSON.parse(ordersSaved) : [];
+    this.orderdetails &#x3D; orderDetailsSaved ? JSON.parse(orderDetailsSaved) : [];
+  }
+
+  /**
+   * @description 
+   * Obtiene todas las órdenes.
+   * 
+   * @return {Order[]} Lista de órdenes.
+   */
+  getOrders(): Order[] {
+    return this.orders;
+  }
+
+  /**
+   * @description 
+   * Obtiene los detalles de una orden específica.
+   * 
+   * @param {number} orderId - El ID de la orden.
+   * @return {OrderDetail[]} Lista de detalles de la orden.
+   */
+  getOrderDetails(orderId: number): OrderDetail[] {
+    return this.orderdetails.filter(detail &#x3D;&gt; detail.id &#x3D;&#x3D;&#x3D; orderId);
+  }
+
+  /**
+   * @description 
+   * Actualiza el estado de una orden.
+   * 
+   * @param {number} orderId - El ID de la orden.
+   * @param {string} status - El nuevo estado de la orden.
+   * @return {void}
+   */
+  updateOrderStatus(orderId: number, status: string): void {
+    const order &#x3D; this.orders.find(o &#x3D;&gt; o.id &#x3D;&#x3D;&#x3D; orderId);
+    if (order) {
+      order.estado &#x3D; status;
+      this.saveOrdersToLocalStorage();
+    }
+  }
+
+  /**
+   * @description 
+   * Guarda las órdenes en el localStorage.
+   * 
+   * @return {void}
+   */
+  saveOrdersToLocalStorage(): void {
+    localStorage.setItem(this.orderStorageKey, JSON.stringify(this.orders));
   }
 }
 </code></pre>

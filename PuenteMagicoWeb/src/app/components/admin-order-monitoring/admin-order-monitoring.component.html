@@ -1,165 +1,105 @@
-    <!-- Header -->
-    <header>
-        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" routerLink="/">
-                    <img id="brandImage" src="assets/images/logo_puente_magico.ico" alt="Puente Mágico">
-                    Puente Mágico</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" routerLink="/admin-user-management">Gestión Usuarios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" routerLink="/admin-client-management">Gestión Clientes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" routerLink="/admin-contact-management">Gestión Contactos</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link active" routerLink="/admin-order-monitoring">Monitoreo Pedidos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" routerLink="/admin-logout">Cerrar Sesión</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Main content -->
-    <main class="container mt-5">
-        <h2>Monitoreo Pedidos</h2>
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID Pedido</th>
-                            <th>Nombre Cliente</th>
-                            <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="orderTable">
-                        <tr>
-                            <td>001</td>
-                            <td>Paula Gonzalez</td>
-                            <td>Croquera</td>
-                            <td>1</td>
-                            <td>Entregado</td>
-                            <td>
-                                <button class="btn btn-primary btn-sm" onclick="editOrder(this)">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="removeOrder(this)">Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>002</td>
-                            <td>Paula Gonzalez</td>
-                            <td>Libretas</td>
-                            <td>2</td>
-                            <td>Pendiente</td>
-                            <td>
-                                <button class="btn btn-primary btn-sm" onclick="editOrder(this)">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="removeOrder(this)">Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>003</td>
-                            <td>Gonzalo Durán</td>
-                            <td>Cuaderno</td>
-                            <td>1</td>
-                            <td>Enviado</td>
-                            <td>
-                                <button class="btn btn-primary btn-sm" onclick="editOrder(this)">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="removeOrder(this)">Eliminar</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addOrderModal">Agregar Nueva Orden</button>
-            </div>
+<!-- order-monitoring.component.html -->
+<header>
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" routerLink="/">
+          <img id="brandImage" src="assets/images/logo_puente_magico.ico" alt="Puente Mágico">
+          Puente Mágico
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/admin-user-management">Gestión Usuarios</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/admin-client-management">Gestión Clientes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/admin-contact-management">Gestión Contactos</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link active" routerLink="/admin-order-monitoring">Monitoreo Pedidos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/admin-logout">Cerrar Sesión</a>
+            </li>
+          </ul>
         </div>
-    </main>
-
-    <!-- Modals -->
-    <div class="modal fade" id="editOrderModal" tabindex="-1" aria-labelledby="editOrderModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editOrderModalLabel">Editar Pedido</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editOrderForm">
-                        <div class="mb-3">
-                            <label for="editClientName" class="form-label">Nombre Cliente:</label>
-                            <input type="text" class="form-control" id="editClientName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editProductName" class="form-label">Nombre Producto:</label>
-                            <input type="text" class="form-control" id="editProductName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editQuantity" class="form-label">Cantidad:</label>
-                            <input type="number" class="form-control" id="editQuantity" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editStatus" class="form-label">Estado:</label>
-                            <select class="form-control" id="editStatus" required>
-                                <option value="Pending">Pendiente</option>
-                                <option value="Shipped">Enviado</option>
-                                <option value="Delivered">Entregado</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+      </div>
+    </nav>
+  </header>
+  
+  <main class="container mt-5">
+    <h2>Monitoreo Pedidos</h2>
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>ID Pedido</th>
+              <th>Email Cliente</th>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of orders" (click)="selectOrder(order.id)">
+              <td>{{ order.id }}</td>
+              <td>{{ order.email }}</td>
+              <td>{{ getOrderProducts(order.id) }}</td>
+              <td>{{ getOrderQuantity(order.id) }}</td>
+              <td>{{ order.estado }}</td>
+              <td>
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editOrderModal">Editar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addOrderModal">Agregar Nueva Orden</button> -->
+      </div>
     </div>
-
-    <div class="modal fade" id="addOrderModal" tabindex="-1" aria-labelledby="addOrderModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addOrderModalLabel">Agregar Nuevo Pedido</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="addOrderForm">
-                        <div class="mb-3">
-                            <label for="addClientName" class="form-label">Nombre Cliente:</label>
-                            <input type="text" class="form-control" id="addClientName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="addProductName" class="form-label">Nombre Producto:</label>
-                            <input type="text" class="form-control" id="addProductName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="addQuantity" class="form-label">Cantidad:</label>
-                            <input type="number" class="form-control" id="addQuantity" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="addStatus" class="form-label">Estado:</label>
-                            <select class="form-control" id="addStatus" required>
-                                <option value="Pending">Pendiente</option>
-                                <option value="Shipped">Enviado</option>
-                                <option value="Delivered">Entregado</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-success">Agregar Pedido</button>
-                    </form>
-                </div>
-            </div>
+  </main>
+  
+  <div class="modal fade" id="editOrderModal" tabindex="-1" aria-labelledby="editOrderModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editOrderModalLabel">Editar Pedido</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body">
+          <form [formGroup]="editOrderForm" (ngSubmit)="updateOrderStatus()">
+            <div class="mb-3">
+              <label for="editClientName" class="form-label">Nombre Cliente:</label>
+              <input type="text" class="form-control" id="editClientName" formControlName="clientName" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="editProductName" class="form-label">Nombre Producto:</label>
+              <input type="text" class="form-control" id="editProductName" formControlName="productName" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="editQuantity" class="form-label">Cantidad:</label>
+              <input type="number" class="form-control" id="editQuantity" formControlName="quantity" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="editStatus" class="form-label">Estado:</label>
+              <select class="form-control" id="editStatus" formControlName="status" required>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Enviado">Enviado</option>
+                <option value="Entregado">Entregado</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
 
     <!-- Footer -->
     <footer class="bg-light text-center text-lg-start mt-5">
@@ -172,3 +112,4 @@
     <div id="loading-screen" class="d-flex justify-content-center align-items-center">
         <div class="loader"></div>
     </div>
+  
