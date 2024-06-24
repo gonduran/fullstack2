@@ -7,7 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:PuenteMagicoWeb": "node dist/puente-magico-web/server/server.mjs"
+    "serve:ssr:PuenteMagicoWeb": "node dist/puente-magico-web/server/server.mjs",
+    "compodoc": "npx compodoc -p tsconfig.app.json",
+    "compodoc:serve": "npx compodoc -s"
   },
   "private": true,
   "dependencies": {
