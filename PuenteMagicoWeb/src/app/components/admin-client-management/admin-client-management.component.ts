@@ -8,7 +8,6 @@ declare var bootstrap: any;
 import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
 import { Router } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
 
 interface Customer {
   clientName: string;
@@ -22,10 +21,9 @@ interface Customer {
 @Component({
   selector: 'app-admin-client-management',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './admin-client-management.component.html',
-  styleUrl: './admin-client-management.component.scss',
-  providers: [CustomersService]
+  styleUrl: './admin-client-management.component.scss'
 })
 export class AdminClientManagementComponent implements OnInit, AfterViewInit {
 
@@ -33,7 +31,6 @@ export class AdminClientManagementComponent implements OnInit, AfterViewInit {
     private navigationService: NavigationService,
     @Inject(PLATFORM_ID) private platformId: Object,
 	  private clientService: CustomersService,
-    private customersService: CustomersService,
     private usersService: UsersService,
     private router: Router
   ) { }
@@ -55,7 +52,6 @@ export class AdminClientManagementComponent implements OnInit, AfterViewInit {
   }
   
   clients: Customer[] = [];
-  customers: Customer[] = [];
   newClient: Customer = { clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
   selectedClient: Customer = { clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
   selectedIndex: number | null = null;
@@ -65,7 +61,6 @@ export class AdminClientManagementComponent implements OnInit, AfterViewInit {
       this.loadClients();
     }
     this.checkLoginState();
-    this.loadCustomers();
   }
 
   loadClients(): void {
@@ -120,52 +115,5 @@ export class AdminClientManagementComponent implements OnInit, AfterViewInit {
         console.log('Usuario no logueado.');
       }
     }
-  }
-
-  loadCustomers(): void {
-    this.customersService.getCustomers().subscribe(
-      (data) => {
-        this.customers = data;
-      },
-      (error) => {
-        console.error('Error al recuperar clientes', error);
-      }
-    );
-  }
-
-  onRegisterCustomer(newCustomer: Customer): void {
-    this.customersService.registerCustomers(newCustomer).subscribe(
-      (customer) => {
-        this.customers.push(customer);
-      },
-      (error) => {
-        console.error('Error al registrar el cliente', error);
-      }
-    );
-  }
-
-  onUpdateCustomer(updatedCustomer: Customer): void {
-    this.customersService.updateCustomers(updatedCustomer).subscribe(
-      (customer) => {
-        const index = this.customers.findIndex(c => c.email === customer.email);
-        if (index !== -1) {
-          this.customers[index] = customer;
-        }
-      },
-      (error) => {
-        console.error('Error al actualizar el cliente', error);
-      }
-    );
-  }
-
-  onDeleteCustomer(email: string): void {
-    this.customersService.deleteCustomers(email).subscribe(
-      () => {
-        this.customers = this.customers.filter(c => c.email !== email);
-      },
-      (error) => {
-        console.error('Error deleting customer', error);
-      }
-    );
   }
 }

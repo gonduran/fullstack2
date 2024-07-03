@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CryptoService } from './crypto.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 interface Customer {
-  //id: number;
   clientName: string;
   clientSurname: string;
   email: string;
@@ -17,19 +14,6 @@ interface Customer {
   providedIn: 'root'
 })
 export class CustomersService {
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer fd948401-45cb-4098-b80d-f3955ea32c04'
-    })
-  }
-
-  //Con ID
-  //private jsonUrl = 'https://firebasestorage.googleapis.com/v0/b/puentemagicojson.appspot.com/o/customers.json?alt=media&token=c52d6930-1d4b-4be7-b7c0-cc7df875b7c0';
-  //Sin ID
-  private jsonUrl = 'https://firebasestorage.googleapis.com/v0/b/puentemagicojson.appspot.com/o/customer.json?alt=media&token=fd948401-45cb-4098-b80d-f3955ea32c04';
-  private lista:any;
-
   private storageKey = 'customers';
   private customers: Customer[] = [];
 
@@ -39,18 +23,13 @@ export class CustomersService {
    * 
    * @param {CryptoService} cryptoService - Servicio de encriptación.
    */
-  constructor(private http: HttpClient,
-              private cryptoService: CryptoService) {
+  constructor(private cryptoService: CryptoService) {
     if (this.isLocalStorageAvailable()) {
       const customersSaved = localStorage.getItem('customers');
       this.customers = customersSaved ? JSON.parse(customersSaved) : [];
     } else {
       this.customers = [];
     }
-  }
-
-  getJsonData(): Observable<any> {
-    return this.http.get(this.jsonUrl);
   }
 
   /**
@@ -322,40 +301,5 @@ export class CustomersService {
     const clients = this.getClients();
     clients.splice(index, 1);
     localStorage.setItem(this.storageKey, JSON.stringify(clients));
-  }
-
-  /**
-   * @description Obtiene la lista de clientes desde la API.
-   * @return {Observable<Customer[]>} Un Observable que emite un arreglo de clientes.
-   */
-  getCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(this.jsonUrl);
-  }
-
-  /**
-   * @description Registra un nuevo cliente en la API.
-   * @param {Customer} customer - Los datos del cliente a registrar.
-   * @return {Observable<Customer>} Un Observable que emite el cliente registrado.
-   */
-  registerCustomers(customer: Customer): Observable<Customer> {
-    return this.http.post<Customer>(this.jsonUrl, customer);
-  }
-
-  /**
-   * @description Actualiza un cliente existente en la API.
-   * @param {Customer} customer - Los datos del cliente a actualizar.
-   * @return {Observable<Customer>} Un Observable que emite el cliente actualizado.
-   */
-  updateCustomers(customer: Customer): Observable<Customer> {
-    return this.http.put<Customer>(`${this.jsonUrl}/${customer.email}`, customer);
-  }
-
-  /**
-   * @description Elimina un cliente en la API.
-   * @param {string} email - El ID del cliente a eliminar.
-   * @return {Observable<void>} Un Observable que emite la respuesta de eliminación.
-   */
-  deleteCustomers(email: string): Observable<void> {
-    return this.http.delete<void>(`${this.jsonUrl}/${email}`);
   }
 }
