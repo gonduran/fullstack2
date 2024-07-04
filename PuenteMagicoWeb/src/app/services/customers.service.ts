@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CryptoService } from './crypto.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-interface Customer {
+export interface Customer {
+  id: number;
   clientName: string;
   clientSurname: string;
   email: string;
@@ -14,6 +17,15 @@ interface Customer {
   providedIn: 'root'
 })
 export class CustomersService {
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ca20b974-678a-4bce-a0bb-a68ddba2bb02'
+    })
+  }
+
+  private jsonUrl = 'https://firebasestorage.googleapis.com/v0/b/puentemagicojson.appspot.com/o/customers.json?alt=media&token=ca20b974-678a-4bce-a0bb-a68ddba2bb02'; 
+
   private storageKey = 'customers';
   private customers: Customer[] = [];
 
@@ -23,13 +35,49 @@ export class CustomersService {
    * 
    * @param {CryptoService} cryptoService - Servicio de encriptación.
    */
-  constructor(private cryptoService: CryptoService) {
-    if (this.isLocalStorageAvailable()) {
+  constructor(private http: HttpClient,
+              private cryptoService: CryptoService) {
+    /*if (this.isLocalStorageAvailable()) {
       const customersSaved = localStorage.getItem('customers');
       this.customers = customersSaved ? JSON.parse(customersSaved) : [];
     } else {
       this.customers = [];
-    }
+    }*/
+  }
+
+  getJsonData(): Observable<Customer[]> {
+    return this.http.get<Customer[]>(this.jsonUrl);
+  }
+
+  MetodoCliente(listaClientes:Customer[]) {
+    console.log('listaClientes', listaClientes);
+    this.http.post(this.jsonUrl,listaClientes,this.httpOptions).subscribe(
+      response => {
+        console.log('Archivo JSON sobrescrito con exito', response);
+      },
+      error => {
+        console.error('Error al sobrescribir el archivo JSON', error);
+      })
+  }
+
+  getCustomers(): Observable<Customer[]> {
+    return this.http.get<Customer[]>(this.jsonUrl);
+  }
+
+  getCustomer(id: number): Observable<Customer> {
+    return this.http.get<Customer>(`${this.jsonUrl}/${id}`);
+  }
+
+  addCustomer(customer: Customer): Observable<Customer> {
+    return this.http.post<Customer>(this.jsonUrl, customer);
+  }
+
+  updateCustomer2(customer: Customer): Observable<Customer> {
+    return this.http.put<Customer>(`${this.jsonUrl}/${customer.id}`, customer);
+  }
+
+  deleteCustomer(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.jsonUrl}/${id}`);
   }
 
   /**
@@ -52,8 +100,8 @@ export class CustomersService {
       console.log('El cliente ya existe.');
       return false;
     }
-
-    const newCustomer: Customer = { clientName, clientSurname, email, password, birthdate, dispatchAddress };
+    const id = 0;
+    const newCustomer: Customer = { id, clientName, clientSurname, email, password, birthdate, dispatchAddress };
     this.customers.push(newCustomer);
     if (this.isLocalStorageAvailable()) {
       localStorage.setItem('customers', JSON.stringify(this.customers));
@@ -78,6 +126,7 @@ export class CustomersService {
   updateCustomer(clientName: string, clientSurname: string, email: string, password: string, birthdate: string, dispatchAddress: string): boolean {
     console.log('Intentando actualizar cliente:', { clientName, clientSurname, email, birthdate, dispatchAddress });
     const customerExisting = this.customers.find(customer => customer.email === email);
+    const id = 0;
     if (customerExisting) {
       const loggedInClient = JSON.parse(localStorage.getItem('loggedInClient') || 'null');
       const clientIndex = this.customers.findIndex(customer => customer.email === loggedInClient.email);
@@ -85,11 +134,11 @@ export class CustomersService {
         if (password === '') {
           console.log('Cliente no cambia su contraseña');
           const passwordSC = loggedInClient.password;
-          this.customers[clientIndex] = { clientName: clientName, clientSurname: clientSurname, email: email, password: passwordSC, birthdate: birthdate, dispatchAddress: dispatchAddress };
+          this.customers[clientIndex] = { id, clientName: clientName, clientSurname: clientSurname, email: email, password: passwordSC, birthdate: birthdate, dispatchAddress: dispatchAddress };
         } else {
           console.log('Cliente cambia su contraseña');
           password = this.cryptoService.encrypt(password);
-          this.customers[clientIndex] = { clientName: clientName, clientSurname: clientSurname, email: email, password: password, birthdate: birthdate, dispatchAddress: dispatchAddress };
+          this.customers[clientIndex] = { id, clientName: clientName, clientSurname: clientSurname, email: email, password: password, birthdate: birthdate, dispatchAddress: dispatchAddress };
         }
         localStorage.setItem('customers', JSON.stringify(this.customers));
 
@@ -260,7 +309,11 @@ export class CustomersService {
    * @return {Customer[]} - Un array de objetos Customer.
    */
   getClients(): Customer[] {
-    return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+    //return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+    this.getCustomers().subscribe(data => {
+      this.customers = data;
+    });
+    return this.customers;
   }
 
   /**
@@ -271,9 +324,16 @@ export class CustomersService {
    * @return {void}
    */
   addClient(client: Customer): void {
-    const clients = this.getClients();
-    clients.push(client);
-    localStorage.setItem(this.storageKey, JSON.stringify(clients));
+    //const clients = this.getClients();
+    let customers: Customer[] = [];
+    this.getCustomers().subscribe(data => {
+      customers = data;
+      console.log('Clientes:', customers);
+    });
+    console.log('Cliente nuevo:', client);
+    customers.push(client);
+    //localStorage.setItem(this.storageKey, JSON.stringify(clients));
+    this.MetodoCliente(customers);
   }
 
   /**
@@ -287,7 +347,8 @@ export class CustomersService {
   updateClient(index: number, updatedClient: Customer): void {
     const clients = this.getClients();
     clients[index] = updatedClient;
-    localStorage.setItem(this.storageKey, JSON.stringify(clients));
+    //localStorage.setItem(this.storageKey, JSON.stringify(clients));
+    this.MetodoCliente(clients);
   }
 
   /**

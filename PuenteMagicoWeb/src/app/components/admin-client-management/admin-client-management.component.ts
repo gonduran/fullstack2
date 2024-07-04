@@ -3,27 +3,29 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { NavigationService } from '../../services/navigation.service';
-import { CustomersService } from '../../services/customers.service';
+import { CustomersService, Customer } from '../../services/customers.service';
 declare var bootstrap: any;
 import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
 import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
-interface Customer {
+/*interface Customer {
   clientName: string;
   clientSurname: string;
   email: string;
   password: string;
   birthdate: string;
   dispatchAddress: string;
-}
+}*/
 
 @Component({
   selector: 'app-admin-client-management',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, HttpClientModule],
   templateUrl: './admin-client-management.component.html',
-  styleUrl: './admin-client-management.component.scss'
+  styleUrl: './admin-client-management.component.scss',
+  providers: [CustomersService]
 })
 export class AdminClientManagementComponent implements OnInit, AfterViewInit {
 
@@ -52,29 +54,42 @@ export class AdminClientManagementComponent implements OnInit, AfterViewInit {
   }
   
   clients: Customer[] = [];
-  newClient: Customer = { clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
-  selectedClient: Customer = { clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
+  newClient: Customer = { id: 0, clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
+  selectedClient: Customer = { id: 0, clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
   selectedIndex: number | null = null;
 
   ngOnInit(): void {
-    if (this.clientService.isLocalStorageAvailable()) {
+    //if (this.clientService.isLocalStorageAvailable()) {
       this.loadClients();
-    }
+    //}
     this.checkLoginState();
   }
 
   loadClients(): void {
-    this.clients = this.clientService.getClients();
+    //this.clients = this.clientService.getClients();
+    this.clientService.getCustomers().subscribe(data => {
+      this.clients = data;
+    });
   }
 
   onAddClient(): void {
-    this.clientService.addClient(this.newClient);
-    this.newClient = { clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
+    this.newClient.id = this.clients.length > 0 ? Math.max(...this.clients.map((p: any) => p.id)) + 1 : 1;
+    //this.clientService.addClient(this.newClient);
+    console.log('Clientes antes:', this.clients);
+    console.log('Cliente nuevo:', this.newClient);
+    this.clients.push(this.newClient);
+    //localStorage.setItem(this.storageKey, JSON.stringify(clients));
+    this.clientService.MetodoCliente(this.clients);
+    console.log('Clientes post:', this.clients);
+    this.newClient = { id: 0, clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
+    console.log('Cliente insertado.');
     this.loadClients();
+    console.log('Cliente mostrado.');
     // Close modal
     const addClientModal = document.getElementById('addClientModal');
     const modalInstance = bootstrap.Modal.getInstance(addClientModal);
     modalInstance.hide();
+    console.log('Cliente fin.');
   }
 
   editClient(index: number): void {
@@ -88,7 +103,7 @@ export class AdminClientManagementComponent implements OnInit, AfterViewInit {
   onUpdateClient(): void {
     if (this.selectedIndex !== null) {
       this.clientService.updateClient(this.selectedIndex, this.selectedClient);
-      this.selectedClient = { clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
+      this.selectedClient = { id: 0, clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
       this.selectedIndex = null;
       this.loadClients();
       // Close modal
