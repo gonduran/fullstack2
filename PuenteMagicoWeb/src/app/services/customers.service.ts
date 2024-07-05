@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CryptoService } from './crypto.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 export interface Customer {
   id: number;
@@ -20,11 +21,11 @@ export class CustomersService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ca20b974-678a-4bce-a0bb-a68ddba2bb02'
+      'Authorization': 'Bearer 54d1a9fa-d9cc-455c-8c64-a898aa7eb3a4'
     })
   }
 
-  private jsonUrl = 'https://firebasestorage.googleapis.com/v0/b/puentemagicojson.appspot.com/o/customers.json?alt=media&token=ca20b974-678a-4bce-a0bb-a68ddba2bb02'; 
+  private jsonUrl = 'https://firebasestorage.googleapis.com/v0/b/puentemagicojson.appspot.com/o/customers.json?alt=media&token=54d1a9fa-d9cc-455c-8c64-a898aa7eb3a4'; 
 
   private storageKey = 'customers';
   private customers: Customer[] = [];
@@ -37,16 +38,7 @@ export class CustomersService {
    */
   constructor(private http: HttpClient,
               private cryptoService: CryptoService) {
-    /*if (this.isLocalStorageAvailable()) {
-      const customersSaved = localStorage.getItem('customers');
-      this.customers = customersSaved ? JSON.parse(customersSaved) : [];
-    } else {
-      this.customers = [];
-    }*/
-  }
 
-  getJsonData(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(this.jsonUrl);
   }
 
   MetodoCliente(listaClientes:Customer[]) {
@@ -63,54 +55,33 @@ export class CustomersService {
   getCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.jsonUrl);
   }
+  /*getCustomers(): Observable<Customer[]> {
+    return this.http.get<Customer[]>(this.apiUrl).pipe(
+      catchError(error => {
+        console.error('Error fetching customers:', error);
+        return throwError(error);
+      })
+    );
+  }*/
 
-  getCustomer(id: number): Observable<Customer> {
-    return this.http.get<Customer>(`${this.jsonUrl}/${id}`);
+  validateEmail(email: string): Observable<boolean> {
+    return this.getCustomers().pipe(
+      map(customers => customers.some(customer => customer.email === email))
+    );
   }
 
-  addCustomer(customer: Customer): Observable<Customer> {
-    return this.http.post<Customer>(this.jsonUrl, customer);
+  validateLogin(email: string, password: string): Observable<boolean> {
+    return this.getCustomers().pipe(
+      map((customers: any[]) => {
+        const customer = customers.find(c => c.email === email && this.cryptoService.decrypt(c.password) === password);
+        if (customer) {
+          this.setLoginState(customer);
+        }
+        return !!customer;
+      })
+    );
   }
-
-  updateCustomer2(customer: Customer): Observable<Customer> {
-    return this.http.put<Customer>(`${this.jsonUrl}/${customer.id}`, customer);
-  }
-
-  deleteCustomer(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.jsonUrl}/${id}`);
-  }
-
-  /**
-   * @description 
-   * Registra un nuevo cliente.
-   * 
-   * @param {string} clientName - Nombre del cliente.
-   * @param {string} clientSurname - Apellido del cliente.
-   * @param {string} email - Correo electrónico del cliente.
-   * @param {string} password - Contraseña del cliente.
-   * @param {string} birthdate - Fecha de nacimiento del cliente.
-   * @param {string} dispatchAddress - Dirección de envío del cliente.
-   * @return {boolean} - Retorna true si el cliente fue registrado exitosamente, de lo contrario false.
-   */
-  registerCustomer(clientName: string, clientSurname: string, email: string, password: string, birthdate: string, dispatchAddress: string): boolean {
-    console.log('Intentando registrar cliente:', { clientName, clientSurname, email, birthdate, dispatchAddress });
-    const customerExisting = this.customers.find(customer => customer.email === email);
-    if (customerExisting) {
-      this.mostrarAlerta('El cliente ya existe.', 'danger');
-      console.log('El cliente ya existe.');
-      return false;
-    }
-    const id = 0;
-    const newCustomer: Customer = { id, clientName, clientSurname, email, password, birthdate, dispatchAddress };
-    this.customers.push(newCustomer);
-    if (this.isLocalStorageAvailable()) {
-      localStorage.setItem('customers', JSON.stringify(this.customers));
-    }
-    this.mostrarAlerta('Cliente registrado exitosamente.', 'success');
-    console.log('Cliente registrado exitosamente:', newCustomer);
-    return true;
-  }
-
+  
   /**
    * @description 
    * Actualiza un cliente existente.
@@ -160,28 +131,6 @@ export class CustomersService {
     return false;
   }
 
-  /**
-   * @description 
-   * Inicia sesión de un cliente.
-   * 
-   * @param {string} email - Correo electrónico del cliente.
-   * @param {string} password - Contraseña del cliente.
-   * @return {boolean} - Retorna true si el inicio de sesión fue exitoso, de lo contrario false.
-   */
-  iniciarSesion(email: string, password: string): boolean {
-    console.log('Intentando iniciar sesión:', { email, password });
-    const customer = this.customers.find(customer => customer.email.trim() === email.trim() && this.cryptoService.decrypt(customer.password.trim()) === password.trim());
-    if (customer) {
-      this.mostrarAlerta('Inicio de sesión exitoso.', 'success');
-      console.log('Inicio de sesión exitoso:', customer);
-      this.setLoginState(customer);
-      return true;
-    } else {
-      this.mostrarAlerta('Email o contraseña incorrectos.', 'danger');
-      console.log('Email o contraseña incorrectos.');
-      return false;
-    }
-  }
 
   /**
    * @description 
@@ -190,7 +139,7 @@ export class CustomersService {
    * @param {string} mensaje - El mensaje de la alerta.
    * @param {string} tipo - El tipo de alerta (e.g., 'success', 'danger').
    */
-  private mostrarAlerta(mensaje: string, tipo: string): void {
+  mostrarAlerta(mensaje: string, tipo: string): void {
     const alertaDiv = document.createElement('div');
     alertaDiv.className = `alert alert-${tipo}`;
     alertaDiv.appendChild(document.createTextNode(mensaje));
@@ -233,9 +182,9 @@ export class CustomersService {
    * @description 
    * Establece el estado de inicio de sesión del cliente.
    * 
-   * @param {any} customer - El cliente que ha iniciado sesión.
+   * @param {Customer} customer - El cliente que ha iniciado sesión.
    */
-  setLoginState(customer: any): void {
+  setLoginState(customer: Customer): void {
     if (this.isLocalStorageAvailable()) {
       localStorage.setItem('loggedInClient', JSON.stringify(customer));
     }
@@ -281,86 +230,4 @@ export class CustomersService {
     }
   }
 
-  /**
-   * @description 
-   * Busca un cliente por su correo electrónico.
-   * 
-   * @param {string} email - El correo electrónico del cliente.
-   * @return {boolean} - Retorna true si el cliente fue encontrado, de lo contrario false.
-   */
-  findCustomer(email: string): boolean {
-    console.log('Buscando cliente:', { email });
-    const customer = this.customers.find(customer => customer.email === email);
-    if (customer) {
-      this.mostrarAlerta('Cliente encontrado.', 'success');
-      console.log('Cliente encontrado:', customer);
-      return true;
-    } else {
-      this.mostrarAlerta('Cliente no encontrado.', 'danger');
-      console.log('Cliente no encontrado.');
-      return false;
-    }
-  }
-
-  /**
-   * @description 
-   * Obtiene la lista de todos los clientes.
-   * 
-   * @return {Customer[]} - Un array de objetos Customer.
-   */
-  getClients(): Customer[] {
-    //return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
-    this.getCustomers().subscribe(data => {
-      this.customers = data;
-    });
-    return this.customers;
-  }
-
-  /**
-   * @description 
-   * Agrega un nuevo cliente a la lista y guarda en localStorage.
-   * 
-   * @param {Customer} client - El cliente a agregar.
-   * @return {void}
-   */
-  addClient(client: Customer): void {
-    //const clients = this.getClients();
-    let customers: Customer[] = [];
-    this.getCustomers().subscribe(data => {
-      customers = data;
-      console.log('Clientes:', customers);
-    });
-    console.log('Cliente nuevo:', client);
-    customers.push(client);
-    //localStorage.setItem(this.storageKey, JSON.stringify(clients));
-    this.MetodoCliente(customers);
-  }
-
-  /**
-   * @description 
-   * Actualiza un cliente existente.
-   * 
-   * @param {number} index - El índice del cliente a actualizar.
-   * @param {Customer} updatedClient - Los datos actualizados del cliente.
-   * @return {void}
-   */
-  updateClient(index: number, updatedClient: Customer): void {
-    const clients = this.getClients();
-    clients[index] = updatedClient;
-    //localStorage.setItem(this.storageKey, JSON.stringify(clients));
-    this.MetodoCliente(clients);
-  }
-
-  /**
-   * @description 
-   * Elimina un cliente de la lista y de localStorage.
-   * 
-   * @param {number} index - El índice del cliente a eliminar.
-   * @return {void}
-   */
-  deleteClient(index: number): void {
-    const clients = this.getClients();
-    clients.splice(index, 1);
-    localStorage.setItem(this.storageKey, JSON.stringify(clients));
-  }
 }

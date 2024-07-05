@@ -4,17 +4,19 @@ import { RouterModule } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { NavigationService } from '../../services/navigation.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CustomersService } from '../../services/customers.service';
+import { CustomersService, Customer } from '../../services/customers.service';
 import { Renderer2, ElementRef } from '@angular/core';
 import { CryptoService } from '../../services/crypto.service';
 import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, HttpClientModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
+  providers: [CustomersService]
 })
 export class RegisterComponent implements OnInit, AfterViewInit {
   registerForm: FormGroup;
@@ -51,7 +53,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       dispatchAddress: ['']
       }, { validator: this.passwordMatchValidator });
   }
-
   /**
    * @description 
    * Hook de inicialización del componente. Verifica el estado de inicio de sesión.
@@ -59,6 +60,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
    * @return {void}
    */
   ngOnInit(): void {
+    this.loadClients();
     this.checkLoginState();
   }
 
@@ -113,6 +115,48 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     return age;
   }
 
+  private clients: Customer[] = [];
+  private newClient: Customer = { id: 0, clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
+
+  loadClients(): void {
+    this.customersService.getCustomers().subscribe(data => {
+      this.clients = data;
+      //console.log('Clientes cargados:', this.clients);
+    }, error => {
+      console.error('Error cargando clientes:', error);
+    });
+  }
+
+  reloadClients(): void {
+    this.loadClients();
+  }
+
+  private registerCustomer(clientName: string, clientSurname: string, email: string, password: string, birthdate: string, dispatchAddress: string): boolean {
+    console.log('Intentando registrar cliente:', { clientName, clientSurname, email, birthdate, dispatchAddress });
+    this.reloadClients();
+    const customerExisting = this.clients.find(customer => customer.email === email);
+    if (customerExisting) {
+      this.customersService.mostrarAlerta('El cliente ya existe.', 'danger');
+      console.log('El cliente ya existe.');
+      return false;
+    }
+
+    this.newClient.id = this.clients.length > 0 ? Math.max(...this.clients.map((p: any) => p.id)) + 1 : 1;
+    this.newClient.clientName = clientName;
+    this.newClient.clientSurname = clientSurname;
+    this.newClient.email = email;
+    this.newClient.password = password;
+    this.newClient.birthdate = birthdate;
+    this.newClient.dispatchAddress = dispatchAddress;
+
+    this.clients.push(this.newClient);
+    this.newClient = { id: 0, clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
+    this.customersService.MetodoCliente(this.clients);
+    this.reloadClients();
+
+    return true;
+  }
+  
   /**
    * @description 
    * Maneja el envío del formulario de registro. Realiza las validaciones y registra al cliente.
@@ -134,7 +178,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       const birthdate = this.formatToStorageDate(this.registerForm.value.birthdate);
       const dispatchAddress = this.registerForm.value.dispatchAddress;
 
-      const registroExitoso = this.customersService.registerCustomer(clientName, clientSurname, email, password, birthdate, dispatchAddress);
+      const registroExitoso = this.registerCustomer(clientName, clientSurname, email, password, birthdate, dispatchAddress);
       if (registroExitoso) {
         console.log('Registro exitoso:', { clientName, clientSurname, email, password, birthdate, dispatchAddress });
         alert('Registro exitoso!');
@@ -216,4 +260,5 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`;
   }
+
 }

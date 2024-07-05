@@ -9,15 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
 import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-
-/*interface Customer {
-  clientName: string;
-  clientSurname: string;
-  email: string;
-  password: string;
-  birthdate: string;
-  dispatchAddress: string;
-}*/
+import { CryptoService } from '../../services/crypto.service';
 
 @Component({
   selector: 'app-admin-client-management',
@@ -34,7 +26,8 @@ export class AdminClientManagementComponent implements OnInit, AfterViewInit {
     @Inject(PLATFORM_ID) private platformId: Object,
 	  private clientService: CustomersService,
     private usersService: UsersService,
-    private router: Router
+    private router: Router,
+    private cryptoService: CryptoService
   ) { }
 
   ngAfterViewInit(): void {
@@ -59,14 +52,11 @@ export class AdminClientManagementComponent implements OnInit, AfterViewInit {
   selectedIndex: number | null = null;
 
   ngOnInit(): void {
-    //if (this.clientService.isLocalStorageAvailable()) {
-      this.loadClients();
-    //}
+    this.loadClients();
     this.checkLoginState();
   }
 
   loadClients(): void {
-    //this.clients = this.clientService.getClients();
     this.clientService.getCustomers().subscribe(data => {
       this.clients = data;
     });
@@ -74,22 +64,15 @@ export class AdminClientManagementComponent implements OnInit, AfterViewInit {
 
   onAddClient(): void {
     this.newClient.id = this.clients.length > 0 ? Math.max(...this.clients.map((p: any) => p.id)) + 1 : 1;
-    //this.clientService.addClient(this.newClient);
-    console.log('Clientes antes:', this.clients);
-    console.log('Cliente nuevo:', this.newClient);
+    this.newClient.password = this.cryptoService.encrypt(this.newClient.password);
     this.clients.push(this.newClient);
-    //localStorage.setItem(this.storageKey, JSON.stringify(clients));
     this.clientService.MetodoCliente(this.clients);
-    console.log('Clientes post:', this.clients);
     this.newClient = { id: 0, clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
-    console.log('Cliente insertado.');
     this.loadClients();
-    console.log('Cliente mostrado.');
     // Close modal
     const addClientModal = document.getElementById('addClientModal');
     const modalInstance = bootstrap.Modal.getInstance(addClientModal);
     modalInstance.hide();
-    console.log('Cliente fin.');
   }
 
   editClient(index: number): void {
@@ -102,7 +85,9 @@ export class AdminClientManagementComponent implements OnInit, AfterViewInit {
 
   onUpdateClient(): void {
     if (this.selectedIndex !== null) {
-      this.clientService.updateClient(this.selectedIndex, this.selectedClient);
+      this.selectedClient.password = this.cryptoService.encrypt(this.selectedClient.password);
+      this.clients[this.selectedIndex] = this.selectedClient;
+      this.clientService.MetodoCliente(this.clients);
       this.selectedClient = { id: 0, clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
       this.selectedIndex = null;
       this.loadClients();
@@ -114,7 +99,8 @@ export class AdminClientManagementComponent implements OnInit, AfterViewInit {
   }
 
   deleteClient(index: number): void {
-    this.clientService.deleteClient(index);
+    this.clients.splice(index, 1);
+    this.clientService.MetodoCliente(this.clients);
     this.loadClients();
   }
 
@@ -122,7 +108,6 @@ export class AdminClientManagementComponent implements OnInit, AfterViewInit {
     if (isPlatformBrowser(this.platformId)) {
       if (this.usersService.checkLoginState()) {
         // Redirigir al administrador
-        //this.router.navigate(['/admin-user-management']);
         console.log('Usuario logueado.');
       } else {
         // Redirigir al administrador
