@@ -114,48 +114,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
     return age;
   }
-
-  /*private clients: Customer[] = [];
-  private newClient: Customer = { id: 0, clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
-
-  loadClients(): void {
-    this.customersService.getCustomers().subscribe(data => {
-      this.clients = data;
-      //console.log('Clientes cargados:', this.clients);
-    }, error => {
-      console.error('Error cargando clientes:', error);
-    });
-  }
-
-  reloadClients(): void {
-    this.loadClients();
-  }
-
-  private registerCustomer(clientName: string, clientSurname: string, email: string, password: string, birthdate: string, dispatchAddress: string): boolean {
-    console.log('Intentando registrar cliente:', { clientName, clientSurname, email, birthdate, dispatchAddress });
-    this.reloadClients();
-    const customerExisting = this.clients.find(customer => customer.email === email);
-    if (customerExisting) {
-      this.customersService.mostrarAlerta('El cliente ya existe.', 'danger');
-      console.log('El cliente ya existe.');
-      return false;
-    }
-
-    this.newClient.id = this.clients.length > 0 ? Math.max(...this.clients.map((p: any) => p.id)) + 1 : 1;
-    this.newClient.clientName = clientName;
-    this.newClient.clientSurname = clientSurname;
-    this.newClient.email = email;
-    this.newClient.password = password;
-    this.newClient.birthdate = birthdate;
-    this.newClient.dispatchAddress = dispatchAddress;
-
-    this.clients.push(this.newClient);
-    this.newClient = { id: 0, clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
-    this.customersService.MetodoCliente(this.clients);
-    this.reloadClients();
-
-    return true;
-  }*/
   
   /**
    * @description 
@@ -163,7 +121,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
    * 
    * @return {void}
    */
-  /*onSubmit(): void {
+  onSubmit() {
     if (this.registerForm.valid) {
       const age = this.calculateAge(this.registerForm.value.birthdate);
       if (age < 13) {
@@ -171,57 +129,29 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         return;
       }
 
-      const clientName = this.registerForm.value.clientName;
-      const clientSurname = this.registerForm.value.clientSurname;
-      const email = this.registerForm.value.email;
-      const password = this.cryptoService.encrypt(this.registerForm.value.password);
-      const birthdate = this.formatToStorageDate(this.registerForm.value.birthdate);
-      const dispatchAddress = this.registerForm.value.dispatchAddress;
+      const newCustomer: Customer = {
+        id: 0, // This will be set in the service
+        clientName: this.registerForm.value.clientName,
+        clientSurname: this.registerForm.value.clientSurname,
+        email: this.registerForm.value.email,
+        password: this.cryptoService.encrypt(this.registerForm.value.password),
+        birthdate: this.registerForm.value.birthdate,
+        dispatchAddress: this.registerForm.value.dispatchAddress
+      };
 
-      const registroExitoso = this.registerCustomer(clientName, clientSurname, email, password, birthdate, dispatchAddress);
-      if (registroExitoso) {
-        console.log('Registro exitoso:', { clientName, clientSurname, email, password, birthdate, dispatchAddress });
-        alert('Registro exitoso!');
-        this.registerForm.reset();
-      } else {
-        console.log('Error en el registro.');
-      }
-    } else {
-      console.log('Formulario invalido');
-    }
-  }*/
- 
-    onSubmit() {
-      if (this.registerForm.valid) {
-        const age = this.calculateAge(this.registerForm.value.birthdate);
-        if (age < 13) {
-          alert('Debe tener al menos 13 años para registrarse.');
-          return;
+      this.customersService.addCustomer(newCustomer).subscribe(
+        () => {
+          alert('Registro exitoso!');
+          this.registerForm.reset();
+        },
+        error => {
+          alert('Error: ' + error.message);
         }
-  
-        const newCustomer: Customer = {
-          id: 0, // This will be set in the service
-          clientName: this.registerForm.value.clientName,
-          clientSurname: this.registerForm.value.clientSurname,
-          email: this.registerForm.value.email,
-          password: this.cryptoService.encrypt(this.registerForm.value.password),
-          birthdate: this.registerForm.value.birthdate,
-          dispatchAddress: this.registerForm.value.dispatchAddress
-        };
-  
-        this.customersService.addCustomer(newCustomer).subscribe(
-          () => {
-            alert('Registro exitoso!');
-            this.registerForm.reset();
-          },
-          error => {
-            alert('Error: ' + error.message);
-          }
-        );
-      } else {
-        console.log('Formulario inválido');
-      }
+      );
+    } else {
+      console.log('Formulario inválido');
     }
+  }
 
   /**
    * @description 
