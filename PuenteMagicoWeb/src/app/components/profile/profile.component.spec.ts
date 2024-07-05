@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -16,7 +17,7 @@ describe('ProfileComponent', () => {
    */
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProfileComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule]
+      imports: [ProfileComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule, HttpClientTestingModule]
     })
     .compileComponents();
 
