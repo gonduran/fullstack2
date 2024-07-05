@@ -53,6 +53,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       dispatchAddress: ['']
       }, { validator: this.passwordMatchValidator });
   }
+
   /**
    * @description 
    * Hook de inicialización del componente. Verifica el estado de inicio de sesión.
@@ -60,7 +61,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
    * @return {void}
    */
   ngOnInit(): void {
-    //this.loadClients();
     this.checkLoginState();
   }
 
@@ -222,5 +222,4 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`;
   }
-
 }

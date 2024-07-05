@@ -206,6 +206,12 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * @description 
+   * Carga los datos del cliente logueado desde el archivo JSON y actualiza el formulario.
+   * 
+   * @return {void}
+   */
   loadCustomerData(): void {
     const loggedInClientEmail = this.customersService.getLoggedInClientEmail();
     if (loggedInClientEmail) {
@@ -245,8 +251,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
    * @description 
    * Formatea una fecha de formulario en el formato YYYY-MM-DD.
    * 
-   * @param {string} date - La fecha en formato DD-MM-YYYY.
-   * @return {string} - La fecha formateada en el formato YYYY-MM-DD.
+   * @param {string} date - La fecha en formatoDD-MM-YYYY.
+	 * @return {string} - La fecha formateada en el formato YYYY-MM-DD.
    */
   formatToStorageDate(date: string): string {
     const [day, month, year] = date.split('-');

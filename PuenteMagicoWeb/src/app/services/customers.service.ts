@@ -27,34 +27,42 @@ export class CustomersService {
 
   private jsonUrl = 'https://firebasestorage.googleapis.com/v0/b/puentemagicojson.appspot.com/o/customers.json?alt=media&token=54d1a9fa-d9cc-455c-8c64-a898aa7eb3a4'; 
 
-  private storageKey = 'customers';
-  private customers: Customer[] = [];
+  //private storageKey = 'customers';
+  //private customers: Customer[] = [];
 
   /**
    * @description 
-   * Constructor del servicio. Carga los clientes desde localStorage.
+   * Constructor del servicio. Inicializa el servicio HTTP y el servicio de encriptación.
    * 
+   * @param {HttpClient} http - Servicio HTTP para realizar solicitudes.
    * @param {CryptoService} cryptoService - Servicio de encriptación.
    */
-  constructor(private http: HttpClient,
-              private cryptoService: CryptoService) {
+  constructor(private http: HttpClient, private cryptoService: CryptoService) {}
 
-  }
-
-  MetodoCliente(listaClientes:Customer[]) {
+  /**
+   * @description 
+   * Sobrescribe el archivo JSON con la lista de clientes proporcionada.
+   * 
+   * @param {Customer[]} listaClientes - La lista de clientes a sobrescribir en el archivo JSON.
+   */
+  MetodoCliente(listaClientes: Customer[]): void {
     console.log('listaClientes', listaClientes);
-    this.http.post(this.jsonUrl,listaClientes,this.httpOptions).subscribe(
+    this.http.post(this.jsonUrl, listaClientes, this.httpOptions).subscribe(
       response => {
-        console.log('Archivo JSON sobrescrito con exito', response);
+        console.log('Archivo JSON sobrescrito con éxito', response);
       },
       error => {
         console.error('Error al sobrescribir el archivo JSON', error);
-      })
+      }
+    );
   }
 
-  /*getCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(this.jsonUrl);
-  }*/
+  /**
+   * @description 
+   * Obtiene la lista de clientes desde el archivo JSON.
+   * 
+   * @return {Observable<Customer[]>} - Un observable con la lista de clientes.
+   */
   getCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.jsonUrl).pipe(
       catchError(error => {
@@ -64,15 +72,30 @@ export class CustomersService {
     );
   }
 
+  /**
+   * @description 
+   * Valida si un correo electrónico ya está registrado.
+   * 
+   * @param {string} email - El correo electrónico a validar.
+   * @return {Observable<boolean>} - Un observable que retorna true si el correo electrónico ya está registrado, de lo contrario false.
+   */
   validateEmail(email: string): Observable<boolean> {
     return this.getCustomers().pipe(
       map(customers => customers.some(customer => customer.email === email))
     );
   }
 
+  /**
+   * @description 
+   * Valida las credenciales de inicio de sesión del cliente.
+   * 
+   * @param {string} email - El correo electrónico del cliente.
+   * @param {string} password - La contraseña del cliente.
+   * @return {Observable<boolean>} - Un observable que retorna true si las credenciales son válidas, de lo contrario false.
+   */
   validateLogin(email: string, password: string): Observable<boolean> {
     return this.getCustomers().pipe(
-      map((customers: any[]) => {
+      map((customers: Customer[]) => {
         const customer = customers.find(c => c.email === email && this.cryptoService.decrypt(c.password) === password);
         if (customer) {
           this.setLoginState(customer);
@@ -82,12 +105,26 @@ export class CustomersService {
     );
   }
 
+  /**
+   * @description 
+   * Obtiene un cliente por su correo electrónico.
+   * 
+   * @param {string} email - El correo electrónico del cliente.
+   * @return {Observable<Customer | undefined>} - Un observable que retorna el cliente si es encontrado, de lo contrario undefined.
+   */
   getCustomerByEmail(email: string): Observable<Customer | undefined> {
     return this.getCustomers().pipe(
       map(customers => customers.find(customer => customer.email === email))
     );
   }
 
+  /**
+   * @description 
+   * Actualiza la información de un cliente existente.
+   * 
+   * @param {Customer} updatedCustomer - Los datos actualizados del cliente.
+   * @return {Observable<Customer[]>} - Un observable con la lista de clientes actualizada.
+   */
   updateCustomer(updatedCustomer: Customer): Observable<Customer[]> {
     return this.getCustomers().pipe(
       map(customers => {
@@ -101,6 +138,13 @@ export class CustomersService {
     );
   }
 
+  /**
+   * @description 
+   * Agrega un nuevo cliente a la lista.
+   * 
+   * @param {Customer} newCustomer - Los datos del nuevo cliente.
+   * @return {Observable<Customer[]>} - Un observable con la lista de clientes actualizada.
+   */
   addCustomer(newCustomer: Customer): Observable<Customer[]> {
     return this.getCustomers().pipe(
       map(customers => {
@@ -209,7 +253,6 @@ export class CustomersService {
   /**
    * @description 
    * Cierra la sesión del cliente.
-   * 
    */
   logout(): void {
     if (this.isLocalStorageAvailable()) {
@@ -217,5 +260,4 @@ export class CustomersService {
       localStorage.removeItem('loggedInClient');
     }
   }
-
 }
