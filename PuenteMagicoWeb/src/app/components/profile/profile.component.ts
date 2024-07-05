@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { NavigationService } from '../../services/navigation.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CustomersService } from '../../services/customers.service';
+import { CustomersService, Customer } from '../../services/customers.service';
 import { Renderer2, ElementRef } from '@angular/core';
 import { CryptoService } from '../../services/crypto.service';
 import { Router } from '@angular/router';
@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent implements OnInit, AfterViewInit {
   profileForm: FormGroup;
+  customer: Customer | undefined;
 
   /**
    * @description 
@@ -60,7 +61,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
    */
   ngOnInit(): void {
     this.checkLoginState();
-    this.loadClientData();
+    this.loadCustomerData();
   }
 
   /**
@@ -123,30 +124,39 @@ export class ProfileComponent implements OnInit, AfterViewInit {
    * 
    * @return {void}
    */
-  onSubmit(): void {
-    if (this.profileForm.valid) {
+  onSubmit() {
+    if (this.profileForm.valid && this.customer) {
       const age = this.calculateAge(this.profileForm.value.birthdate);
       if (age < 13) {
         alert('Debe tener al menos 13 años para registrarse.');
         return;
       }
 
-      const clientName = this.profileForm.value.clientName;
-      const clientSurname = this.profileForm.value.clientSurname;
-      const email = this.profileForm.value.email;
-      const password = this.profileForm.value.password;
-      const birthdate = this.formatToStorageDate(this.profileForm.value.birthdate);
-      const dispatchAddress = this.profileForm.value.dispatchAddress;
+      const updatedCustomer: Customer = {
+        ...this.customer,
+        clientName: this.profileForm.value.clientName,
+        clientSurname: this.profileForm.value.clientSurname,
+        birthdate: this.formatToStorageDate(this.profileForm.value.birthdate),
+        dispatchAddress: this.profileForm.value.dispatchAddress
+      };
 
-      const updateExitoso = this.customersService.updateCustomer(clientName, clientSurname, email, password, birthdate, dispatchAddress);
-      if (updateExitoso) {
-        console.log('Actualizacion exitosa:', { clientName, clientSurname, email, password, birthdate, dispatchAddress });
-        alert('Actualizacion exitosa!');
-      } else {
-        console.log('Error en la actualización.');
+      if (this.profileForm.value.password) {
+        updatedCustomer.password = this.cryptoService.encrypt(this.profileForm.value.password);
       }
+
+      this.customersService.updateCustomer(updatedCustomer).subscribe(
+        () => {
+          alert('Actualización exitosa!');
+          this.customersService.mostrarAlerta('Cliente actualizado exitosamente.', 'success');
+          // Actualizar los datos del cliente logueado en localStorage
+          localStorage.setItem('loggedInClient', JSON.stringify(updatedCustomer));
+        },
+        error => {
+          console.error('Error al actualizar el perfil cliente:', error);
+        }
+      );
     } else {
-      console.log('Formulario invalido');
+      console.log('Formulario inválido');
     }
   }
 
@@ -196,28 +206,26 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /**
-   * @description 
-   * Carga los datos del cliente logueado en el formulario de perfil.
-   * 
-   * @return {void}
-   */
-  loadClientData(): void {
-    if (this.customersService.isLocalStorageAvailable()) {
-      const userData = JSON.parse(localStorage.getItem('loggedInClient') || '{}');
-      if (userData) {
-        console.log('Cliente logueado:', { userData });
-        
-        this.profileForm.patchValue({
-          clientName: userData.clientName || '',
-          clientSurname: userData.clientSurname || '',
-          email: userData.email || '',
-          password: '',
-          confirmPassword: '',
-          birthdate: userData.birthdate ? this.formatToFormDate(userData.birthdate) : '',
-          dispatchAddress: userData.dispatchAddress || ''
-        });
-      }
+  loadCustomerData(): void {
+    const loggedInClientEmail = this.customersService.getLoggedInClientEmail();
+    if (loggedInClientEmail) {
+      this.customersService.getCustomerByEmail(loggedInClientEmail).subscribe(
+        customer => {
+          if (customer) {
+            this.customer = customer;
+            this.profileForm.patchValue({
+              clientName: customer.clientName,
+              clientSurname: customer.clientSurname,
+              email: customer.email,
+              birthdate: this.formatToFormDate(customer.birthdate),
+              dispatchAddress: customer.dispatchAddress
+            });
+          }
+        },
+        error => {
+          console.error('Error al cargar los datos del cliente:', error);
+        }
+      );
     }
   }
 

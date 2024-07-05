@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CryptoService } from './crypto.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 export interface Customer {
@@ -52,17 +52,17 @@ export class CustomersService {
       })
   }
 
-  getCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(this.jsonUrl);
-  }
   /*getCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(this.apiUrl).pipe(
+    return this.http.get<Customer[]>(this.jsonUrl);
+  }*/
+  getCustomers(): Observable<Customer[]> {
+    return this.http.get<Customer[]>(this.jsonUrl).pipe(
       catchError(error => {
-        console.error('Error fetching customers:', error);
+        console.error('Error al recuperar clientes:', error);
         return throwError(error);
       })
     );
-  }*/
+  }
 
   validateEmail(email: string): Observable<boolean> {
     return this.getCustomers().pipe(
@@ -81,56 +81,44 @@ export class CustomersService {
       })
     );
   }
-  
-  /**
-   * @description 
-   * Actualiza un cliente existente.
-   * 
-   * @param {string} clientName - Nombre del cliente.
-   * @param {string} clientSurname - Apellido del cliente.
-   * @param {string} email - Correo electrónico del cliente.
-   * @param {string} password - Contraseña del cliente.
-   * @param {string} birthdate - Fecha de nacimiento del cliente.
-   * @param {string} dispatchAddress - Dirección de envío del cliente.
-   * @return {boolean} - Retorna true si el cliente fue actualizado exitosamente, de lo contrario false.
-   */
-  updateCustomer(clientName: string, clientSurname: string, email: string, password: string, birthdate: string, dispatchAddress: string): boolean {
-    console.log('Intentando actualizar cliente:', { clientName, clientSurname, email, birthdate, dispatchAddress });
-    const customerExisting = this.customers.find(customer => customer.email === email);
-    const id = 0;
-    if (customerExisting) {
-      const loggedInClient = JSON.parse(localStorage.getItem('loggedInClient') || 'null');
-      const clientIndex = this.customers.findIndex(customer => customer.email === loggedInClient.email);
-      if (clientIndex !== -1) {
-        if (password === '') {
-          console.log('Cliente no cambia su contraseña');
-          const passwordSC = loggedInClient.password;
-          this.customers[clientIndex] = { id, clientName: clientName, clientSurname: clientSurname, email: email, password: passwordSC, birthdate: birthdate, dispatchAddress: dispatchAddress };
-        } else {
-          console.log('Cliente cambia su contraseña');
-          password = this.cryptoService.encrypt(password);
-          this.customers[clientIndex] = { id, clientName: clientName, clientSurname: clientSurname, email: email, password: password, birthdate: birthdate, dispatchAddress: dispatchAddress };
-        }
-        localStorage.setItem('customers', JSON.stringify(this.customers));
 
-        // Actualizar los datos del cliente logueado en localStorage
-        localStorage.setItem('loggedInClient', JSON.stringify(this.customers[clientIndex]));
-
-        this.mostrarAlerta('Cliente actualizado exitosamente.', 'success');
-        console.log('Cliente actualizado exitosamente:', this.customers[clientIndex]);
-        return true;
-      } else {
-        this.mostrarAlerta('Error al actualizar el perfil cliente.', 'danger');
-        console.log('Error al actualizar el perfil cliente:', email);
-        return false;
-      }
-    }
-
-    this.mostrarAlerta('Cliente no actualizado.', 'danger');
-    console.log('Cliente no actualizado:', email);
-    return false;
+  getCustomerByEmail(email: string): Observable<Customer | undefined> {
+    return this.getCustomers().pipe(
+      map(customers => customers.find(customer => customer.email === email))
+    );
   }
 
+  updateCustomer(updatedCustomer: Customer): Observable<Customer[]> {
+    return this.getCustomers().pipe(
+      map(customers => {
+        const index = customers.findIndex(customer => customer.id === updatedCustomer.id);
+        if (index !== -1) {
+          customers[index] = updatedCustomer;
+          this.MetodoCliente(customers);
+        }
+        return customers;
+      })
+    );
+  }
+
+  addCustomer(newCustomer: Customer): Observable<Customer[]> {
+    return this.getCustomers().pipe(
+      map(customers => {
+        const customerExists = customers.some(customer => customer.email === newCustomer.email);
+        if (customerExists) {
+          throw new Error('El cliente ya existe.');
+        }
+        newCustomer.id = customers.length > 0 ? Math.max(...customers.map(c => c.id)) + 1 : 1;
+        customers.push(newCustomer);
+        this.MetodoCliente(customers);
+        return customers;
+      }),
+      catchError(error => {
+        console.error('Error al agregar cliente:', error);
+        return throwError(error);
+      })
+    );
+  }
 
   /**
    * @description 

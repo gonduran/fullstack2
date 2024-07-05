@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
    * @return {void}
    */
   ngOnInit(): void {
-    this.loadClients();
+    //this.loadClients();
     this.checkLoginState();
   }
 
@@ -115,7 +115,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     return age;
   }
 
-  private clients: Customer[] = [];
+  /*private clients: Customer[] = [];
   private newClient: Customer = { id: 0, clientName: '', clientSurname: '', email: '', password: '', birthdate: '', dispatchAddress: '' };
 
   loadClients(): void {
@@ -155,7 +155,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     this.reloadClients();
 
     return true;
-  }
+  }*/
   
   /**
    * @description 
@@ -163,7 +163,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
    * 
    * @return {void}
    */
-  onSubmit(): void {
+  /*onSubmit(): void {
     if (this.registerForm.valid) {
       const age = this.calculateAge(this.registerForm.value.birthdate);
       if (age < 13) {
@@ -189,7 +189,39 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     } else {
       console.log('Formulario invalido');
     }
-  }
+  }*/
+ 
+    onSubmit() {
+      if (this.registerForm.valid) {
+        const age = this.calculateAge(this.registerForm.value.birthdate);
+        if (age < 13) {
+          alert('Debe tener al menos 13 años para registrarse.');
+          return;
+        }
+  
+        const newCustomer: Customer = {
+          id: 0, // This will be set in the service
+          clientName: this.registerForm.value.clientName,
+          clientSurname: this.registerForm.value.clientSurname,
+          email: this.registerForm.value.email,
+          password: this.cryptoService.encrypt(this.registerForm.value.password),
+          birthdate: this.registerForm.value.birthdate,
+          dispatchAddress: this.registerForm.value.dispatchAddress
+        };
+  
+        this.customersService.addCustomer(newCustomer).subscribe(
+          () => {
+            alert('Registro exitoso!');
+            this.registerForm.reset();
+          },
+          error => {
+            alert('Error: ' + error.message);
+          }
+        );
+      } else {
+        console.log('Formulario inválido');
+      }
+    }
 
   /**
    * @description 
