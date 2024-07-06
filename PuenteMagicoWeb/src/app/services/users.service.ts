@@ -36,6 +36,12 @@ export class UsersService {
    */
   constructor(private cryptoService: CryptoService) {
     if (this.isLocalStorageAvailable()) {
+      const userAdmin: Users = { name: 'Administrador', email: 'admin@puente-magico.cl', password: 'P4ss2511', profile: 'Admin' };
+      if (!(this.findUserAdmin('admin@puente-magico.cl'))) {
+        console.log('Administrador no encontrado:');
+        this.users.push(userAdmin);
+        localStorage.setItem('users', JSON.stringify(this.users));
+      }
       const profilesSaved = localStorage.getItem('profiles');
       this.profiles = profilesSaved ? JSON.parse(profilesSaved) : [];
       const usersSaved = localStorage.getItem('users');
