@@ -69,15 +69,6 @@ export class AdminLoginComponent implements OnInit, AfterViewInit {
         });
       });
     }
-    if (this.usersService.isLocalStorageAvailable()) {
-      const email = this.userAdminDefault.email;
-      if (this.usersService.findUserAdmin(email)) {
-        console.log('Administrador encontrado:');
-      } else {
-        console.log('Administrador no encontrado.');
-        this.usersService.addUser(this.userAdminDefault);
-      }
-    }
   }
 
   onSubmit() {
