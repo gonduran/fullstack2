@@ -122,7 +122,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/components/admin-user-management/admin-user-management.component.ts</code>
+            <code>src/app/components/admin-login/admin-login.component.ts</code>
         </p>
 
 
@@ -317,9 +317,10 @@ import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule } from &#x27;@angular/router&#x27;;
 import { isPlatformBrowser } from &#x27;@angular/common&#x27;;
 import { NavigationService } from &#x27;../../services/navigation.service&#x27;;
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from &#x27;@angular/forms&#x27;;
 import { UsersService } from &#x27;../../services/users.service&#x27;;
-declare var bootstrap: any;
-import { FormsModule } from &#x27;@angular/forms&#x27;;
+import { Renderer2, ElementRef } from &#x27;@angular/core&#x27;;
+import { CryptoService } from &#x27;../../services/crypto.service&#x27;;
 import { Router } from &#x27;@angular/router&#x27;;
 
 interface User {
@@ -330,21 +331,43 @@ interface User {
 }
 
 @Component({
-  selector: &#x27;app-admin-user-management&#x27;,
+  selector: &#x27;app-admin-login&#x27;,
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
-  templateUrl: &#x27;./admin-user-management.component.html&#x27;,
-  styleUrl: &#x27;./admin-user-management.component.scss&#x27;
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  templateUrl: &#x27;./admin-login.component.html&#x27;,
+  styleUrl: &#x27;./admin-login.component.scss&#x27;
 })
-export class AdminUserManagementComponent implements OnInit, AfterViewInit {
+export class AdminLoginComponent implements OnInit, AfterViewInit {
+  adminLoginForm: FormGroup;
 
   constructor(
     private navigationService: NavigationService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private userService: UsersService,
+	  private fb: FormBuilder,
     private usersService: UsersService,
-    private router: Router
-  ) { }
+    private renderer: Renderer2,
+    private el: ElementRef,
+    private cryptoService: CryptoService,
+    private router: Router) { 
+      this.adminLoginForm &#x3D; this.fb.group({
+      email: [&#x27;&#x27;, [Validators.required, Validators.email]],
+      password: [&#x27;&#x27;, [Validators.required]]});
+	}
+
+  userAdminDefault: User &#x3D; { name: &#x27;Administrador&#x27;, email: &#x27;admin@puente-magico.cl&#x27;, password: &#x27;P4ss2511&#x27;, profile: &#x27;Admin&#x27; };
+
+  ngOnInit(): void {
+    if (this.usersService.isLocalStorageAvailable()) {
+      const email &#x3D; this.userAdminDefault.email;
+      if (this.usersService.findUserAdmin(email)) {
+        console.log(&#x27;Administrador encontrado:&#x27;);
+      } else {
+        console.log(&#x27;Administrador no encontrado.&#x27;);
+        this.usersService.addUser(this.userAdminDefault);
+      }
+    }
+    this.checkLoginState();
+  }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -360,74 +383,49 @@ export class AdminUserManagementComponent implements OnInit, AfterViewInit {
         });
       });
     }
-  }
-
-  users: User[] &#x3D; [];
-  newUser: User &#x3D; { name: &#x27;&#x27;, email: &#x27;&#x27;, password: &#x27;&#x27;, profile: &#x27;&#x27; };
-  selectedUser: User &#x3D; { name: &#x27;&#x27;, email: &#x27;&#x27;, password: &#x27;&#x27;, profile: &#x27;&#x27; };
-  selectedIndex: number | null &#x3D; null;
-
-  ngOnInit(): void {
-    if (this.userService.isLocalStorageAvailable()) {
-      this.loadUsers();
-    }
-    this.checkLoginState();
-  }
-
-  loadUsers(): void {
-    this.users &#x3D; this.userService.getUsers();
-  }
-
-  onAddUser(): void {
-    this.userService.addUser(this.newUser);
-    this.newUser &#x3D; { name: &#x27;&#x27;, email: &#x27;&#x27;, password: &#x27;&#x27;, profile: &#x27;&#x27; };
-    this.loadUsers();
-    // Close modal
-    const addUserModal &#x3D; document.getElementById(&#x27;addUserModal&#x27;);
-    const modalInstance &#x3D; bootstrap.Modal.getInstance(addUserModal);
-    modalInstance.hide();
-  }
-
-  editUser(index: number): void {
-    this.selectedUser &#x3D; { ...this.users[index] };
-    this.selectedIndex &#x3D; index;
-    // Show modal
-    const editUserModal &#x3D; new bootstrap.Modal(document.getElementById(&#x27;editUserModal&#x27;));
-    editUserModal.show();
-  }
-
-  onUpdateUser(): void {
-    if (this.selectedIndex !&#x3D;&#x3D; null) {
-      this.userService.updateUser(this.selectedIndex, this.selectedUser);
-      this.selectedUser &#x3D; { name: &#x27;&#x27;, email: &#x27;&#x27;, password: &#x27;&#x27;, profile: &#x27;&#x27; };
-      this.selectedIndex &#x3D; null;
-      this.loadUsers();
-      // Close modal
-      const editUserModal &#x3D; document.getElementById(&#x27;editUserModal&#x27;);
-      const modalInstance &#x3D; bootstrap.Modal.getInstance(editUserModal);
-      modalInstance.hide();
+    if (this.usersService.isLocalStorageAvailable()) {
+      const email &#x3D; this.userAdminDefault.email;
+      if (this.usersService.findUserAdmin(email)) {
+        console.log(&#x27;Administrador encontrado:&#x27;);
+      } else {
+        console.log(&#x27;Administrador no encontrado.&#x27;);
+        this.usersService.addUser(this.userAdminDefault);
+      }
     }
   }
 
-  deleteUser(index: number): void {
-    this.userService.deleteUser(index);
-    this.loadUsers();
+  onSubmit() {
+    if (this.adminLoginForm.valid) {
+      const email &#x3D; this.adminLoginForm.value.email;
+      const password &#x3D; this.adminLoginForm.value.password;
+
+      //localStorage.setItem(&#x27;user&#x27;, JSON.stringify(userData));
+      const loginExitoso &#x3D; this.usersService.iniciarSesion(email, password);
+      if (loginExitoso) {
+        console.log(&#x27;Inicio de sesión exitoso:&#x27;, { email });
+        alert(&#x27;Inicio de sesión exitoso!&#x27;);
+        // Redirigir al administrador
+        this.router.navigate([&#x27;/admin-user-management&#x27;]);
+      } else {
+        console.log(&#x27;Error en el inicio de sesión.&#x27;);
+      }
+    } else {
+      console.log(&#x27;Formulario invalido&#x27;);
+    }
   }
 
   checkLoginState(): void {
     if (isPlatformBrowser(this.platformId)) {
       if (this.usersService.checkLoginState()) {
-        // Redirigir al administrador
-        //this.router.navigate([&#x27;/admin-user-management&#x27;]);
-        console.log(&#x27;Usuario logueado.&#x27;);
+        // Redirigir al perfil del usuario
+        this.router.navigate([&#x27;/admin-user-management&#x27;]);
       } else {
-        // Redirigir al administrador
-        this.router.navigate([&#x27;/admin-login&#x27;]);
-        console.log(&#x27;Usuario no logueado.&#x27;);
+        console.log(&#x27;Administrador no logueado.&#x27;);
       }
     }
   }
-}</code></pre>
+}
+</code></pre>
     </div>
 </div>
 

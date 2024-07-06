@@ -44,7 +44,7 @@ FROM nginx:alpine
 COPY --from=build /app/dist/puente-magico-web/browser /usr/share/nginx/html
 
 # Verificar si el archivo index.csr.html existe y renombrarlo a index.html
-# RUN if [ -f /usr/share/nginx/html/index.csr.html ]; then mv /usr/share/nginx/html/index.csr.html /usr/share/nginx/html/index.html; fi
+RUN if [ -f /usr/share/nginx/html/index.csr.html ]; then mv /usr/share/nginx/html/index.csr.html /usr/share/nginx/html/index.html; fi
 
 # Copiar archivo de configuración de Nginx
 #COPY nginx.conf /etc/nginx/nginx.conf

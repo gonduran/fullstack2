@@ -503,6 +503,23 @@ export class UsersService {
 
   /**
    * @description 
+   * Busca un usuario por su correo electrónico.
+   * 
+   * @param {string} email - El correo electrónico del administrador.
+   * @return {boolean} - Retorna true si el administrador fue encontrado, de lo contrario false.
+   */
+  findUserAdmin(email: string): boolean {
+    console.log(&#x27;Buscando administrador:&#x27;, { email });
+    const user &#x3D; this.users.find(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email);
+    if (user) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * @description 
    * Obtiene la lista de todos los usuarios.
    * 
    * @return {User[]} - Un array de objetos User.

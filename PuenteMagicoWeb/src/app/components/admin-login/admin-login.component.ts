@@ -9,6 +9,13 @@ import { Renderer2, ElementRef } from '@angular/core';
 import { CryptoService } from '../../services/crypto.service';
 import { Router } from '@angular/router';
 
+interface User {
+  name: string;
+  email: string;
+  password: string;
+  profile: string;
+}
+
 @Component({
   selector: 'app-admin-login',
   standalone: true,
@@ -33,7 +40,18 @@ export class AdminLoginComponent implements OnInit, AfterViewInit {
       password: ['', [Validators.required]]});
 	}
 
+  userAdminDefault: User = { name: 'Administrador', email: 'admin@puente-magico.cl', password: 'P4ss2511', profile: 'Admin' };
+
   ngOnInit(): void {
+    if (this.usersService.isLocalStorageAvailable()) {
+      const email = this.userAdminDefault.email;
+      if (this.usersService.findUserAdmin(email)) {
+        console.log('Administrador encontrado:');
+      } else {
+        console.log('Administrador no encontrado.');
+        this.usersService.addUser(this.userAdminDefault);
+      }
+    }
     this.checkLoginState();
   }
 
@@ -50,6 +68,15 @@ export class AdminLoginComponent implements OnInit, AfterViewInit {
           }
         });
       });
+    }
+    if (this.usersService.isLocalStorageAvailable()) {
+      const email = this.userAdminDefault.email;
+      if (this.usersService.findUserAdmin(email)) {
+        console.log('Administrador encontrado:');
+      } else {
+        console.log('Administrador no encontrado.');
+        this.usersService.addUser(this.userAdminDefault);
+      }
     }
   }
 
