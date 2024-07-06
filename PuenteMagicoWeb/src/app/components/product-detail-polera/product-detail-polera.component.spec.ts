@@ -4,6 +4,7 @@ import { ProductDetailPoleraComponent } from './product-detail-polera.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ProductDetailPoleraComponent', () => {
   let component: ProductDetailPoleraComponent;
@@ -11,7 +12,7 @@ describe('ProductDetailPoleraComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductDetailPoleraComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule]
+      imports: [ProductDetailPoleraComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule, HttpClientTestingModule]
     })
     .compileComponents();
 

@@ -54,16 +54,23 @@ export class PasswordRecoveryComponent implements OnInit, AfterViewInit {
     if (this.passwordRecoveryForm.valid) {
       const email = this.passwordRecoveryForm.value.email;
 
-      //localStorage.setItem('user', JSON.stringify(userData));
-      const clienteEncontrado = this.customersService.findCustomer(email);
-      if (clienteEncontrado) {
-        console.log('Cliente encontrado:', { email });
-        alert('Se ha enviado un enlace de recuperación de contraseña a su correo electrónico.!');
-        // Redirigir al perfil del usuario
-        this.router.navigate(['/login']);
-      } else {
-        console.log('Error cliente no encontrado.');
-      }
+      this.customersService.validateEmail(email).subscribe(
+        emailExists => {
+          if (emailExists) {
+            console.log('Cliente encontrado:', { email });
+            this.customersService.mostrarAlerta('Cliente encontrado.', 'success');
+            alert('Se ha enviado un enlace de recuperación de contraseña a su correo electrónico.!');
+            // Redirigir al perfil del usuario
+            this.router.navigate(['/login']);
+          } else {
+            console.log('Error cliente no encontrado.');
+            this.customersService.mostrarAlerta('Cliente no encontrado.', 'danger');
+          }
+        },
+        error => {
+          console.error('Error al validar el correo electrónico:', error);
+        }
+      );
     } else {
       console.log('Formulario invalido');
     }

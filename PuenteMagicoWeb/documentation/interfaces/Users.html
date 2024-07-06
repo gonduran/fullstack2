@@ -350,6 +350,12 @@ export class UsersService {
    */
   constructor(private cryptoService: CryptoService) {
     if (this.isLocalStorageAvailable()) {
+      const userAdmin: Users &#x3D; { name: &#x27;Administrador&#x27;, email: &#x27;admin@puente-magico.cl&#x27;, password: &#x27;P4ss2511&#x27;, profile: &#x27;Admin&#x27; };
+      if (!(this.findUserAdmin(&#x27;admin@puente-magico.cl&#x27;))) {
+        console.log(&#x27;Administrador no encontrado:&#x27;);
+        this.users.push(userAdmin);
+        localStorage.setItem(&#x27;users&#x27;, JSON.stringify(this.users));
+      }
       const profilesSaved &#x3D; localStorage.getItem(&#x27;profiles&#x27;);
       this.profiles &#x3D; profilesSaved ? JSON.parse(profilesSaved) : [];
       const usersSaved &#x3D; localStorage.getItem(&#x27;users&#x27;);
@@ -575,6 +581,23 @@ export class UsersService {
     } else {
       this.mostrarAlerta(&#x27;Usuario no encontrado.&#x27;, &#x27;danger&#x27;);
       console.log(&#x27;Usuario no encontrado.&#x27;);
+      return false;
+    }
+  }
+
+  /**
+   * @description 
+   * Busca un usuario por su correo electrónico.
+   * 
+   * @param {string} email - El correo electrónico del administrador.
+   * @return {boolean} - Retorna true si el administrador fue encontrado, de lo contrario false.
+   */
+  findUserAdmin(email: string): boolean {
+    console.log(&#x27;Buscando administrador:&#x27;, { email });
+    const user &#x3D; this.users.find(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email);
+    if (user) {
+      return true;
+    } else {
       return false;
     }
   }

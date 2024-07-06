@@ -402,8 +402,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="76"
-                                    class="link-to-prism">src/app/components/login/login.component.ts:76</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="77"
+                                    class="link-to-prism">src/app/components/login/login.component.ts:77</a></div>
                         </td>
                     </tr>
 
@@ -628,16 +628,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
       const email &#x3D; this.loginForm.value.email;
       const password &#x3D; this.loginForm.value.password;
 
-      //localStorage.setItem(&#x27;user&#x27;, JSON.stringify(userData));
-      const loginExitoso &#x3D; this.customersService.iniciarSesion(email, password);
-      if (loginExitoso) {
-        console.log(&#x27;Inicio de sesión exitoso:&#x27;, { email });
-        alert(&#x27;Inicio de sesión exitoso!&#x27;);
-        // Redirigir al perfil del usuario
-        this.router.navigate([&#x27;/profile&#x27;]);
-      } else {
-        console.log(&#x27;Error en el inicio de sesión.&#x27;);
-      }
+      this.customersService.validateLogin(email, password).subscribe(isValid &#x3D;&gt; {
+        if (isValid) {
+          console.log(&#x27;Inicio de sesión exitoso:&#x27;, { email });
+          this.customersService.mostrarAlerta(&#x27;Inicio de sesión exitoso.&#x27;, &#x27;success&#x27;);
+          alert(&#x27;Inicio de sesión exitoso!&#x27;);
+          this.router.navigate([&#x27;/home&#x27;]);
+        } else {
+          console.log(&#x27;Email o contraseña incorrectos.&#x27;);
+          this.customersService.mostrarAlerta(&#x27;Email o contraseña incorrectos.&#x27;, &#x27;danger&#x27;);
+        }
+      });
     } else {
       console.log(&#x27;Formulario invalido&#x27;);
     }

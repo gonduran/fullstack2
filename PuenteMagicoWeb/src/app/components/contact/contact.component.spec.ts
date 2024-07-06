@@ -4,6 +4,7 @@ import { ContactComponent } from './contact.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ContactComponent', () => {
   let component: ContactComponent;
@@ -11,7 +12,7 @@ describe('ContactComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule]
+      imports: [ContactComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule, HttpClientTestingModule]
     })
     .compileComponents();
 

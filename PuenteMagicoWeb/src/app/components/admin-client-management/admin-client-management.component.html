@@ -37,9 +37,10 @@
         <div class="row">
           <div class="col-md-12">
             <div *ngIf="clients.length === 0">No hay Clientes para mostrar.</div>
-            <table *ngIf="clients.length > 0" class="table table-bordered">
+            <table *ngIf="clients && clients.length > 0" class="table table-bordered">
               <thead>
                 <tr>
+                  <th>ID</th>
                   <th>Nombre Cliente</th>
                   <th>Apellido Cliente</th>
                   <th>Email</th>
@@ -49,6 +50,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let client of clients; let i = index">
+                  <td>{{ client.id }}</td>
                   <td>{{ client.clientName }}</td>
                   <td>{{ client.clientSurname }}</td>
                   <td>{{ client.email }}</td>
@@ -74,6 +76,10 @@
               </div>
               <div class="modal-body">
                 <form (ngSubmit)="onUpdateClient()">
+                  <div class="mb-3">
+                    <label for="editId" class="form-label">ID:</label>
+                    <input type="text" class="form-control" id="editId" [(ngModel)]="selectedClient.id" name="id" readonly>
+                  </div>
                   <div class="mb-3">
                     <label for="editClientName" class="form-label">Nombre Cliente:</label>
                     <input type="text" class="form-control" id="editClientName" [(ngModel)]="selectedClient.clientName" name="clientName" required>
@@ -106,6 +112,10 @@
               </div>
               <div class="modal-body">
                 <form (ngSubmit)="onAddClient()">
+                  <div class="mb-3">
+                    <label for="addId" class="form-label">ID:</label>
+                    <input type="text" class="form-control" id="addId" [(ngModel)]="newClient.id" name="id" readonly>
+                  </div>
                   <div class="mb-3">
                     <label for="addClientName" class="form-label">Nombre Cliente:</label>
                     <input type="text" class="form-control" id="addClientName" [(ngModel)]="newClient.clientName" name="clientName" required>

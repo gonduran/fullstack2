@@ -122,7 +122,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/services/users.service.ts</code>
+            <code>src/app/components/admin-user-management/admin-user-management.component.ts</code>
         </p>
 
 
@@ -312,20 +312,15 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import { CryptoService } from &#x27;./crypto.service&#x27;;
-
-interface Users {
-  name: string;
-  email: string;
-  password: string;
-  profile: string;
-}
-
-interface Profile {
-  id: number;
-  name: string;
-}
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { RouterModule } from &#x27;@angular/router&#x27;;
+import { isPlatformBrowser } from &#x27;@angular/common&#x27;;
+import { NavigationService } from &#x27;../../services/navigation.service&#x27;;
+import { UsersService } from &#x27;../../services/users.service&#x27;;
+declare var bootstrap: any;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
 
 interface User {
   name: string;
@@ -334,325 +329,105 @@ interface User {
   profile: string;
 }
 
-@Injectable({
-  providedIn: &#x27;root&#x27;
+@Component({
+  selector: &#x27;app-admin-user-management&#x27;,
+  standalone: true,
+  imports: [CommonModule, RouterModule, FormsModule],
+  templateUrl: &#x27;./admin-user-management.component.html&#x27;,
+  styleUrl: &#x27;./admin-user-management.component.scss&#x27;
 })
-export class UsersService {
-  private users: Users[] &#x3D; [];
-  private profiles: Profile[] &#x3D; [];
-  private storageKey &#x3D; &#x27;users&#x27;;
+export class AdminUserManagementComponent implements OnInit, AfterViewInit {
 
-  /**
-   * @description 
-   * Constructor del servicio. Carga los perfiles y usuarios desde localStorage.
-   * 
-   * @param {CryptoService} cryptoService - Servicio para encriptar y desencriptar datos.
-   */
-  constructor(private cryptoService: CryptoService) {
-    if (this.isLocalStorageAvailable()) {
-      const userAdmin: Users &#x3D; { name: &#x27;Administrador&#x27;, email: &#x27;admin@puente-magico.cl&#x27;, password: &#x27;P4ss2511&#x27;, profile: &#x27;Admin&#x27; };
-      if (!(this.findUserAdmin(&#x27;admin@puente-magico.cl&#x27;))) {
-        console.log(&#x27;Administrador no encontrado:&#x27;);
-        this.users.push(userAdmin);
-        localStorage.setItem(&#x27;users&#x27;, JSON.stringify(this.users));
-      }
-      const profilesSaved &#x3D; localStorage.getItem(&#x27;profiles&#x27;);
-      this.profiles &#x3D; profilesSaved ? JSON.parse(profilesSaved) : [];
-      const usersSaved &#x3D; localStorage.getItem(&#x27;users&#x27;);
-      this.users &#x3D; usersSaved ? JSON.parse(usersSaved) : [];
-    } else {
-      this.users &#x3D; [];
-      this.profiles &#x3D; [];
+  constructor(
+    private navigationService: NavigationService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private userService: UsersService,
+    private usersService: UsersService,
+    private router: Router
+  ) { }
+
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const links &#x3D; document.querySelectorAll(&#x27;a&#x27;);
+      links.forEach(link &#x3D;&gt; {
+        link.addEventListener(&#x27;click&#x27;, (event: Event) &#x3D;&gt; {
+          event.preventDefault();
+          const target &#x3D; event.target as HTMLElement;
+          const href &#x3D; target.getAttribute(&#x27;href&#x27;);
+          if (href) {
+            this.navigationService.navigateWithDelay(href);
+          }
+        });
+      });
     }
   }
 
-  /**
-   * @description 
-   * Registra un nuevo perfil de usuario.
-   * 
-   * @param {number} id - El ID del perfil.
-   * @param {string} name - El nombre del perfil.
-   * @return {boolean} - Retorna true si el perfil fue registrado exitosamente, de lo contrario false.
-   */
-  registerProfile(id: number, name: string): boolean {
-    console.log(&#x27;Intentando registrar perfil de usuario:&#x27;, { id, name });
-    const profileExisting &#x3D; this.profiles.find(profile &#x3D;&gt; profile.id &#x3D;&#x3D;&#x3D; id);
-    if (profileExisting) {
-      this.mostrarAlerta(&#x27;El perfil de usuario ya existe.&#x27;, &#x27;danger&#x27;);
-      console.log(&#x27;El perfil de usuario ya existe.&#x27;);
-      return false;
-    }
+  users: User[] &#x3D; [];
+  newUser: User &#x3D; { name: &#x27;&#x27;, email: &#x27;&#x27;, password: &#x27;&#x27;, profile: &#x27;&#x27; };
+  selectedUser: User &#x3D; { name: &#x27;&#x27;, email: &#x27;&#x27;, password: &#x27;&#x27;, profile: &#x27;&#x27; };
+  selectedIndex: number | null &#x3D; null;
 
-    const newProfile: Profile &#x3D; { id, name };
-    this.profiles.push(newProfile);
-    if (this.isLocalStorageAvailable()) {
-      localStorage.setItem(&#x27;profiles&#x27;, JSON.stringify(this.profiles));
+  ngOnInit(): void {
+    if (this.userService.isLocalStorageAvailable()) {
+      this.loadUsers();
     }
-    this.mostrarAlerta(&#x27;Perfil de usuario registrado exitosamente.&#x27;, &#x27;success&#x27;);
-    console.log(&#x27;Perfil de usuario registrado exitosamente:&#x27;, newProfile);
-    return true;
+    this.checkLoginState();
   }
 
-  /**
-   * @description 
-   * Registra un nuevo usuario.
-   * 
-   * @param {string} name - El nombre del usuario.
-   * @param {string} email - El correo electrónico del usuario.
-   * @param {string} password - La contraseña del usuario.
-   * @param {string} profile - El perfil del usuario.
-   * @return {boolean} - Retorna true si el usuario fue registrado exitosamente, de lo contrario false.
-   */
-  registerUser(name: string, email: string, password: string, profile: string): boolean {
-    console.log(&#x27;Intentando registrar usuario:&#x27;, { name, email, profile });
-    const userExisting &#x3D; this.users.find(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email);
-    if (userExisting) {
-      this.mostrarAlerta(&#x27;El usuario ya existe.&#x27;, &#x27;danger&#x27;);
-      console.log(&#x27;El usuario ya existe.&#x27;);
-      return false;
-    }
-
-    const newUser: Users &#x3D; { name, email, password, profile };
-    this.users.push(newUser);
-    if (this.isLocalStorageAvailable()) {
-      localStorage.setItem(&#x27;users&#x27;, JSON.stringify(this.users));
-    }
-    this.mostrarAlerta(&#x27;Usuario registrado exitosamente.&#x27;, &#x27;success&#x27;);
-    console.log(&#x27;Usuario registrado exitosamente:&#x27;, newUser);
-    return true;
+  loadUsers(): void {
+    this.users &#x3D; this.userService.getUsers();
   }
 
-  /**
-   * @description 
-   * Actualiza un usuario existente.
-   * 
-   * @param {string} name - El nombre del usuario.
-   * @param {string} email - El correo electrónico del usuario.
-   * @param {string} password - La contraseña del usuario.
-   * @param {string} profile - El perfil del usuario.
-   * @return {boolean} - Retorna true si el usuario fue actualizado exitosamente, de lo contrario false.
-   */
-  updatedUser(name: string, email: string, password: string, profile: string): boolean {
-    console.log(&#x27;Intentando actualizar usuario:&#x27;, { name, email, password, profile });
-    const userExisting &#x3D; this.users.find(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email);
-    if (userExisting) {
-      const userIndex &#x3D; this.users.findIndex(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email);
-      if (userIndex !&#x3D;&#x3D; -1) {
-        password &#x3D; this.cryptoService.encrypt(password);
-        this.users[userIndex] &#x3D; { name: name, email: email, password: password, profile: profile };
-        localStorage.setItem(&#x27;users&#x27;, JSON.stringify(this.users));
-
-        this.mostrarAlerta(&#x27;Usuario actualizado exitosamente.&#x27;, &#x27;success&#x27;);
-        console.log(&#x27;Usuario actualizado exitosamente:&#x27;, this.users[userIndex]);
-        return true;
-      } else {
-        this.mostrarAlerta(&#x27;Error al actualizar el usuario.&#x27;, &#x27;danger&#x27;);
-        console.log(&#x27;Error al actualizar el usuario:&#x27;, email);
-        return false;
-      }
-    }
-
-    this.mostrarAlerta(&#x27;Usuario no actualizado.&#x27;, &#x27;danger&#x27;);
-    console.log(&#x27;Usuario no actualizado:&#x27;, email);
-    return false;
+  onAddUser(): void {
+    this.userService.addUser(this.newUser);
+    this.newUser &#x3D; { name: &#x27;&#x27;, email: &#x27;&#x27;, password: &#x27;&#x27;, profile: &#x27;&#x27; };
+    this.loadUsers();
+    // Close modal
+    const addUserModal &#x3D; document.getElementById(&#x27;addUserModal&#x27;);
+    const modalInstance &#x3D; bootstrap.Modal.getInstance(addUserModal);
+    modalInstance.hide();
   }
 
-  /**
-   * @description 
-   * Inicia sesión de un usuario.
-   * 
-   * @param {string} email - El correo electrónico del usuario.
-   * @param {string} password - La contraseña del usuario.
-   * @return {boolean} - Retorna true si el inicio de sesión fue exitoso, de lo contrario false.
-   */
-  iniciarSesion(email: string, password: string): boolean {
-    console.log(&#x27;Intentando iniciar sesión:&#x27;, { email, password });
-    // const user &#x3D; this.users.find(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email &amp;&amp; this.cryptoService.decrypt(user.password) &#x3D;&#x3D;&#x3D; password);
-    const user &#x3D; this.users.find(user &#x3D;&gt; user.email.trim() &#x3D;&#x3D;&#x3D; email.trim() &amp;&amp; user.password.trim() &#x3D;&#x3D;&#x3D; password.trim());
-    console.log(&#x27;Estado sesión:&#x27;, user);
-    if (user) {
-      this.mostrarAlerta(&#x27;Inicio de sesión exitoso.&#x27;, &#x27;success&#x27;);
-      console.log(&#x27;Inicio de sesión exitoso:&#x27;, user);
-      this.setLoginState(user);
-      return true;
-    } else {
-      this.mostrarAlerta(&#x27;Email o contraseña incorrectos.&#x27;, &#x27;danger&#x27;);
-      console.log(&#x27;Email o contraseña incorrectos.&#x27;);
-      return false;
+  editUser(index: number): void {
+    this.selectedUser &#x3D; { ...this.users[index] };
+    this.selectedIndex &#x3D; index;
+    // Show modal
+    const editUserModal &#x3D; new bootstrap.Modal(document.getElementById(&#x27;editUserModal&#x27;));
+    editUserModal.show();
+  }
+
+  onUpdateUser(): void {
+    if (this.selectedIndex !&#x3D;&#x3D; null) {
+      this.userService.updateUser(this.selectedIndex, this.selectedUser);
+      this.selectedUser &#x3D; { name: &#x27;&#x27;, email: &#x27;&#x27;, password: &#x27;&#x27;, profile: &#x27;&#x27; };
+      this.selectedIndex &#x3D; null;
+      this.loadUsers();
+      // Close modal
+      const editUserModal &#x3D; document.getElementById(&#x27;editUserModal&#x27;);
+      const modalInstance &#x3D; bootstrap.Modal.getInstance(editUserModal);
+      modalInstance.hide();
     }
   }
 
-  /**
-   * @description 
-   * Muestra una alerta en la interfaz de usuario.
-   * 
-   * @param {string} mensaje - El mensaje de la alerta.
-   * @param {string} tipo - El tipo de alerta (e.g., &#x27;success&#x27;, &#x27;danger&#x27;).
-   */
-  private mostrarAlerta(mensaje: string, tipo: string): void {
-    const alertaDiv &#x3D; document.createElement(&#x27;div&#x27;);
-    alertaDiv.className &#x3D; &#x60;alert alert-${tipo}&#x60;;
-    alertaDiv.appendChild(document.createTextNode(mensaje));
-    const container &#x3D; document.querySelector(&#x27;.container&#x27;);
-    if (container) {
-      const firstChild &#x3D; container.firstChild;
-      if (firstChild) {
-        container.insertBefore(alertaDiv, firstChild);
-      } else {
-        container.appendChild(alertaDiv);
-      }
-
-      setTimeout(() &#x3D;&gt; {
-        const alerta &#x3D; document.querySelector(&#x27;.alert&#x27;);
-        if (alerta) {
-          alerta.remove();
-        }
-      }, 6000);
-    }
-  }
-
-  /**
-   * @description 
-   * Verifica si localStorage está disponible.
-   * 
-   * @return {boolean} - Retorna true si localStorage está disponible, de lo contrario false.
-   */
-  isLocalStorageAvailable(): boolean {
-    try {
-      const test &#x3D; &#x27;__test__&#x27;;
-      localStorage.setItem(test, test);
-      localStorage.removeItem(test);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  /**
-   * @description 
-   * Establece el estado de inicio de sesión del usuario.
-   * 
-   * @param {any} user - El usuario que ha iniciado sesión.
-   */
-  setLoginState(user: any): void {
-    if (this.isLocalStorageAvailable()) {
-      localStorage.setItem(&#x27;loggedInUser&#x27;, JSON.stringify(user));
-    }
-  }
-
-  /**
-   * @description 
-   * Verifica el estado de inicio de sesión del usuario.
-   * 
-   * @return {boolean} - Retorna true si el usuario ha iniciado sesión, de lo contrario false.
-   */
-  checkLoginState(): boolean {
-    if (this.isLocalStorageAvailable()) {
-      const loggedInUser &#x3D; JSON.parse(localStorage.getItem(&#x27;loggedInUser&#x27;) || &#x27;null&#x27;);
-      return loggedInUser !&#x3D;&#x3D; null;
-    }
-    return false;
-  }
-
-  /**
-   * @description Cierra la sesión del usuario.
-   */
-  logout(): void {
-    if (this.isLocalStorageAvailable()) {
-      console.log(&#x27;Logout usuario.&#x27;);
-      localStorage.removeItem(&#x27;loggedInUser&#x27;);
-    }
-  }
-
-  /**
-   * @description 
-   * Busca un usuario por su correo electrónico.
-   * 
-   * @param {string} email - El correo electrónico del usuario.
-   * @return {boolean} - Retorna true si el usuario fue encontrado, de lo contrario false.
-   */
-  findUser(email: string): boolean {
-    console.log(&#x27;Buscando usuario:&#x27;, { email });
-    const user &#x3D; this.users.find(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email);
-    if (user) {
-      this.mostrarAlerta(&#x27;Usuario encontrado.&#x27;, &#x27;success&#x27;);
-      console.log(&#x27;Usuario encontrado:&#x27;, user);
-      return true;
-    } else {
-      this.mostrarAlerta(&#x27;Usuario no encontrado.&#x27;, &#x27;danger&#x27;);
-      console.log(&#x27;Usuario no encontrado.&#x27;);
-      return false;
-    }
-  }
-
-  /**
-   * @description 
-   * Busca un usuario por su correo electrónico.
-   * 
-   * @param {string} email - El correo electrónico del administrador.
-   * @return {boolean} - Retorna true si el administrador fue encontrado, de lo contrario false.
-   */
-  findUserAdmin(email: string): boolean {
-    console.log(&#x27;Buscando administrador:&#x27;, { email });
-    const user &#x3D; this.users.find(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email);
-    if (user) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  /**
-   * @description 
-   * Obtiene la lista de todos los usuarios.
-   * 
-   * @return {User[]} - Un array de objetos User.
-   */
-  getUsers(): User[] {
-    return JSON.parse(localStorage.getItem(this.storageKey) || &#x27;[]&#x27;);
-  }
-
-  /**
-   * @description 
-   * Agrega un nuevo usuario a la lista y guarda en localStorage.
-   * 
-   * @param {User} user - El usuario a agregar.
-   * @return {void}
-   */
-  addUser(user: User): void {
-    const users &#x3D; this.getUsers();
-    users.push(user);
-    localStorage.setItem(this.storageKey, JSON.stringify(users));
-  }
-
-  /**
-   * @description 
-   * Actualiza un usuario existente.
-   * 
-   * @param {number} index - El índice del usuario a actualizar.
-   * @param {User} updatedUser - Los datos actualizados del usuario.
-   * @return {void}
-   */
-  updateUser(index: number, updatedUser: User): void {
-    const users &#x3D; this.getUsers();
-    users[index] &#x3D; updatedUser;
-    localStorage.setItem(this.storageKey, JSON.stringify(users));
-  }
-
-  /**
-   * @description 
-   * Elimina un usuario de la lista y de localStorage.
-   * 
-   * @param {number} index - El índice del usuario a eliminar.
-   * @return {void}
-   */
   deleteUser(index: number): void {
-    const users &#x3D; this.getUsers();
-    users.splice(index, 1);
-    localStorage.setItem(this.storageKey, JSON.stringify(users));
+    this.userService.deleteUser(index);
+    this.loadUsers();
   }
-}
-</code></pre>
+
+  checkLoginState(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.usersService.checkLoginState()) {
+        // Redirigir al administrador
+        //this.router.navigate([&#x27;/admin-user-management&#x27;]);
+        console.log(&#x27;Usuario logueado.&#x27;);
+      } else {
+        // Redirigir al administrador
+        this.router.navigate([&#x27;/admin-login&#x27;]);
+        console.log(&#x27;Usuario no logueado.&#x27;);
+      }
+    }
+  }
+}</code></pre>
     </div>
 </div>
 
@@ -689,7 +464,7 @@ export class UsersService {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
-            var COMPODOC_CURRENT_PAGE_URL = 'User.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'User-2.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

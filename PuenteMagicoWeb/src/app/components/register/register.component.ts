@@ -4,17 +4,19 @@ import { RouterModule } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { NavigationService } from '../../services/navigation.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CustomersService } from '../../services/customers.service';
+import { CustomersService, Customer } from '../../services/customers.service';
 import { Renderer2, ElementRef } from '@angular/core';
 import { CryptoService } from '../../services/crypto.service';
 import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, HttpClientModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
+  providers: [CustomersService]
 })
 export class RegisterComponent implements OnInit, AfterViewInit {
   registerForm: FormGroup;
@@ -112,14 +114,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
     return age;
   }
-
+  
   /**
    * @description 
    * Maneja el envío del formulario de registro. Realiza las validaciones y registra al cliente.
    * 
    * @return {void}
    */
-  onSubmit(): void {
+  onSubmit() {
     if (this.registerForm.valid) {
       const age = this.calculateAge(this.registerForm.value.birthdate);
       if (age < 13) {
@@ -127,23 +129,27 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         return;
       }
 
-      const clientName = this.registerForm.value.clientName;
-      const clientSurname = this.registerForm.value.clientSurname;
-      const email = this.registerForm.value.email;
-      const password = this.cryptoService.encrypt(this.registerForm.value.password);
-      const birthdate = this.formatToStorageDate(this.registerForm.value.birthdate);
-      const dispatchAddress = this.registerForm.value.dispatchAddress;
+      const newCustomer: Customer = {
+        id: 0, // This will be set in the service
+        clientName: this.registerForm.value.clientName,
+        clientSurname: this.registerForm.value.clientSurname,
+        email: this.registerForm.value.email,
+        password: this.cryptoService.encrypt(this.registerForm.value.password),
+        birthdate: this.registerForm.value.birthdate,
+        dispatchAddress: this.registerForm.value.dispatchAddress
+      };
 
-      const registroExitoso = this.customersService.registerCustomer(clientName, clientSurname, email, password, birthdate, dispatchAddress);
-      if (registroExitoso) {
-        console.log('Registro exitoso:', { clientName, clientSurname, email, password, birthdate, dispatchAddress });
-        alert('Registro exitoso!');
-        this.registerForm.reset();
-      } else {
-        console.log('Error en el registro.');
-      }
+      this.customersService.addCustomer(newCustomer).subscribe(
+        () => {
+          alert('Registro exitoso!');
+          this.registerForm.reset();
+        },
+        error => {
+          alert('Error: ' + error.message);
+        }
+      );
     } else {
-      console.log('Formulario invalido');
+      console.log('Formulario inválido');
     }
   }
 

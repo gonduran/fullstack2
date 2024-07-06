@@ -58,16 +58,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
       const email = this.loginForm.value.email;
       const password = this.loginForm.value.password;
 
-      //localStorage.setItem('user', JSON.stringify(userData));
-      const loginExitoso = this.customersService.iniciarSesion(email, password);
-      if (loginExitoso) {
-        console.log('Inicio de sesión exitoso:', { email });
-        alert('Inicio de sesión exitoso!');
-        // Redirigir al perfil del usuario
-        this.router.navigate(['/profile']);
-      } else {
-        console.log('Error en el inicio de sesión.');
-      }
+      this.customersService.validateLogin(email, password).subscribe(isValid => {
+        if (isValid) {
+          console.log('Inicio de sesión exitoso:', { email });
+          this.customersService.mostrarAlerta('Inicio de sesión exitoso.', 'success');
+          alert('Inicio de sesión exitoso!');
+          this.router.navigate(['/home']);
+        } else {
+          console.log('Email o contraseña incorrectos.');
+          this.customersService.mostrarAlerta('Email o contraseña incorrectos.', 'danger');
+        }
+      });
     } else {
       console.log('Formulario invalido');
     }
