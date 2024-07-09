@@ -1,19 +1,36 @@
 import { TestBed } from '@angular/core/testing';
-import { ContactsService } from './contacts.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { ContactsService, Contact } from './contacts.service';
+import { HttpClient } from '@angular/common/http';
 
 describe('ContactsService', () => {
   let service: ContactsService;
+  let httpMock: HttpTestingController;
 
+  /**
+   * @description 
+   * Configuración del módulo de pruebas antes de cada prueba.
+   */
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [ContactsService]
+    });
     service = TestBed.inject(ContactsService);
-    localStorage.clear(); // Limpiar localStorage antes de cada prueba
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   /**
    * @description 
-   * Verifica que el servicio se crea correctamente.
-   * 
+   * Verifica que no haya solicitudes pendientes después de cada prueba.
+   */
+  afterEach(() => {
+    httpMock.verify();
+  });
+
+  /**
+   * @description 
+   * Verifica que el servicio se haya creado correctamente.
    */
   it('should be created', () => {
     expect(service).toBeTruthy();
@@ -21,45 +38,65 @@ describe('ContactsService', () => {
 
   /**
    * @description 
-   * Verifica que un contacto puede ser encontrado por su ID.
-   * 
+   * Prueba para obtener la lista de contactos desde el archivo JSON.
    */
-  it('should find a contact by id', () => {
-    service.registerContacts('John Doe', 'john@example.com', '123456789', 'Subject', 'Message');
-    const contacts = service.getContacts();
-    const contactId = contacts[0].id;
-    const result = service.findContact(contactId);
-    expect(result).toBeTrue();
+  it('should retrieve contacts from JSON', () => {
+    const mockContacts: Contact[] = [
+      { id: 1, name: 'John Doe', email: 'john@example.com', phone: '123456789', subject: 'Subject 1', message: 'Message 1', fecha: '2023-06-21', estado: 'new' },
+      { id: 2, name: 'Jane Doe', email: 'jane@example.com', phone: '987654321', subject: 'Subject 2', message: 'Message 2', fecha: '2023-06-22', estado: 'new' }
+    ];
+
+    service.getContacts().subscribe(contacts => {
+      expect(contacts.length).toBe(2);
+      expect(contacts).toEqual(mockContacts);
+    });
+
+    const req = httpMock.expectOne(service['jsonUrl']);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockContacts);
   });
 
   /**
    * @description 
-   * Verifica que el servicio retorna false cuando se intenta encontrar un contacto inexistente.
-   * 
+   * Prueba para agregar un nuevo contacto a la lista.
    */
-  it('should return false when trying to find a non-existent contact', () => {
-    const result = service.findContact(999);
-    expect(result).toBeFalse();
+  it('should add a new contact', () => {
+    const mockContacts: Contact[] = [
+      { id: 1, name: 'John Doe', email: 'john@example.com', phone: '123456789', subject: 'Subject 1', message: 'Message 1', fecha: '2023-06-21', estado: 'new' }
+    ];
+
+    const newContact: Contact = { id: 2, name: 'Jane Doe', email: 'jane@example.com', phone: '987654321', subject: 'Subject 2', message: 'Message 2', fecha: '2023-06-22', estado: 'new' };
+
+    service.addContact(newContact).subscribe(contacts => {
+      expect(contacts.length).toBe(2);
+      expect(contacts.find(c => c.id === 2)).toEqual(newContact);
+    });
+
+    const getReq = httpMock.expectOne(service['jsonUrl']);
+    getReq.flush(mockContacts);
+
+    const postReq = httpMock.expectOne(service['jsonUrl']);
+    expect(postReq.request.method).toBe('POST');
+    postReq.flush([...mockContacts, newContact]);
   });
 
   /**
    * @description 
-   * Verifica si el localStorage está disponible.
-   * 
+   * Prueba para formatear una fecha de YYYY-MM-DD a DD-MM-YYYY.
    */
-  it('should check if localStorage is available', () => {
-    expect(service.isLocalStorageAvailable()).toBeTrue();
+  it('should format date from YYYY-MM-DD to DD-MM-YYYY', () => {
+    const date = '2023-06-21';
+    const formattedDate = service['formatToFormDate'](date);
+    expect(formattedDate).toBe('21-06-2023');
   });
 
   /**
    * @description 
-   * Verifica que las fechas se formatean correctamente de YYYY-MM-DD a DD-MM-YYYY.
-   * 
+   * Prueba para formatear una fecha de DD-MM-YYYY a YYYY-MM-DD.
    */
-  it('should format dates correctly', () => {
-    const formDate = service['formatToFormDate']('2024-06-21');
-    expect(formDate).toBe('21-06-2024');
-    const storageDate = service['formatToStorageDate']('21-06-2024');
-    expect(storageDate).toBe('2024-06-21');
+  it('should format date from DD-MM-YYYY to YYYY-MM-DD', () => {
+    const date = '21-06-2023';
+    const formattedDate = service['formatToStorageDate'](date);
+    expect(formattedDate).toBe('2023-06-21');
   });
 });

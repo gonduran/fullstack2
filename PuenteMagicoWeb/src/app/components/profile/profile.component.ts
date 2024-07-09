@@ -8,13 +8,15 @@ import { CustomersService, Customer } from '../../services/customers.service';
 import { Renderer2, ElementRef } from '@angular/core';
 import { CryptoService } from '../../services/crypto.service';
 import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, HttpClientModule],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.scss'
+  styleUrl: './profile.component.scss',
+  providers: [CustomersService]
 })
 export class ProfileComponent implements OnInit, AfterViewInit {
   profileForm: FormGroup;
@@ -146,8 +148,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
       this.customersService.updateCustomer(updatedCustomer).subscribe(
         () => {
-          alert('Actualización exitosa!');
           this.customersService.mostrarAlerta('Cliente actualizado exitosamente.', 'success');
+          alert('Actualización exitosa!');
           // Actualizar los datos del cliente logueado en localStorage
           localStorage.setItem('loggedInClient', JSON.stringify(updatedCustomer));
         },

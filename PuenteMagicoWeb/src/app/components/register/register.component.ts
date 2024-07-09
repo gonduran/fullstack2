@@ -135,12 +135,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         clientSurname: this.registerForm.value.clientSurname,
         email: this.registerForm.value.email,
         password: this.cryptoService.encrypt(this.registerForm.value.password),
-        birthdate: this.registerForm.value.birthdate,
+        birthdate: this.formatToStorageDate(this.registerForm.value.birthdate),
         dispatchAddress: this.registerForm.value.dispatchAddress
       };
 
       this.customersService.addCustomer(newCustomer).subscribe(
         () => {
+          this.customersService.mostrarAlerta('Contacto cliente registrado exitosamente.', 'success');
+          console.log('Contacto cliente registrado exitosamente:', newCustomer);
           alert('Registro exitoso!');
           this.registerForm.reset();
         },
