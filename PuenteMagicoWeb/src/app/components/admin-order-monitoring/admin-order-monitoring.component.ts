@@ -6,54 +6,50 @@ import { NavigationService } from '../../services/navigation.service';
 import { UsersService } from '../../services/users.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { OrdersService } from '../../services/orders.service';
-
-interface Order {
-  email: string;
-  id: number;
-  total: number;
-  fecha: Date;
-  estado: string;
-}
-
-interface Orderdetail {
-  id: number;
-  product: string;
-  image: string;
-  price: number;
-  quantity: number;
-  total: number;
-}
+import { OrdersService, Order, OrderDetail } from '../../services/orders.service';
 
 @Component({
   selector: 'app-admin-order-monitoring',
   standalone: true,
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './admin-order-monitoring.component.html',
-  styleUrl: './admin-order-monitoring.component.scss'
+  styleUrls: ['./admin-order-monitoring.component.scss']
 })
 export class AdminOrderMonitoringComponent implements OnInit, AfterViewInit {
   orders: Order[] = [];
-  selectedOrderDetails: Orderdetail[] = [];
+  selectedOrderDetails: OrderDetail[] = [];
   selectedOrderId: number | null = null;
-  editOrderForm: FormGroup;
-  
+  statusForm: FormGroup;
+
+  /**
+   * @description 
+   * Constructor del componente. Inicializa los servicios necesarios.
+   * 
+   * @param {NavigationService} navigationService - Servicio de navegación.
+   * @param {Object} platformId - Identificador de la plataforma.
+   * @param {UsersService} usersService - Servicio de usuarios.
+   * @param {OrdersService} ordersService - Servicio de órdenes.
+   * @param {Router} router - Servicio de enrutamiento.
+   */
   constructor(
     private navigationService: NavigationService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private usersService: UsersService,
     private router: Router,
-    private orderService: OrdersService,
+    private ordersService: OrdersService,
     private fb: FormBuilder
   ) {
-    this.editOrderForm = this.fb.group({
-      clientName: ['', Validators.required],
-      productName: ['', Validators.required],
-      quantity: ['', Validators.required],
+    this.statusForm = this.fb.group({
       status: ['', Validators.required]
     });
   }
 
+  /**
+   * @description
+   * Hook que se ejecuta después de que la vista ha sido inicializada. Configura la navegación con retardo para los enlaces.
+   * 
+   * @return {void}
+   */
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const links = document.querySelectorAll('a');
@@ -70,11 +66,23 @@ export class AdminOrderMonitoringComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * @description
+   * Hook de inicialización del componente. Verifica el estado de inicio de sesión y carga el carrito.
+   * 
+   * @return {void}
+   */
   ngOnInit(): void {
     this.checkLoginState();
-	this.orders = this.orderService.getOrders();
+    this.orders = this.ordersService.getOrders();
   }
 
+  /**
+   * @description
+   * Verifica el estado de inicio de sesión del cliente y actualiza la interfaz de usuario en consecuencia.
+   * 
+   * @return {void}
+   */
   checkLoginState(): void {
     if (isPlatformBrowser(this.platformId)) {
       if (this.usersService.checkLoginState()) {
@@ -89,35 +97,43 @@ export class AdminOrderMonitoringComponent implements OnInit, AfterViewInit {
     }
   }
 
-  selectOrder(orderId: number): void {
+  /**
+   * @description 
+   * Muestra los detalles de la orden seleccionada.
+   * 
+   * @param {number} orderId - El ID de la orden seleccionada.
+   * @return {void}
+   */
+  showOrderDetails(orderId: number): void {
     this.selectedOrderId = orderId;
-    this.selectedOrderDetails = this.orderService.getOrderDetails(orderId);
-    const order = this.orders.find(o => o.id === orderId);
-    if (order) {
-      this.editOrderForm.patchValue({
-        clientName: order.email,
-        productName: this.selectedOrderDetails.map(detail => detail.product).join(', '),
-        quantity: this.selectedOrderDetails.reduce((acc, detail) => acc + detail.quantity, 0),
-        status: order.estado
-      });
-    }
+    this.ordersService.getOrderDetails(orderId).subscribe(details => {
+      this.selectedOrderDetails = details;
+    });
   }
 
-  getOrderProducts(orderId: number): string {
-    const products = this.orderService.getOrderDetails(orderId).map(detail => detail.product);
-    return products.join(', ');
+  /**
+   * @description Cierra los detalles de la orden.
+   * @param {void}
+   */
+  closeOrderDetails(): void {
+    this.selectedOrderId = null;
+    this.selectedOrderDetails = [];
+    this.statusForm.reset();
   }
 
-  getOrderQuantity(orderId: number): number {
-    const quantity = this.orderService.getOrderDetails(orderId).reduce((acc, detail) => acc + detail.quantity, 0);
-    return quantity;
-  }
-
+  /**
+   * @description 
+   * Actualiza el estado de la orden seleccionada.
+   * 
+   * @return {void}
+   */
   updateOrderStatus(): void {
-    if (this.selectedOrderId !== null) {
-      const newStatus = this.editOrderForm.value.status;
-      this.orderService.updateOrderStatus(this.selectedOrderId, newStatus);
-      this.orders = this.orderService.getOrders();
+    if (this.selectedOrderId && this.statusForm.valid) {
+      const newStatus = this.statusForm.value.status;
+      this.ordersService.updateOrderStatus(this.selectedOrderId, newStatus).subscribe(order => {
+        console.log('Estado de la orden actualizado:', order);
+        this.orders = this.orders.map(o => o.id === order.id ? order : o);
+      });
     }
   }
 }

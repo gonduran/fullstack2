@@ -96,6 +96,7 @@ export class AdminUserManagementComponent implements OnInit, AfterViewInit {
    */
   editUser(index: number): void {
     this.selectedUser = { ...this.users[index] };
+    this.selectedUser.password = this.cryptoService.decrypt(this.selectedUser.password);
     this.selectedIndex = index;
     // Show modal
     const editUserModal = new bootstrap.Modal(document.getElementById('editUserModal'));
