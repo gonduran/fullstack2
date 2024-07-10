@@ -135,12 +135,11 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#profiles" >profiles</a>
+                                <a href="#httpOptions" >httpOptions</a>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
-                                <a href="#storageKey" >storageKey</a>
+                                <a href="#jsonUrl" >jsonUrl</a>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
@@ -165,19 +164,10 @@
                                 <a href="#checkLoginState" >checkLoginState</a>
                             </li>
                             <li>
-                                <a href="#deleteUser" >deleteUser</a>
-                            </li>
-                            <li>
-                                <a href="#findUser" >findUser</a>
-                            </li>
-                            <li>
-                                <a href="#findUserAdmin" >findUserAdmin</a>
+                                <a href="#getUserByEmail" >getUserByEmail</a>
                             </li>
                             <li>
                                 <a href="#getUsers" >getUsers</a>
-                            </li>
-                            <li>
-                                <a href="#iniciarSesion" >iniciarSesion</a>
                             </li>
                             <li>
                                 <a href="#isLocalStorageAvailable" >isLocalStorageAvailable</a>
@@ -186,23 +176,22 @@
                                 <a href="#logout" >logout</a>
                             </li>
                             <li>
-                                    <span class="modifier">Private</span>
+                                <a href="#MetodoUsuario" >MetodoUsuario</a>
+                            </li>
+                            <li>
                                 <a href="#mostrarAlerta" >mostrarAlerta</a>
-                            </li>
-                            <li>
-                                <a href="#registerProfile" >registerProfile</a>
-                            </li>
-                            <li>
-                                <a href="#registerUser" >registerUser</a>
                             </li>
                             <li>
                                 <a href="#setLoginState" >setLoginState</a>
                             </li>
                             <li>
-                                <a href="#updatedUser" >updatedUser</a>
+                                <a href="#updateUser" >updateUser</a>
                             </li>
                             <li>
-                                <a href="#updateUser" >updateUser</a>
+                                <a href="#validateEmail" >validateEmail</a>
+                            </li>
+                            <li>
+                                <a href="#validateLogin" >validateLogin</a>
                             </li>
                         </ul>
                     </td>
@@ -222,18 +211,18 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(cryptoService: <a href="../injectables/CryptoService.html" target="_self">CryptoService</a>)</code>
+<code>constructor(http: HttpClient, cryptoService: <a href="../injectables/CryptoService.html" target="_self">CryptoService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/services/users.service.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/services/users.service.ts:33</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
-                            <div class="io-description"><p>Constructor del servicio. Carga los perfiles y usuarios desde localStorage.</p>
+                            <div class="io-description"><p>Constructor del servicio. Inicializa el servicio HTTP y el servicio de encriptación.</p>
 </div>
                             <div>
                                     <b>Parameters :</b>
@@ -248,6 +237,24 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpClient</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Servicio HTTP para realizar solicitudes.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
                                                         <td>cryptoService</td>
                                                   
                                                         <td>
@@ -260,7 +267,7 @@
                                                     
                                                         <td>
                                                                 <ul>
-<li>Servicio para encriptar y desencriptar datos.</li>
+<li>Servicio de encriptación.</li>
 </ul>
 
                                                         </td>
@@ -292,22 +299,22 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>addUser(user: <a href="../interfaces/User.html" target="_self">User</a>)</code>
+<code>addUser(newUser: <a href="../interfaces/User.html" target="_self">User</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="308"
-                                    class="link-to-prism">src/app/services/users.service.ts:308</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="150"
+                                    class="link-to-prism">src/app/services/users.service.ts:150</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Agrega un nuevo usuario a la lista y guarda en localStorage.</p>
+                        <div class="io-description"><p>Agrega un nuevo usuario a la lista.</p>
 </div>
 
                             <div class="io-description">
@@ -324,7 +331,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>user</td>
+                                                <td>newUser</td>
                                             <td>
                                                             <code><a href="../interfaces/User.html" target="_self" >User</a></code>
                                             </td>
@@ -336,7 +343,7 @@
 
                                             <td>
                                                     <ul>
-<li>El usuario a agregar.</li>
+<li>Los datos del nuevo usuario.</li>
 </ul>
 
                                             </td>
@@ -345,11 +352,14 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                            <b>Returns : </b>        <code><a href="../interfaces/User.html" target="_self" >Observable&lt;User[]&gt;</a></code>
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>Un observable con la lista de usuarios actualizada.</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -375,8 +385,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="235"
-                                    class="link-to-prism">src/app/services/users.service.ts:235</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="233"
+                                    class="link-to-prism">src/app/services/users.service.ts:233</a></div>
                         </td>
                     </tr>
 
@@ -404,107 +414,31 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="deleteUser"></a>
+                    <a name="getUserByEmail"></a>
                     <span class="name">
-                        <span ><b>deleteUser</b></span>
-                        <a href="#deleteUser"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>getUserByEmail</b></span>
+                        <a href="#getUserByEmail"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>deleteUser(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+<code>getUserByEmail(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="335"
-                                    class="link-to-prism">src/app/services/users.service.ts:335</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="117"
+                                    class="link-to-prism">src/app/services/users.service.ts:117</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Elimina un usuario de la lista y de localStorage.</p>
-</div>
-
-                            <div class="io-description">
-                                <b>Parameters :</b>
-                                
-                                <table class="params">
-                                    <thead>
-                                        <tr>
-                                            <td>Name</td>
-                                                <td>Type</td>
-                                            <td>Optional</td>
-                                                <td>Description</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>index</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                            <td>
-                                                    <ul>
-<li>El índice del usuario a eliminar.</li>
-</ul>
-
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                        </div>
-                            <div class="io-description">
-                                
-                            </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="findUser"></a>
-                    <span class="name">
-                        <span ><b>findUser</b></span>
-                        <a href="#findUser"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>findUser(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="260"
-                                    class="link-to-prism">src/app/services/users.service.ts:260</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-description"><p>Busca un usuario por su correo electrónico.</p>
+                        <div class="io-description"><p>Obtiene un usuario por su correo electrónico.</p>
 </div>
 
                             <div class="io-description">
@@ -542,91 +476,12 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                            <b>Returns : </b>        <code><a href="../interfaces/User.html" target="_self" >Observable&lt;User | undefined&gt;</a></code>
 
                         </div>
                             <div class="io-description">
                                 <ul>
-<li>Retorna true si el usuario fue encontrado, de lo contrario false.</li>
-</ul>
-
-                            </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="findUserAdmin"></a>
-                    <span class="name">
-                        <span ><b>findUserAdmin</b></span>
-                        <a href="#findUserAdmin"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>findUserAdmin(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="281"
-                                    class="link-to-prism">src/app/services/users.service.ts:281</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-description"><p>Busca un usuario por su correo electrónico.</p>
-</div>
-
-                            <div class="io-description">
-                                <b>Parameters :</b>
-                                
-                                <table class="params">
-                                    <thead>
-                                        <tr>
-                                            <td>Name</td>
-                                                <td>Type</td>
-                                            <td>Optional</td>
-                                                <td>Description</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>email</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                            <td>
-                                                    <ul>
-<li>El correo electrónico del administrador.</li>
-</ul>
-
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                        </div>
-                            <div class="io-description">
-                                <ul>
-<li>Retorna true si el administrador fue encontrado, de lo contrario false.</li>
+<li>Un observable que retorna el usuario si es encontrado, de lo contrario undefined.</li>
 </ul>
 
                             </div>
@@ -654,121 +509,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="297"
-                                    class="link-to-prism">src/app/services/users.service.ts:297</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="68"
+                                    class="link-to-prism">src/app/services/users.service.ts:68</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Obtiene la lista de todos los usuarios.</p>
+                        <div class="io-description"><p>Obtiene la lista de usuarios desde el archivo JSON.</p>
 </div>
 
                         <div class="io-description">
-                            <b>Returns : </b>    <code>User[]</code>
+                            <b>Returns : </b>        <code><a href="../interfaces/User.html" target="_self" >Observable&lt;User[]&gt;</a></code>
 
                         </div>
                             <div class="io-description">
                                 <ul>
-<li>Un array de objetos User.</li>
-</ul>
-
-                            </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="iniciarSesion"></a>
-                    <span class="name">
-                        <span ><b>iniciarSesion</b></span>
-                        <a href="#iniciarSesion"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>iniciarSesion(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="154"
-                                    class="link-to-prism">src/app/services/users.service.ts:154</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-description"><p>Inicia sesión de un usuario.</p>
-</div>
-
-                            <div class="io-description">
-                                <b>Parameters :</b>
-                                
-                                <table class="params">
-                                    <thead>
-                                        <tr>
-                                            <td>Name</td>
-                                                <td>Type</td>
-                                            <td>Optional</td>
-                                                <td>Description</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>email</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                            <td>
-                                                    <ul>
-<li>El correo electrónico del usuario.</li>
-</ul>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                                <td>password</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                            <td>
-                                                    <ul>
-<li>La contraseña del usuario.</li>
-</ul>
-
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                        </div>
-                            <div class="io-description">
-                                <ul>
-<li>Retorna true si el inicio de sesión fue exitoso, de lo contrario false.</li>
+<li>Un observable con la lista de usuarios.</li>
 </ul>
 
                             </div>
@@ -796,8 +554,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="206"
-                                    class="link-to-prism">src/app/services/users.service.ts:206</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="204"
+                                    class="link-to-prism">src/app/services/users.service.ts:204</a></div>
                         </td>
                     </tr>
 
@@ -841,8 +599,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="246"
-                                    class="link-to-prism">src/app/services/users.service.ts:246</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="244"
+                                    class="link-to-prism">src/app/services/users.service.ts:244</a></div>
                         </td>
                     </tr>
 
@@ -862,9 +620,84 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="MetodoUsuario"></a>
+                    <span class="name">
+                        <span ><b>MetodoUsuario</b></span>
+                        <a href="#MetodoUsuario"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>MetodoUsuario(listaUsuarios: <a href="../interfaces/User.html" target="_self">User[]</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="50"
+                                    class="link-to-prism">src/app/services/users.service.ts:50</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sobrescribe el archivo JSON con la lista de usuarios proporcionada.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>listaUsuarios</td>
+                                            <td>
+                                                            <code><a href="../interfaces/User.html" target="_self" >User[]</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>La lista de usuarios a sobrescribir en el archivo JSON.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="mostrarAlerta"></a>
                     <span class="name">
-                            <span class="modifier">Private</span>
                         <span ><b>mostrarAlerta</b></span>
                         <a href="#mostrarAlerta"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -872,16 +705,15 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>mostrarAlerta(mensaje: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, tipo: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>mostrarAlerta(mensaje: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, tipo: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="178"
-                                    class="link-to-prism">src/app/services/users.service.ts:178</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="176"
+                                    class="link-to-prism">src/app/services/users.service.ts:176</a></div>
                         </td>
                     </tr>
 
@@ -958,236 +790,6 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="registerProfile"></a>
-                    <span class="name">
-                        <span ><b>registerProfile</b></span>
-                        <a href="#registerProfile"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>registerProfile(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="63"
-                                    class="link-to-prism">src/app/services/users.service.ts:63</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-description"><p>Registra un nuevo perfil de usuario.</p>
-</div>
-
-                            <div class="io-description">
-                                <b>Parameters :</b>
-                                
-                                <table class="params">
-                                    <thead>
-                                        <tr>
-                                            <td>Name</td>
-                                                <td>Type</td>
-                                            <td>Optional</td>
-                                                <td>Description</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>id</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                            <td>
-                                                    <ul>
-<li>El ID del perfil.</li>
-</ul>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                                <td>name</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                            <td>
-                                                    <ul>
-<li>El nombre del perfil.</li>
-</ul>
-
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                        </div>
-                            <div class="io-description">
-                                <ul>
-<li>Retorna true si el perfil fue registrado exitosamente, de lo contrario false.</li>
-</ul>
-
-                            </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="registerUser"></a>
-                    <span class="name">
-                        <span ><b>registerUser</b></span>
-                        <a href="#registerUser"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>registerUser(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, profile: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="92"
-                                    class="link-to-prism">src/app/services/users.service.ts:92</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-description"><p>Registra un nuevo usuario.</p>
-</div>
-
-                            <div class="io-description">
-                                <b>Parameters :</b>
-                                
-                                <table class="params">
-                                    <thead>
-                                        <tr>
-                                            <td>Name</td>
-                                                <td>Type</td>
-                                            <td>Optional</td>
-                                                <td>Description</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>name</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                            <td>
-                                                    <ul>
-<li>El nombre del usuario.</li>
-</ul>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                                <td>email</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                            <td>
-                                                    <ul>
-<li>El correo electrónico del usuario.</li>
-</ul>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                                <td>password</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                            <td>
-                                                    <ul>
-<li>La contraseña del usuario.</li>
-</ul>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                                <td>profile</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                            <td>
-                                                    <ul>
-<li>El perfil del usuario.</li>
-</ul>
-
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                        </div>
-                            <div class="io-description">
-                                <ul>
-<li>Retorna true si el usuario fue registrado exitosamente, de lo contrario false.</li>
-</ul>
-
-                            </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="setLoginState"></a>
                     <span class="name">
                         <span ><b>setLoginState</b></span>
@@ -1204,8 +806,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="223"
-                                    class="link-to-prism">src/app/services/users.service.ts:223</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="221"
+                                    class="link-to-prism">src/app/services/users.service.ts:221</a></div>
                         </td>
                     </tr>
 
@@ -1264,31 +866,31 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="updatedUser"></a>
+                    <a name="updateUser"></a>
                     <span class="name">
-                        <span ><b>updatedUser</b></span>
-                        <a href="#updatedUser"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>updateUser</b></span>
+                        <a href="#updateUser"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>updatedUser(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, profile: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>updateUser(updatedUser: <a href="../interfaces/User.html" target="_self">User</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="121"
-                                    class="link-to-prism">src/app/services/users.service.ts:121</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="130"
+                                    class="link-to-prism">src/app/services/users.service.ts:130</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Actualiza un usuario existente.</p>
+                        <div class="io-description"><p>Actualiza la información de un usuario existente.</p>
 </div>
 
                             <div class="io-description">
@@ -1305,7 +907,86 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>name</td>
+                                                <td>updatedUser</td>
+                                            <td>
+                                                            <code><a href="../interfaces/User.html" target="_self" >User</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Los datos actualizados del usuario.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/User.html" target="_self" >Observable&lt;User[]&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>Un observable con la lista de usuarios actualizada.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validateEmail"></a>
+                    <span class="name">
+                        <span ><b>validateEmail</b></span>
+                        <a href="#validateEmail"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validateEmail(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="84"
+                                    class="link-to-prism">src/app/services/users.service.ts:84</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Valida si un correo electrónico ya está registrado.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
                                             <td>
                                                             <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                             </td>
@@ -1317,11 +998,72 @@
 
                                             <td>
                                                     <ul>
-<li>El nombre del usuario.</li>
+<li>El correo electrónico a validar.</li>
 </ul>
 
                                             </td>
                                         </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;boolean&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>Un observable que retorna true si el correo electrónico ya está registrado, de lo contrario false.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validateLogin"></a>
+                    <span class="name">
+                        <span ><b>validateLogin</b></span>
+                        <a href="#validateLogin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validateLogin(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="98"
+                                    class="link-to-prism">src/app/services/users.service.ts:98</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Valida las credenciales de inicio de sesión del usuario.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                         <tr>
                                                 <td>email</td>
                                             <td>
@@ -1358,130 +1100,18 @@
 
                                             </td>
                                         </tr>
-                                        <tr>
-                                                <td>profile</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                            <td>
-                                                    <ul>
-<li>El perfil del usuario.</li>
-</ul>
-
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                            <b>Returns : </b>    <code>Observable&lt;boolean&gt;</code>
 
                         </div>
                             <div class="io-description">
                                 <ul>
-<li>Retorna true si el usuario fue actualizado exitosamente, de lo contrario false.</li>
+<li>Un observable que retorna true si las credenciales son válidas, de lo contrario false.</li>
 </ul>
 
-                            </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="updateUser"></a>
-                    <span class="name">
-                        <span ><b>updateUser</b></span>
-                        <a href="#updateUser"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>updateUser(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, updatedUser: <a href="../interfaces/User.html" target="_self">User</a>)</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="322"
-                                    class="link-to-prism">src/app/services/users.service.ts:322</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-description"><p>Actualiza un usuario existente.</p>
-</div>
-
-                            <div class="io-description">
-                                <b>Parameters :</b>
-                                
-                                <table class="params">
-                                    <thead>
-                                        <tr>
-                                            <td>Name</td>
-                                                <td>Type</td>
-                                            <td>Optional</td>
-                                                <td>Description</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>index</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                            <td>
-                                                    <ul>
-<li>El índice del usuario a actualizar.</li>
-</ul>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                                <td>updatedUser</td>
-                                            <td>
-                                                            <code><a href="../interfaces/User.html" target="_self" >User</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                            <td>
-                                                    <ul>
-<li>Los datos actualizados del usuario.</li>
-</ul>
-
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                        </div>
-                            <div class="io-description">
-                                
                             </div>
                 </td>
             </tr>
@@ -1497,28 +1127,32 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="profiles"></a>
+                    <a name="httpOptions"></a>
                     <span class="name">
-                            <span class="modifier">Private</span>
-                        <span ><b>profiles</b></span>
-                        <a href="#profiles"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>httpOptions</b></span>
+                        <a href="#httpOptions"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Profile.html" target="_self" >Profile[]</a></code>
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
 
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>[]</code>
+                        <i>Default value : </i><code>{
+    headers: new HttpHeaders({
+      &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+      &#x27;Authorization&#x27;: &#x27;Bearer 91e7d0c0-fde6-436b-a798-35b8bbabcc84&#x27;
+    })
+  }</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/services/users.service.ts:28</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/services/users.service.ts:24</a></div>
                         </td>
                     </tr>
 
@@ -1529,11 +1163,11 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="storageKey"></a>
+                    <a name="jsonUrl"></a>
                     <span class="name">
                             <span class="modifier">Private</span>
-                        <span ><b>storageKey</b></span>
-                        <a href="#storageKey"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>jsonUrl</b></span>
+                        <a href="#jsonUrl"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -1545,12 +1179,12 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>&#x27;users&#x27;</code>
+                        <i>Default value : </i><code>&#x27;https://firebasestorage.googleapis.com/v0/b/puentemagicojson.appspot.com/o/users.json?alt&#x3D;media&amp;token&#x3D;91e7d0c0-fde6-436b-a798-35b8bbabcc84&#x27;</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/services/users.service.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/services/users.service.ts:31</a></div>
                         </td>
                     </tr>
 
@@ -1571,7 +1205,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>    <code>Users[]</code>
+                        <i>Type : </i>        <code><a href="../interfaces/User.html" target="_self" >User[]</a></code>
 
                     </td>
                 </tr>
@@ -1582,7 +1216,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/services/users.service.ts:27</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/services/users.service.ts:33</a></div>
                         </td>
                     </tr>
 
@@ -1597,20 +1231,17 @@
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 import { CryptoService } from &#x27;./crypto.service&#x27;;
+import { HttpClient, HttpHeaders } from &#x27;@angular/common/http&#x27;;
+import { Observable, throwError } from &#x27;rxjs&#x27;;
+import { map, catchError } from &#x27;rxjs/operators&#x27;;
 
-interface Users {
-  name: string;
-  email: string;
-  password: string;
-  profile: string;
-}
-
-interface Profile {
+/**
+ * @description 
+ * Interface de Usuarios.
+ * 
+ */
+export interface User {
   id: number;
-  name: string;
-}
-
-interface User {
   name: string;
   email: string;
   password: string;
@@ -1621,148 +1252,149 @@ interface User {
   providedIn: &#x27;root&#x27;
 })
 export class UsersService {
-  private users: Users[] &#x3D; [];
-  private profiles: Profile[] &#x3D; [];
-  private storageKey &#x3D; &#x27;users&#x27;;
+  httpOptions &#x3D; {
+    headers: new HttpHeaders({
+      &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+      &#x27;Authorization&#x27;: &#x27;Bearer 91e7d0c0-fde6-436b-a798-35b8bbabcc84&#x27;
+    })
+  }
+
+  private jsonUrl &#x3D; &#x27;https://firebasestorage.googleapis.com/v0/b/puentemagicojson.appspot.com/o/users.json?alt&#x3D;media&amp;token&#x3D;91e7d0c0-fde6-436b-a798-35b8bbabcc84&#x27;; 
+
+  private users: User[] &#x3D; [];
 
   /**
    * @description 
-   * Constructor del servicio. Carga los perfiles y usuarios desde localStorage.
+   * Constructor del servicio. Inicializa el servicio HTTP y el servicio de encriptación.
    * 
-   * @param {CryptoService} cryptoService - Servicio para encriptar y desencriptar datos.
+   * @param {HttpClient} http - Servicio HTTP para realizar solicitudes.
+   * @param {CryptoService} cryptoService - Servicio de encriptación.
    */
-  constructor(private cryptoService: CryptoService) {
-    if (this.isLocalStorageAvailable()) {
-      const userAdmin: Users &#x3D; { name: &#x27;Administrador&#x27;, email: &#x27;admin@puente-magico.cl&#x27;, password: &#x27;P4ss2511&#x27;, profile: &#x27;Admin&#x27; };
-      if (!(this.findUserAdmin(&#x27;admin@puente-magico.cl&#x27;))) {
-        console.log(&#x27;Administrador no encontrado:&#x27;);
-        this.users.push(userAdmin);
-        localStorage.setItem(&#x27;users&#x27;, JSON.stringify(this.users));
+  constructor(private http: HttpClient, private cryptoService: CryptoService) {}
+
+  /**
+   * @description 
+   * Sobrescribe el archivo JSON con la lista de usuarios proporcionada.
+   * 
+   * @param {User[]} listaUsuarios - La lista de usuarios a sobrescribir en el archivo JSON.
+   */
+  MetodoUsuario(listaUsuarios: User[]): void {
+    console.log(&#x27;listaUsuarios&#x27;, listaUsuarios);
+    this.http.post(this.jsonUrl, listaUsuarios, this.httpOptions).subscribe(
+      response &#x3D;&gt; {
+        console.log(&#x27;MetodoUsuario: Archivo JSON sobrescrito con éxito&#x27;, response);
+      },
+      error &#x3D;&gt; {
+        console.error(&#x27;MetodoUsuario: Error al sobrescribir el archivo JSON&#x27;, error);
       }
-      const profilesSaved &#x3D; localStorage.getItem(&#x27;profiles&#x27;);
-      this.profiles &#x3D; profilesSaved ? JSON.parse(profilesSaved) : [];
-      const usersSaved &#x3D; localStorage.getItem(&#x27;users&#x27;);
-      this.users &#x3D; usersSaved ? JSON.parse(usersSaved) : [];
-    } else {
-      this.users &#x3D; [];
-      this.profiles &#x3D; [];
-    }
+    );
   }
 
   /**
    * @description 
-   * Registra un nuevo perfil de usuario.
+   * Obtiene la lista de usuarios desde el archivo JSON.
    * 
-   * @param {number} id - El ID del perfil.
-   * @param {string} name - El nombre del perfil.
-   * @return {boolean} - Retorna true si el perfil fue registrado exitosamente, de lo contrario false.
+   * @return {Observable&lt;User[]&gt;} - Un observable con la lista de usuarios.
    */
-  registerProfile(id: number, name: string): boolean {
-    console.log(&#x27;Intentando registrar perfil de usuario:&#x27;, { id, name });
-    const profileExisting &#x3D; this.profiles.find(profile &#x3D;&gt; profile.id &#x3D;&#x3D;&#x3D; id);
-    if (profileExisting) {
-      this.mostrarAlerta(&#x27;El perfil de usuario ya existe.&#x27;, &#x27;danger&#x27;);
-      console.log(&#x27;El perfil de usuario ya existe.&#x27;);
-      return false;
-    }
-
-    const newProfile: Profile &#x3D; { id, name };
-    this.profiles.push(newProfile);
-    if (this.isLocalStorageAvailable()) {
-      localStorage.setItem(&#x27;profiles&#x27;, JSON.stringify(this.profiles));
-    }
-    this.mostrarAlerta(&#x27;Perfil de usuario registrado exitosamente.&#x27;, &#x27;success&#x27;);
-    console.log(&#x27;Perfil de usuario registrado exitosamente:&#x27;, newProfile);
-    return true;
+  getUsers(): Observable&lt;User[]&gt; {
+    return this.http.get&lt;User[]&gt;(this.jsonUrl).pipe(
+      catchError(error &#x3D;&gt; {
+        console.error(&#x27;Error al recuperar usuarios:&#x27;, error);
+        return throwError(error);
+      })
+    );
   }
 
   /**
    * @description 
-   * Registra un nuevo usuario.
+   * Valida si un correo electrónico ya está registrado.
    * 
-   * @param {string} name - El nombre del usuario.
-   * @param {string} email - El correo electrónico del usuario.
-   * @param {string} password - La contraseña del usuario.
-   * @param {string} profile - El perfil del usuario.
-   * @return {boolean} - Retorna true si el usuario fue registrado exitosamente, de lo contrario false.
+   * @param {string} email - El correo electrónico a validar.
+   * @return {Observable&lt;boolean&gt;} - Un observable que retorna true si el correo electrónico ya está registrado, de lo contrario false.
    */
-  registerUser(name: string, email: string, password: string, profile: string): boolean {
-    console.log(&#x27;Intentando registrar usuario:&#x27;, { name, email, profile });
-    const userExisting &#x3D; this.users.find(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email);
-    if (userExisting) {
-      this.mostrarAlerta(&#x27;El usuario ya existe.&#x27;, &#x27;danger&#x27;);
-      console.log(&#x27;El usuario ya existe.&#x27;);
-      return false;
-    }
-
-    const newUser: Users &#x3D; { name, email, password, profile };
-    this.users.push(newUser);
-    if (this.isLocalStorageAvailable()) {
-      localStorage.setItem(&#x27;users&#x27;, JSON.stringify(this.users));
-    }
-    this.mostrarAlerta(&#x27;Usuario registrado exitosamente.&#x27;, &#x27;success&#x27;);
-    console.log(&#x27;Usuario registrado exitosamente:&#x27;, newUser);
-    return true;
+  validateEmail(email: string): Observable&lt;boolean&gt; {
+    return this.getUsers().pipe(
+      map(users &#x3D;&gt; users.some(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email))
+    );
   }
 
   /**
    * @description 
-   * Actualiza un usuario existente.
-   * 
-   * @param {string} name - El nombre del usuario.
-   * @param {string} email - El correo electrónico del usuario.
-   * @param {string} password - La contraseña del usuario.
-   * @param {string} profile - El perfil del usuario.
-   * @return {boolean} - Retorna true si el usuario fue actualizado exitosamente, de lo contrario false.
-   */
-  updatedUser(name: string, email: string, password: string, profile: string): boolean {
-    console.log(&#x27;Intentando actualizar usuario:&#x27;, { name, email, password, profile });
-    const userExisting &#x3D; this.users.find(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email);
-    if (userExisting) {
-      const userIndex &#x3D; this.users.findIndex(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email);
-      if (userIndex !&#x3D;&#x3D; -1) {
-        password &#x3D; this.cryptoService.encrypt(password);
-        this.users[userIndex] &#x3D; { name: name, email: email, password: password, profile: profile };
-        localStorage.setItem(&#x27;users&#x27;, JSON.stringify(this.users));
-
-        this.mostrarAlerta(&#x27;Usuario actualizado exitosamente.&#x27;, &#x27;success&#x27;);
-        console.log(&#x27;Usuario actualizado exitosamente:&#x27;, this.users[userIndex]);
-        return true;
-      } else {
-        this.mostrarAlerta(&#x27;Error al actualizar el usuario.&#x27;, &#x27;danger&#x27;);
-        console.log(&#x27;Error al actualizar el usuario:&#x27;, email);
-        return false;
-      }
-    }
-
-    this.mostrarAlerta(&#x27;Usuario no actualizado.&#x27;, &#x27;danger&#x27;);
-    console.log(&#x27;Usuario no actualizado:&#x27;, email);
-    return false;
-  }
-
-  /**
-   * @description 
-   * Inicia sesión de un usuario.
+   * Valida las credenciales de inicio de sesión del usuario.
    * 
    * @param {string} email - El correo electrónico del usuario.
    * @param {string} password - La contraseña del usuario.
-   * @return {boolean} - Retorna true si el inicio de sesión fue exitoso, de lo contrario false.
+   * @return {Observable&lt;boolean&gt;} - Un observable que retorna true si las credenciales son válidas, de lo contrario false.
    */
-  iniciarSesion(email: string, password: string): boolean {
-    console.log(&#x27;Intentando iniciar sesión:&#x27;, { email, password });
-    // const user &#x3D; this.users.find(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email &amp;&amp; this.cryptoService.decrypt(user.password) &#x3D;&#x3D;&#x3D; password);
-    const user &#x3D; this.users.find(user &#x3D;&gt; user.email.trim() &#x3D;&#x3D;&#x3D; email.trim() &amp;&amp; user.password.trim() &#x3D;&#x3D;&#x3D; password.trim());
-    console.log(&#x27;Estado sesión:&#x27;, user);
-    if (user) {
-      this.mostrarAlerta(&#x27;Inicio de sesión exitoso.&#x27;, &#x27;success&#x27;);
-      console.log(&#x27;Inicio de sesión exitoso:&#x27;, user);
-      this.setLoginState(user);
-      return true;
-    } else {
-      this.mostrarAlerta(&#x27;Email o contraseña incorrectos.&#x27;, &#x27;danger&#x27;);
-      console.log(&#x27;Email o contraseña incorrectos.&#x27;);
-      return false;
-    }
+  validateLogin(email: string, password: string): Observable&lt;boolean&gt; {
+    return this.getUsers().pipe(
+      map((users: User[]) &#x3D;&gt; {
+        const user &#x3D; users.find(c &#x3D;&gt; c.email &#x3D;&#x3D;&#x3D; email &amp;&amp; this.cryptoService.decrypt(c.password) &#x3D;&#x3D;&#x3D; password);
+        if (user) {
+          this.setLoginState(user);
+        }
+        return !!user;
+      })
+    );
+  }
+
+  /**
+   * @description 
+   * Obtiene un usuario por su correo electrónico.
+   * 
+   * @param {string} email - El correo electrónico del usuario.
+   * @return {Observable&lt;Customer | undefined&gt;} - Un observable que retorna el usuario si es encontrado, de lo contrario undefined.
+   */
+  getUserByEmail(email: string): Observable&lt;User | undefined&gt; {
+    return this.getUsers().pipe(
+      map(users &#x3D;&gt; users.find(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email))
+    );
+  }
+
+  /**
+   * @description 
+   * Actualiza la información de un usuario existente.
+   * 
+   * @param {User} updatedUser - Los datos actualizados del usuario.
+   * @return {Observable&lt;User[]&gt;} - Un observable con la lista de usuarios actualizada.
+   */
+  updateUser(updatedUser: User): Observable&lt;User[]&gt; {
+    return this.getUsers().pipe(
+      map(users &#x3D;&gt; {
+        const index &#x3D; users.findIndex(user &#x3D;&gt; user.id &#x3D;&#x3D;&#x3D; updatedUser.id);
+        if (index !&#x3D;&#x3D; -1) {
+          users[index] &#x3D; updatedUser;
+          this.MetodoUsuario(users);
+        }
+        return users;
+      })
+    );
+  }
+
+  /**
+   * @description 
+   * Agrega un nuevo usuario a la lista.
+   * 
+   * @param {User} newUser - Los datos del nuevo usuario.
+   * @return {Observable&lt;User[]&gt;} - Un observable con la lista de usuarios actualizada.
+   */
+  addUser(newUser: User): Observable&lt;User[]&gt; {
+    return this.getUsers().pipe(
+      map(users &#x3D;&gt; {
+        const userExists &#x3D; users.some(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; newUser.email);
+        if (userExists) {
+          throw new Error(&#x27;El cliente ya existe.&#x27;);
+        }
+        newUser.id &#x3D; users.length &gt; 0 ? Math.max(...users.map(c &#x3D;&gt; c.id)) + 1 : 1;
+        users.push(newUser);
+        this.MetodoUsuario(users);
+        return users;
+      }),
+      catchError(error &#x3D;&gt; {
+        console.error(&#x27;Error al agregar cliente:&#x27;, error);
+        return throwError(error);
+      })
+    );
   }
 
   /**
@@ -1772,7 +1404,7 @@ export class UsersService {
    * @param {string} mensaje - El mensaje de la alerta.
    * @param {string} tipo - El tipo de alerta (e.g., &#x27;success&#x27;, &#x27;danger&#x27;).
    */
-  private mostrarAlerta(mensaje: string, tipo: string): void {
+  mostrarAlerta(mensaje: string, tipo: string): void {
     const alertaDiv &#x3D; document.createElement(&#x27;div&#x27;);
     alertaDiv.className &#x3D; &#x60;alert alert-${tipo}&#x60;;
     alertaDiv.appendChild(document.createTextNode(mensaje));
@@ -1845,94 +1477,6 @@ export class UsersService {
       console.log(&#x27;Logout usuario.&#x27;);
       localStorage.removeItem(&#x27;loggedInUser&#x27;);
     }
-  }
-
-  /**
-   * @description 
-   * Busca un usuario por su correo electrónico.
-   * 
-   * @param {string} email - El correo electrónico del usuario.
-   * @return {boolean} - Retorna true si el usuario fue encontrado, de lo contrario false.
-   */
-  findUser(email: string): boolean {
-    console.log(&#x27;Buscando usuario:&#x27;, { email });
-    const user &#x3D; this.users.find(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email);
-    if (user) {
-      this.mostrarAlerta(&#x27;Usuario encontrado.&#x27;, &#x27;success&#x27;);
-      console.log(&#x27;Usuario encontrado:&#x27;, user);
-      return true;
-    } else {
-      this.mostrarAlerta(&#x27;Usuario no encontrado.&#x27;, &#x27;danger&#x27;);
-      console.log(&#x27;Usuario no encontrado.&#x27;);
-      return false;
-    }
-  }
-
-  /**
-   * @description 
-   * Busca un usuario por su correo electrónico.
-   * 
-   * @param {string} email - El correo electrónico del administrador.
-   * @return {boolean} - Retorna true si el administrador fue encontrado, de lo contrario false.
-   */
-  findUserAdmin(email: string): boolean {
-    console.log(&#x27;Buscando administrador:&#x27;, { email });
-    const user &#x3D; this.users.find(user &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email);
-    if (user) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  /**
-   * @description 
-   * Obtiene la lista de todos los usuarios.
-   * 
-   * @return {User[]} - Un array de objetos User.
-   */
-  getUsers(): User[] {
-    return JSON.parse(localStorage.getItem(this.storageKey) || &#x27;[]&#x27;);
-  }
-
-  /**
-   * @description 
-   * Agrega un nuevo usuario a la lista y guarda en localStorage.
-   * 
-   * @param {User} user - El usuario a agregar.
-   * @return {void}
-   */
-  addUser(user: User): void {
-    const users &#x3D; this.getUsers();
-    users.push(user);
-    localStorage.setItem(this.storageKey, JSON.stringify(users));
-  }
-
-  /**
-   * @description 
-   * Actualiza un usuario existente.
-   * 
-   * @param {number} index - El índice del usuario a actualizar.
-   * @param {User} updatedUser - Los datos actualizados del usuario.
-   * @return {void}
-   */
-  updateUser(index: number, updatedUser: User): void {
-    const users &#x3D; this.getUsers();
-    users[index] &#x3D; updatedUser;
-    localStorage.setItem(this.storageKey, JSON.stringify(users));
-  }
-
-  /**
-   * @description 
-   * Elimina un usuario de la lista y de localStorage.
-   * 
-   * @param {number} index - El índice del usuario a eliminar.
-   * @return {void}
-   */
-  deleteUser(index: number): void {
-    const users &#x3D; this.getUsers();
-    users.splice(index, 1);
-    localStorage.setItem(this.storageKey, JSON.stringify(users));
   }
 }
 </code></pre>

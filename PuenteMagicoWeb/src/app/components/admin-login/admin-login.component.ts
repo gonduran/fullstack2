@@ -19,24 +19,51 @@ import { Router } from '@angular/router';
 export class AdminLoginComponent implements OnInit, AfterViewInit {
   adminLoginForm: FormGroup;
 
+  /**
+   * @description
+   * Constructor del componente AdminLoginComponent.
+   * 
+   * @param {NavigationService} navigationService - Servicio de navegación.
+   * @param {Object} platformId - Identificador de la plataforma.
+   * @param {FormBuilder} fb - Constructor de formularios reactivos.
+   * @param {UsersService} usersService - Servicio de usuarios.
+   * @param {Renderer2} renderer - Servicio de renderizado.
+   * @param {ElementRef} el - Referencia al elemento HTML.
+   * @param {CryptoService} cryptoService - Servicio de encriptación.
+   * @param {Router} router - Servicio de enrutamiento.
+   */
   constructor(
     private navigationService: NavigationService,
     @Inject(PLATFORM_ID) private platformId: Object,
-	  private fb: FormBuilder,
+    private fb: FormBuilder,
     private usersService: UsersService,
     private renderer: Renderer2,
     private el: ElementRef,
     private cryptoService: CryptoService,
-    private router: Router) { 
-      this.adminLoginForm = this.fb.group({
+    private router: Router
+  ) { 
+    this.adminLoginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]});
-	}
+      password: ['', [Validators.required]]
+    });
+  }
 
+  /**
+   * @description
+   * Hook de inicialización del componente. Verifica el estado de inicio de sesión.
+   * 
+   * @return {void}
+   */
   ngOnInit(): void {
     this.checkLoginState();
   }
 
+  /**
+   * @description
+   * Hook que se ejecuta después de que la vista ha sido inicializada. Configura la navegación con retardo para los enlaces.
+   * 
+   * @return {void}
+   */
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const links = document.querySelectorAll('a');
@@ -53,26 +80,40 @@ export class AdminLoginComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onSubmit() {
+  /**
+   * @description
+   * Maneja el envío del formulario de inicio de sesión de administrador. Valida las credenciales y realiza la autenticación.
+   * 
+   * @return {void}
+   */
+  onSubmit(): void {
     if (this.adminLoginForm.valid) {
       const email = this.adminLoginForm.value.email;
       const password = this.adminLoginForm.value.password;
 
-      //localStorage.setItem('user', JSON.stringify(userData));
-      const loginExitoso = this.usersService.iniciarSesion(email, password);
-      if (loginExitoso) {
-        console.log('Inicio de sesión exitoso:', { email });
-        alert('Inicio de sesión exitoso!');
-        // Redirigir al administrador
-        this.router.navigate(['/admin-user-management']);
-      } else {
-        console.log('Error en el inicio de sesión.');
-      }
+      this.usersService.validateLogin(email, password).subscribe(isValid => {
+        if (isValid) {
+          console.log('Inicio de sesión exitoso:', { email });
+          this.usersService.mostrarAlerta('Inicio de sesión exitoso.', 'success');
+          // Redirigir al administrador
+          alert('Inicio de sesión exitoso!');
+          this.router.navigate(['/admin-user-management']);
+        } else {
+          console.log('Email o contraseña incorrectos.');
+          this.usersService.mostrarAlerta('Email o contraseña incorrectos.', 'danger');
+        }
+      });
     } else {
       console.log('Formulario invalido');
     }
   }
 
+  /**
+   * @description
+   * Verifica el estado de inicio de sesión del usuario y redirige según el estado.
+   * 
+   * @return {void}
+   */
   checkLoginState(): void {
     if (isPlatformBrowser(this.platformId)) {
       if (this.usersService.checkLoginState()) {

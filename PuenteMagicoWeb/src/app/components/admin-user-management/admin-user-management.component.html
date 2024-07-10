@@ -40,6 +40,7 @@
             <table *ngIf="users.length > 0" class="table table-bordered" id="userTable">
               <thead>
                 <tr>
+                  <th>ID</th>
                   <th>Nombre Usuario</th>
                   <th>Email</th>
                   <th>Contraseña</th>
@@ -49,6 +50,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let user of users; let i = index">
+                  <td>{{ user.id }}</td>
                   <td>{{ user.name }}</td>
                   <td>{{ user.email }}</td>
                   <td class="hidetext">{{ user.password }}</td>
@@ -74,6 +76,10 @@
               </div>
               <div class="modal-body">
                 <form (ngSubmit)="onAddUser()">
+                  <div class="mb-3">
+                    <label for="addId" class="form-label">ID Usuario:</label>
+                    <input type="text" class="form-control" [(ngModel)]="newUser.id" name="id" required>
+                  </div>
                   <div class="mb-3">
                     <label for="addName" class="form-label">Nombre Usuario:</label>
                     <input type="text" class="form-control" [(ngModel)]="newUser.name" name="name" required>
@@ -106,6 +112,10 @@
               </div>
               <div class="modal-body">
                 <form (ngSubmit)="onUpdateUser()">
+                  <div class="mb-3">
+                    <label for="editId" class="form-label">ID Usuario:</label>
+                    <input type="text" class="form-control" [(ngModel)]="selectedUser.id" name="id" required>
+                  </div>
                   <div class="mb-3">
                     <label for="editName" class="form-label">Nombre Usuario:</label>
                     <input type="text" class="form-control" [(ngModel)]="selectedUser.name" name="name" required>

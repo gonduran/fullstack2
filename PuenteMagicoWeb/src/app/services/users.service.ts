@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
 import { CryptoService } from './crypto.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
-interface Users {
-  name: string;
-  email: string;
-  password: string;
-  profile: string;
-}
-
-interface Profile {
+/**
+ * @description 
+ * Interface de Usuarios.
+ * 
+ */
+export interface User {
   id: number;
-  name: string;
-}
-
-interface User {
   name: string;
   email: string;
   password: string;
@@ -24,148 +21,149 @@ interface User {
   providedIn: 'root'
 })
 export class UsersService {
-  private users: Users[] = [];
-  private profiles: Profile[] = [];
-  private storageKey = 'users';
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer 91e7d0c0-fde6-436b-a798-35b8bbabcc84'
+    })
+  }
+
+  private jsonUrl = 'https://firebasestorage.googleapis.com/v0/b/puentemagicojson.appspot.com/o/users.json?alt=media&token=91e7d0c0-fde6-436b-a798-35b8bbabcc84'; 
+
+  private users: User[] = [];
 
   /**
    * @description 
-   * Constructor del servicio. Carga los perfiles y usuarios desde localStorage.
+   * Constructor del servicio. Inicializa el servicio HTTP y el servicio de encriptación.
    * 
-   * @param {CryptoService} cryptoService - Servicio para encriptar y desencriptar datos.
+   * @param {HttpClient} http - Servicio HTTP para realizar solicitudes.
+   * @param {CryptoService} cryptoService - Servicio de encriptación.
    */
-  constructor(private cryptoService: CryptoService) {
-    if (this.isLocalStorageAvailable()) {
-      const userAdmin: Users = { name: 'Administrador', email: 'admin@puente-magico.cl', password: 'P4ss2511', profile: 'Admin' };
-      if (!(this.findUserAdmin('admin@puente-magico.cl'))) {
-        console.log('Administrador no encontrado:');
-        this.users.push(userAdmin);
-        localStorage.setItem('users', JSON.stringify(this.users));
+  constructor(private http: HttpClient, private cryptoService: CryptoService) {}
+
+  /**
+   * @description 
+   * Sobrescribe el archivo JSON con la lista de usuarios proporcionada.
+   * 
+   * @param {User[]} listaUsuarios - La lista de usuarios a sobrescribir en el archivo JSON.
+   */
+  MetodoUsuario(listaUsuarios: User[]): void {
+    console.log('listaUsuarios', listaUsuarios);
+    this.http.post(this.jsonUrl, listaUsuarios, this.httpOptions).subscribe(
+      response => {
+        console.log('MetodoUsuario: Archivo JSON sobrescrito con éxito', response);
+      },
+      error => {
+        console.error('MetodoUsuario: Error al sobrescribir el archivo JSON', error);
       }
-      const profilesSaved = localStorage.getItem('profiles');
-      this.profiles = profilesSaved ? JSON.parse(profilesSaved) : [];
-      const usersSaved = localStorage.getItem('users');
-      this.users = usersSaved ? JSON.parse(usersSaved) : [];
-    } else {
-      this.users = [];
-      this.profiles = [];
-    }
+    );
   }
 
   /**
    * @description 
-   * Registra un nuevo perfil de usuario.
+   * Obtiene la lista de usuarios desde el archivo JSON.
    * 
-   * @param {number} id - El ID del perfil.
-   * @param {string} name - El nombre del perfil.
-   * @return {boolean} - Retorna true si el perfil fue registrado exitosamente, de lo contrario false.
+   * @return {Observable<User[]>} - Un observable con la lista de usuarios.
    */
-  registerProfile(id: number, name: string): boolean {
-    console.log('Intentando registrar perfil de usuario:', { id, name });
-    const profileExisting = this.profiles.find(profile => profile.id === id);
-    if (profileExisting) {
-      this.mostrarAlerta('El perfil de usuario ya existe.', 'danger');
-      console.log('El perfil de usuario ya existe.');
-      return false;
-    }
-
-    const newProfile: Profile = { id, name };
-    this.profiles.push(newProfile);
-    if (this.isLocalStorageAvailable()) {
-      localStorage.setItem('profiles', JSON.stringify(this.profiles));
-    }
-    this.mostrarAlerta('Perfil de usuario registrado exitosamente.', 'success');
-    console.log('Perfil de usuario registrado exitosamente:', newProfile);
-    return true;
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.jsonUrl).pipe(
+      catchError(error => {
+        console.error('Error al recuperar usuarios:', error);
+        return throwError(error);
+      })
+    );
   }
 
   /**
    * @description 
-   * Registra un nuevo usuario.
+   * Valida si un correo electrónico ya está registrado.
    * 
-   * @param {string} name - El nombre del usuario.
-   * @param {string} email - El correo electrónico del usuario.
-   * @param {string} password - La contraseña del usuario.
-   * @param {string} profile - El perfil del usuario.
-   * @return {boolean} - Retorna true si el usuario fue registrado exitosamente, de lo contrario false.
+   * @param {string} email - El correo electrónico a validar.
+   * @return {Observable<boolean>} - Un observable que retorna true si el correo electrónico ya está registrado, de lo contrario false.
    */
-  registerUser(name: string, email: string, password: string, profile: string): boolean {
-    console.log('Intentando registrar usuario:', { name, email, profile });
-    const userExisting = this.users.find(user => user.email === email);
-    if (userExisting) {
-      this.mostrarAlerta('El usuario ya existe.', 'danger');
-      console.log('El usuario ya existe.');
-      return false;
-    }
-
-    const newUser: Users = { name, email, password, profile };
-    this.users.push(newUser);
-    if (this.isLocalStorageAvailable()) {
-      localStorage.setItem('users', JSON.stringify(this.users));
-    }
-    this.mostrarAlerta('Usuario registrado exitosamente.', 'success');
-    console.log('Usuario registrado exitosamente:', newUser);
-    return true;
+  validateEmail(email: string): Observable<boolean> {
+    return this.getUsers().pipe(
+      map(users => users.some(user => user.email === email))
+    );
   }
 
   /**
    * @description 
-   * Actualiza un usuario existente.
-   * 
-   * @param {string} name - El nombre del usuario.
-   * @param {string} email - El correo electrónico del usuario.
-   * @param {string} password - La contraseña del usuario.
-   * @param {string} profile - El perfil del usuario.
-   * @return {boolean} - Retorna true si el usuario fue actualizado exitosamente, de lo contrario false.
-   */
-  updatedUser(name: string, email: string, password: string, profile: string): boolean {
-    console.log('Intentando actualizar usuario:', { name, email, password, profile });
-    const userExisting = this.users.find(user => user.email === email);
-    if (userExisting) {
-      const userIndex = this.users.findIndex(user => user.email === email);
-      if (userIndex !== -1) {
-        password = this.cryptoService.encrypt(password);
-        this.users[userIndex] = { name: name, email: email, password: password, profile: profile };
-        localStorage.setItem('users', JSON.stringify(this.users));
-
-        this.mostrarAlerta('Usuario actualizado exitosamente.', 'success');
-        console.log('Usuario actualizado exitosamente:', this.users[userIndex]);
-        return true;
-      } else {
-        this.mostrarAlerta('Error al actualizar el usuario.', 'danger');
-        console.log('Error al actualizar el usuario:', email);
-        return false;
-      }
-    }
-
-    this.mostrarAlerta('Usuario no actualizado.', 'danger');
-    console.log('Usuario no actualizado:', email);
-    return false;
-  }
-
-  /**
-   * @description 
-   * Inicia sesión de un usuario.
+   * Valida las credenciales de inicio de sesión del usuario.
    * 
    * @param {string} email - El correo electrónico del usuario.
    * @param {string} password - La contraseña del usuario.
-   * @return {boolean} - Retorna true si el inicio de sesión fue exitoso, de lo contrario false.
+   * @return {Observable<boolean>} - Un observable que retorna true si las credenciales son válidas, de lo contrario false.
    */
-  iniciarSesion(email: string, password: string): boolean {
-    console.log('Intentando iniciar sesión:', { email, password });
-    // const user = this.users.find(user => user.email === email && this.cryptoService.decrypt(user.password) === password);
-    const user = this.users.find(user => user.email.trim() === email.trim() && user.password.trim() === password.trim());
-    console.log('Estado sesión:', user);
-    if (user) {
-      this.mostrarAlerta('Inicio de sesión exitoso.', 'success');
-      console.log('Inicio de sesión exitoso:', user);
-      this.setLoginState(user);
-      return true;
-    } else {
-      this.mostrarAlerta('Email o contraseña incorrectos.', 'danger');
-      console.log('Email o contraseña incorrectos.');
-      return false;
-    }
+  validateLogin(email: string, password: string): Observable<boolean> {
+    return this.getUsers().pipe(
+      map((users: User[]) => {
+        const user = users.find(c => c.email === email && this.cryptoService.decrypt(c.password) === password);
+        if (user) {
+          this.setLoginState(user);
+        }
+        return !!user;
+      })
+    );
+  }
+
+  /**
+   * @description 
+   * Obtiene un usuario por su correo electrónico.
+   * 
+   * @param {string} email - El correo electrónico del usuario.
+   * @return {Observable<Customer | undefined>} - Un observable que retorna el usuario si es encontrado, de lo contrario undefined.
+   */
+  getUserByEmail(email: string): Observable<User | undefined> {
+    return this.getUsers().pipe(
+      map(users => users.find(user => user.email === email))
+    );
+  }
+
+  /**
+   * @description 
+   * Actualiza la información de un usuario existente.
+   * 
+   * @param {User} updatedUser - Los datos actualizados del usuario.
+   * @return {Observable<User[]>} - Un observable con la lista de usuarios actualizada.
+   */
+  updateUser(updatedUser: User): Observable<User[]> {
+    return this.getUsers().pipe(
+      map(users => {
+        const index = users.findIndex(user => user.id === updatedUser.id);
+        if (index !== -1) {
+          users[index] = updatedUser;
+          this.MetodoUsuario(users);
+        }
+        return users;
+      })
+    );
+  }
+
+  /**
+   * @description 
+   * Agrega un nuevo usuario a la lista.
+   * 
+   * @param {User} newUser - Los datos del nuevo usuario.
+   * @return {Observable<User[]>} - Un observable con la lista de usuarios actualizada.
+   */
+  addUser(newUser: User): Observable<User[]> {
+    return this.getUsers().pipe(
+      map(users => {
+        const userExists = users.some(user => user.email === newUser.email);
+        if (userExists) {
+          throw new Error('El cliente ya existe.');
+        }
+        newUser.id = users.length > 0 ? Math.max(...users.map(c => c.id)) + 1 : 1;
+        users.push(newUser);
+        this.MetodoUsuario(users);
+        return users;
+      }),
+      catchError(error => {
+        console.error('Error al agregar cliente:', error);
+        return throwError(error);
+      })
+    );
   }
 
   /**
@@ -175,7 +173,7 @@ export class UsersService {
    * @param {string} mensaje - El mensaje de la alerta.
    * @param {string} tipo - El tipo de alerta (e.g., 'success', 'danger').
    */
-  private mostrarAlerta(mensaje: string, tipo: string): void {
+  mostrarAlerta(mensaje: string, tipo: string): void {
     const alertaDiv = document.createElement('div');
     alertaDiv.className = `alert alert-${tipo}`;
     alertaDiv.appendChild(document.createTextNode(mensaje));
@@ -248,93 +246,5 @@ export class UsersService {
       console.log('Logout usuario.');
       localStorage.removeItem('loggedInUser');
     }
-  }
-
-  /**
-   * @description 
-   * Busca un usuario por su correo electrónico.
-   * 
-   * @param {string} email - El correo electrónico del usuario.
-   * @return {boolean} - Retorna true si el usuario fue encontrado, de lo contrario false.
-   */
-  findUser(email: string): boolean {
-    console.log('Buscando usuario:', { email });
-    const user = this.users.find(user => user.email === email);
-    if (user) {
-      this.mostrarAlerta('Usuario encontrado.', 'success');
-      console.log('Usuario encontrado:', user);
-      return true;
-    } else {
-      this.mostrarAlerta('Usuario no encontrado.', 'danger');
-      console.log('Usuario no encontrado.');
-      return false;
-    }
-  }
-
-  /**
-   * @description 
-   * Busca un usuario por su correo electrónico.
-   * 
-   * @param {string} email - El correo electrónico del administrador.
-   * @return {boolean} - Retorna true si el administrador fue encontrado, de lo contrario false.
-   */
-  findUserAdmin(email: string): boolean {
-    console.log('Buscando administrador:', { email });
-    const user = this.users.find(user => user.email === email);
-    if (user) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  /**
-   * @description 
-   * Obtiene la lista de todos los usuarios.
-   * 
-   * @return {User[]} - Un array de objetos User.
-   */
-  getUsers(): User[] {
-    return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
-  }
-
-  /**
-   * @description 
-   * Agrega un nuevo usuario a la lista y guarda en localStorage.
-   * 
-   * @param {User} user - El usuario a agregar.
-   * @return {void}
-   */
-  addUser(user: User): void {
-    const users = this.getUsers();
-    users.push(user);
-    localStorage.setItem(this.storageKey, JSON.stringify(users));
-  }
-
-  /**
-   * @description 
-   * Actualiza un usuario existente.
-   * 
-   * @param {number} index - El índice del usuario a actualizar.
-   * @param {User} updatedUser - Los datos actualizados del usuario.
-   * @return {void}
-   */
-  updateUser(index: number, updatedUser: User): void {
-    const users = this.getUsers();
-    users[index] = updatedUser;
-    localStorage.setItem(this.storageKey, JSON.stringify(users));
-  }
-
-  /**
-   * @description 
-   * Elimina un usuario de la lista y de localStorage.
-   * 
-   * @param {number} index - El índice del usuario a eliminar.
-   * @return {void}
-   */
-  deleteUser(index: number): void {
-    const users = this.getUsers();
-    users.splice(index, 1);
-    localStorage.setItem(this.storageKey, JSON.stringify(users));
   }
 }

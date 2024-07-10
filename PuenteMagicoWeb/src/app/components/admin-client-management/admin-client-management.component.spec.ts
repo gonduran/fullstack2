@@ -4,6 +4,7 @@ import { AdminClientManagementComponent } from './admin-client-management.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AdminClientManagementComponent', () => {
   let component: AdminClientManagementComponent;
@@ -11,7 +12,7 @@ describe('AdminClientManagementComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AdminClientManagementComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule]
+      imports: [AdminClientManagementComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule, HttpClientTestingModule]
     })
     .compileComponents();
 

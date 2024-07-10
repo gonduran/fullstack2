@@ -4,6 +4,7 @@ import { AdminOrderMonitoringComponent } from './admin-order-monitoring.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AdminOrderMonitoringComponent', () => {
   let component: AdminOrderMonitoringComponent;
@@ -11,7 +12,7 @@ describe('AdminOrderMonitoringComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AdminOrderMonitoringComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule]
+      imports: [AdminOrderMonitoringComponent, CommonModule, RouterModule.forRoot([]), FormsModule, ReactiveFormsModule, HttpClientTestingModule]
     })
     .compileComponents();
 
