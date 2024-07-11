@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "name": "Administrador",
+        "email": "admin@puente-magico.cl",
+        "password": "U2FsdGVkX1/LVUlTwv7nNbxK6Lm8fMtL3z9zA9ISEG4=",
+        "profile": "Admin"
+    },
+    {
+        "id": 2,
+        "name": "Usuario",
+        "email": "user@puente-magico.cl",
+        "password": "U2FsdGVkX1/cugu+imIHhbdyDjjfZ2sHbIofhUS37ZU=",
+        "profile": "User"
+    }
+]

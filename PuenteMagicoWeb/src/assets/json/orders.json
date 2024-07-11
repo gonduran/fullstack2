@@ -1,0 +1,37 @@
+{
+    "orders": [
+        {
+            "email": "gon.duran@duocuc.cl",
+            "id": 1,
+            "total": 20500,
+            "fecha": "10-07-2024",
+            "estado": "Pendiente"
+        }
+    ],
+    "orderdetails": [
+        {
+            "product": "Cuaderno personalizado",
+            "image": "assets/images/cuaderno1.png",
+            "price": 9000,
+            "quantity": 1,
+            "total": 9000,
+            "orderId": 1
+        },
+        {
+            "product": "Libreta personalizada",
+            "image": "assets/images/libreta1.png",
+            "price": 4500,
+            "quantity": 1,
+            "total": 4500,
+            "orderId": 1
+        },
+        {
+            "product": "Croquera personalizado",
+            "image": "assets/images/croquera1.png",
+            "price": 7000,
+            "quantity": 1,
+            "total": 7000,
+            "orderId": 1
+        }
+    ]
+}

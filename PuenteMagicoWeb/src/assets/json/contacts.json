@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "name": "Gonzalo Durán Adasme",
+    "email": "gon.duran@duocuc.cl",
+    "phone": "977992993",
+	"subject": "Estado compra",
+	"message": "Cuando realizaran el despacho de mi compra",
+    "fecha": "08-07-2024",
+    "estado": "Nuevo"
+  }
+]
