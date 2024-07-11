@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
-interface Cart {
+/**
+ * @description 
+ * Interface de Carro de Compra.
+ */
+export interface Cart {
   product: string;
   image: string;
   price: number;
@@ -8,46 +15,219 @@ interface Cart {
   total: number;
 }
 
-interface Order {
+/**
+ * @description 
+ * Interface de Ordenes de Compra.
+ */
+export interface Order {
   email: string;
   id: number;
   total: number;
-  fecha: Date;
+  fecha: string;
   estado: string;
 }
 
-interface OrderDetail extends Cart {
-  id: number;
+/**
+ * @description 
+ * Interface de Detalle de Ordenes de Compra.
+ */
+export interface OrderDetail extends Cart {
+  orderId: number;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrdersService {
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer 3325d02c-9baf-4d8e-9747-250f21a63494'
+    })
+  }
+
+  private jsonUrl = 'https://firebasestorage.googleapis.com/v0/b/puentemagicojson.appspot.com/o/orders.json?alt=media&token=3325d02c-9baf-4d8e-9747-250f21a63494'; 
   private carts: Cart[] = [];
   private orders: Order[] = [];
   private orderdetails: OrderDetail[] = [];
-  private orderStorageKey = 'orders';
-  private orderDetailsStorageKey = 'orderdetails';
 
   /**
    * @description 
-   * Constructor del servicio. Carga los carros de compra, órdenes y detalles de órdenes desde localStorage.
+   * Constructor del servicio. Inicializa el servicio HTTP.
    * 
+   * @param {HttpClient} http - Servicio HTTP para realizar solicitudes.
    */
-  constructor() {
+  constructor(private http: HttpClient) {
+    this.loadOrdersFromJson();
     if (this.isLocalStorageAvailable()) {
       const cartsSaved = localStorage.getItem('carts');
       this.carts = cartsSaved ? JSON.parse(cartsSaved) : [];
-      const ordersSaved = localStorage.getItem('orders');
-      this.orders = ordersSaved ? JSON.parse(ordersSaved) : [];
-      const orderdetailsSaved = localStorage.getItem('orderdetails');
-      this.orderdetails = orderdetailsSaved ? JSON.parse(orderdetailsSaved) : [];
-      this.loadOrdersFromLocalStorage();
     } else {
       this.carts = [];
-      this.orders = [];
-      this.orderdetails = [];
+    }
+    console.log('constructor this.orders:', this.orders);
+    console.log('constructor this.orderdetails:', this.orderdetails);
+  }
+
+  /**
+   * @description 
+   * Carga las órdenes y los detalles de las órdenes desde el archivo JSON.
+   * 
+   * @return {void}
+   */
+  private loadOrdersFromJson(): void {
+    this.http.get<any>(this.jsonUrl).subscribe(data => {
+      this.orders = data.orders || [];
+      this.orderdetails = data.orderdetails || [];
+    }, error => {
+      console.error('Error al cargar las órdenes:', error);
+    });
+  }
+
+  /**
+   * @description 
+   * Registra una nueva orden.
+   * 
+   * @param {string} email - El correo electrónico del cliente.
+   * @param {number} total - El total de la orden.
+   * @return {number} - Retorna el ID de la nueva orden registrada.
+   */
+  registerOrder(email: string, total: number): number {
+    const fechaNow = new Date();
+    const year = fechaNow.getFullYear();
+    const month = String(fechaNow.getMonth() + 1).padStart(2, '0');
+    const day = String(fechaNow.getDate()).padStart(2, '0');
+
+    const fecha = `${year}-${month}-${day}`;
+
+    const estado = 'Pendiente';
+    const id = this.orders.length + 1;
+
+    const newOrder: Order = { email, id, total, fecha, estado };
+    this.orders.push(newOrder);
+    console.log('registerOrder this.carts:', this.carts);
+
+    const newOrderDetails: OrderDetail[] = this.carts.map(cart => ({
+      ...cart,
+      orderId: id
+    }));
+    this.orderdetails.push(...newOrderDetails);
+
+    console.log('registerOrder this.orders:', this.orders);
+    console.log('registerOrder this.orderdetails:', this.orderdetails);
+
+    const data = {
+      orders: this.orders,
+      orderdetails: this.orderdetails
+    };
+    console.log('registerOrder data:', data);
+
+    this.http.post(this.jsonUrl, data, this.httpOptions).subscribe(
+      response => {
+        console.log('registerOrder: Archivo JSON sobrescrito con éxito', response);
+      },
+      error => {
+        console.error('registerOrder: Error al sobrescribir el archivo JSON', error);
+      }
+    );
+    console.log('registerOrder se ejecuto this.saveOrders:');
+    this.clearCart();
+    return id;
+  }
+
+  /**
+   * @description 
+   * Actualiza el estado de una orden.
+   * 
+   * @param {number} orderId - El ID de la orden.
+   * @param {string} status - El nuevo estado de la orden.
+   * @return {Observable<Order>} - Retorna un observable con la orden actualizada.
+   */
+  updateOrderStatus(orderId: number, status: string): Observable<Order> {
+    const order = this.orders.find(o => o.id === orderId);
+    if (order) {
+      order.estado = status;
+      const data = {
+        orders: this.orders,
+        orderdetails: this.orderdetails
+      };
+      return this.http.post(this.jsonUrl, data, this.httpOptions).pipe(
+        map(() => order),
+        catchError(error => {
+          console.error('Error al actualizar el estado de la orden:', error);
+          return throwError(error);
+        })
+      );
+    }
+    return throwError('Order not found');
+  }
+
+  /**
+   * @description 
+   * Obtiene todas las órdenes.
+   * 
+   * @return {Order[]} - Lista de órdenes.
+   */
+  getOrders(): Order[] {
+    return this.orders;
+  }
+
+  /**
+   * @description 
+   * Obtiene los detalles de una orden específica.
+   * 
+   * @param {number} orderId - El ID de la orden.
+   * @return {Observable<OrderDetail[]>} - Retorna un observable con los detalles de la orden.
+   */
+  getOrderDetails(orderId: number): Observable<OrderDetail[]> {
+    const details = this.orderdetails.filter(detail => detail.orderId === orderId);
+    return of(details);
+  }
+
+  /**
+   * @description 
+   * Muestra una alerta en la interfaz de usuario.
+   * 
+   * @param {string} mensaje - El mensaje de la alerta.
+   * @param {string} tipo - El tipo de alerta (e.g., 'success', 'danger').
+   * @return {void}
+   */
+  private mostrarAlerta(mensaje: string, tipo: string): void {
+    const alertaDiv = document.createElement('div');
+    alertaDiv.className = `alert alert-${tipo}`;
+    alertaDiv.appendChild(document.createTextNode(mensaje));
+    const container = document.querySelector('.container');
+    if (container) {
+      const firstChild = container.firstChild;
+      if (firstChild) {
+        container.insertBefore(alertaDiv, firstChild);
+      } else {
+        container.appendChild(alertaDiv);
+      }
+
+      setTimeout(() => {
+        const alerta = document.querySelector('.alert');
+        if (alerta) {
+          alerta.remove();
+        }
+      }, 6000);
+    }
+  }
+
+  /**
+   * @description 
+   * Verifica si localStorage está disponible.
+   * 
+   * @return {boolean} - Retorna true si localStorage está disponible, de lo contrario false.
+   */
+  private isLocalStorageAvailable(): boolean {
+    try {
+      const test = '__test__';
+      localStorage.setItem(test, test);
+      localStorage.removeItem(test);
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 
@@ -104,158 +284,6 @@ export class OrdersService {
 
   /**
    * @description 
-   * Registra una nueva orden.
-   * 
-   * @param {string} email - El correo electrónico del cliente.
-   * @param {number} total - El total de la orden.
-   * @return {number} - Retorna el ID de la nueva orden registrada.
-   */
-  registerOrders(email: string, total: number): number {
-    console.log('Intentando registrar orden cliente:', { email, total });
-    const fecha = new Date();
-    const estado = 'Pendiente';
-    const id = this.orders.length + 1;
-
-    const newOrder: Order = { email, id, total, fecha, estado };
-    this.orders.push(newOrder);
-    if (this.isLocalStorageAvailable()) {
-      localStorage.setItem('orders', JSON.stringify(this.orders));
-    }
-    console.log('Orden cliente registrado exitosamente:', newOrder);
-    return id;
-  }
-
-  /**
-   * @description 
-   * Registra los detalles de una orden.
-   * 
-   * @param {number} id - El ID de la orden.
-   * @return {boolean} - Retorna true si los detalles de la orden fueron registrados exitosamente, de lo contrario false.
-   */
-  registerOrderdetails(id: number): boolean {
-    if (this.isLocalStorageAvailable()) {
-      const cart = JSON.parse(localStorage.getItem('carts') || '[]');
-      const orderDetail = cart.map((item: any) => ({
-        ...item,
-        id: id
-      }));
-
-      const existingItems = JSON.parse(localStorage.getItem('orderdetails') || '[]');
-      const updatedItems = existingItems.concat(orderDetail);
-      
-      localStorage.setItem('orderdetails', JSON.stringify(updatedItems));
-
-      console.log('Detalle compra registrado exitosamente:', orderDetail);
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * @description 
-   * Actualiza una orden existente.
-   * 
-   * @param {string} email - El correo electrónico del cliente.
-   * @param {number} id - El ID de la orden.
-   * @param {number} total - El total de la orden.
-   * @param {string} estado - El estado de la orden.
-   * @return {boolean} - Retorna true si la orden fue actualizada exitosamente, de lo contrario false.
-   */
-  updateOrders(email: string, id: number, total: number, estado: string): boolean {
-    console.log('Intentando actualizar orden cliente:', { email, id });
-    const orderExisting = this.orders.find(order => order.id === id);
-    const fecha = new Date();
-
-    if (orderExisting) {
-      const orderIndex = this.orders.findIndex(contact => contact.id === id);
-      if (orderIndex !== -1) {
-        console.log('Se actualiza estado orden cliente');
-        this.orders[orderIndex] = { email: email, id: id, total: total, fecha: fecha, estado : estado };
-        localStorage.setItem('orders', JSON.stringify(this.orders));
-
-        console.log('Orden cliente actualizado exitosamente:', this.orders[orderIndex]);
-        return true;
-      } else {
-        console.log('Error al actualizar el orden cliente:', email);
-        return false;
-      } 
-    }
-
-    this.mostrarAlerta('Orden cliente no actualizado.', 'danger');
-    console.log('Orden cliente no actualizado:', email);
-    return false;
-  }
-
-  /**
-   * @description 
-   * Muestra una alerta en la interfaz de usuario.
-   * 
-   * @param {string} mensaje - El mensaje de la alerta.
-   * @param {string} tipo - El tipo de alerta (e.g., 'success', 'danger').
-   * @return {void}
-   */
-  private mostrarAlerta(mensaje: string, tipo: string): void {
-    const alertaDiv = document.createElement('div');
-    alertaDiv.className = `alert alert-${tipo}`;
-    alertaDiv.appendChild(document.createTextNode(mensaje));
-    const container = document.querySelector('.container');
-    if (container) {
-      const firstChild = container.firstChild;
-      if (firstChild) {
-        container.insertBefore(alertaDiv, firstChild);
-      } else {
-        container.appendChild(alertaDiv);
-      }
-
-      setTimeout(() => {
-        const alerta = document.querySelector('.alert');
-        if (alerta) {
-          alerta.remove();
-        }
-      }, 6000);
-    }
-  }
-
-  /**
-   * @description 
-   * Verifica si localStorage está disponible.
-   * 
-   * @return {boolean} - Retorna true si localStorage está disponible, de lo contrario false.
-   */
-  private isLocalStorageAvailable(): boolean {
-    try {
-      const test = '__test__';
-      localStorage.setItem(test, test);
-      localStorage.removeItem(test);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  /**
-   * @description 
-   * Busca una orden por su ID.
-   * 
-   * @param {number} id - El ID de la orden.
-   * @return {boolean} - Retorna true si la orden fue encontrada, de lo contrario false.
-   */
-  findOrder(id: number): boolean {
-    console.log('Buscando orden cliente:', { id });
-    const order = this.orders.find(order => order.id === id);
-    if (order) {
-      this.mostrarAlerta('Orden cliente encontrado.', 'success');
-      console.log('Orden cliente encontrado:', order);
-      return true;
-    } else {
-      this.mostrarAlerta('Orden cliente no encontrado.', 'danger');
-      console.log('Orden cliente no encontrado.');
-      return false;
-    }
-  }
-
-  /**
-   * @description 
    * Formatea una fecha en formato YYYY-MM-DD a DD-MM-YYYY.
    * 
    * @param {string} date - La fecha en formato YYYY-MM-DD.
@@ -276,65 +304,5 @@ export class OrdersService {
   private formatToStorageDate(date: string): string {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`;
-  }
-
-  /**
-   * @description 
-   * Carga las órdenes y los detalles de las órdenes desde el localStorage.
-   * 
-   * @return {void}
-   */
-  private loadOrdersFromLocalStorage(): void {
-    const ordersSaved = localStorage.getItem(this.orderStorageKey);
-    const orderDetailsSaved = localStorage.getItem(this.orderDetailsStorageKey);
-    this.orders = ordersSaved ? JSON.parse(ordersSaved) : [];
-    this.orderdetails = orderDetailsSaved ? JSON.parse(orderDetailsSaved) : [];
-  }
-
-  /**
-   * @description 
-   * Obtiene todas las órdenes.
-   * 
-   * @return {Order[]} Lista de órdenes.
-   */
-  getOrders(): Order[] {
-    return this.orders;
-  }
-
-  /**
-   * @description 
-   * Obtiene los detalles de una orden específica.
-   * 
-   * @param {number} orderId - El ID de la orden.
-   * @return {OrderDetail[]} Lista de detalles de la orden.
-   */
-  getOrderDetails(orderId: number): OrderDetail[] {
-    return this.orderdetails.filter(detail => detail.id === orderId);
-  }
-
-  /**
-   * @description 
-   * Actualiza el estado de una orden.
-   * 
-   * @param {number} orderId - El ID de la orden.
-   * @param {string} status - El nuevo estado de la orden.
-   * @return {void}
-   */
-  updateOrderStatus(orderId: number, status: string): void {
-    const order = this.orders.find(o => o.id === orderId);
-    if (order) {
-      order.estado = status;
-      this.saveOrdersToLocalStorage();
-    }
-  }
-
-  /**
-   * @description 
-   * Guarda las órdenes en el localStorage.
-   * 
-   * @return {void}
-   */
-  saveOrdersToLocalStorage(): void {
-    localStorage.setItem(this.orderStorageKey, JSON.stringify(this.orders));
   }
 }

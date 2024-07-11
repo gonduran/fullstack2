@@ -14,15 +14,35 @@ import { CustomersService } from '../../services/customers.service';
 })
 export class ProductCatalogComponent implements OnInit, AfterViewInit {
 
+  /**
+   * @description 
+   * Constructor del componente ProductCatalogComponent. Inicializa los servicios necesarios y configura el formulario reactivo.
+   * 
+   * @param {NavigationService} navigationService - Servicio de navegación.
+   * @param {Object} platformId - Identificador de la plataforma.
+   * @param {CustomersService} customersService - Servicio de clientes.
+   */
   constructor(
     private navigationService: NavigationService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private customersService: CustomersService) { }
 
+  /**
+   * @description 
+   * Hook de inicialización del componente. Verifica el estado de inicio de sesión.
+   * 
+   * @return {void}
+   */
   ngOnInit(): void {
     this.checkLoginState();
   }
 
+  /**
+   * @description 
+   * Verifica el estado de inicio de sesión del cliente y actualiza la interfaz de usuario en consecuencia.
+   * 
+   * @return {void}
+   */
   checkLoginState(): void {
     if (isPlatformBrowser(this.platformId)) {
       if (this.customersService.checkLoginState()) {
@@ -43,6 +63,12 @@ export class ProductCatalogComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * @description 
+   * Hook que se ejecuta después de que la vista ha sido inicializada. Configura la navegación con retardo para los enlaces.
+   * 
+   * @return {void}
+   */
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const links = document.querySelectorAll('a');

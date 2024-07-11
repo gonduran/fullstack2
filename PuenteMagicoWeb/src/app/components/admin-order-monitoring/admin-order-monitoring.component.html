@@ -32,84 +32,95 @@
     </nav>
   </header>
   
-  <main class="container mt-5">
-    <h2>Monitoreo Pedidos</h2>
+  <!-- Main content -->
+  <div class="container mt-5">
+    <h2>Monitoreo de Órdenes</h2>
     <div class="row">
       <div class="col-md-12">
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th>ID Pedido</th>
-              <th>Email Cliente</th>
-              <th>Producto</th>
-              <th>Cantidad</th>
+              <th>ID</th>
+              <th>Email</th>
+              <th>Total</th>
+              <th>Fecha</th>
               <th>Estado</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let order of orders" (click)="selectOrder(order.id)">
+            <tr *ngFor="let order of orders">
               <td>{{ order.id }}</td>
               <td>{{ order.email }}</td>
-              <td>{{ getOrderProducts(order.id) }}</td>
-              <td>{{ getOrderQuantity(order.id) }}</td>
+              <td>{{ order.total }}</td>
+              <td>{{ order.fecha }}</td>
               <td>{{ order.estado }}</td>
               <td>
-                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editOrderModal">Editar</button>
+                <button (click)="showOrderDetails(order.id)" class="btn btn-info btn-sm">Ver Detalles</button>
               </td>
             </tr>
           </tbody>
         </table>
-        <!-- <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addOrderModal">Agregar Nueva Orden</button> -->
       </div>
     </div>
-  </main>
   
-  <div class="modal fade" id="editOrderModal" tabindex="-1" aria-labelledby="editOrderModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editOrderModalLabel">Editar Pedido</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="editOrderForm" (ngSubmit)="updateOrderStatus()">
-            <div class="mb-3">
-              <label for="editClientName" class="form-label">Nombre Cliente:</label>
-              <input type="text" class="form-control" id="editClientName" formControlName="clientName" readonly>
-            </div>
-            <div class="mb-3">
-              <label for="editProductName" class="form-label">Nombre Producto:</label>
-              <input type="text" class="form-control" id="editProductName" formControlName="productName" readonly>
-            </div>
-            <div class="mb-3">
-              <label for="editQuantity" class="form-label">Cantidad:</label>
-              <input type="number" class="form-control" id="editQuantity" formControlName="quantity" readonly>
-            </div>
-            <div class="mb-3">
-              <label for="editStatus" class="form-label">Estado:</label>
-              <select class="form-control" id="editStatus" formControlName="status" required>
-                <option value="Pendiente">Pendiente</option>
-                <option value="Enviado">Enviado</option>
-                <option value="Entregado">Entregado</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-          </form>
-        </div>
+    <div *ngIf="selectedOrderId !== null" class="row">
+      <div class="col-md-12">
+        <h3>Detalles de la Orden ID: {{ selectedOrderId }}</h3>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Imagen</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let detail of selectedOrderDetails">
+              <td>{{ detail.product }}</td>
+              <td><img [src]="detail.image" alt="{{ detail.product }}" width="50"></td>
+              <td>{{ detail.price }}</td>
+              <td>{{ detail.quantity }}</td>
+              <td>{{ detail.total }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <form [formGroup]="statusForm" (ngSubmit)="updateOrderStatus()">
+          <div class="form-group col-md-12">
+            <tbody>
+              <td>
+                <label for="status">Actualizar Estado:</label>
+              </td>
+              <td>
+                <select id="status" formControlName="status" class="form-control">
+                  <option value="Pendiente">Pendiente</option>
+                  <option value="Enviado">Enviado</option>
+                  <option value="Entregado">Entregado</option>
+                </select>
+              </td>
+              <td>
+                <button type="submit" class="btn btn-primary btn-sm" [disabled]="statusForm.invalid">Actualizar Estado</button>
+              </td>
+              <td>
+                  <button (click)="closeOrderDetails()" class="btn btn-secondary btn-sm">Cerrar Detalles</button>
+              </td>
+            </tbody>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-
-    <!-- Footer -->
-    <footer class="bg-light text-center text-lg-start mt-5">
-        <div class="container p-4">
-            <p>&copy; 2024 Puente Mágico. Reservados todos los derechos.</p>
-        </div>
-    </footer>
-    
-    <!-- Loading Screen -->
-    <div id="loading-screen" class="d-flex justify-content-center align-items-center">
-        <div class="loader"></div>
-    </div>
+  <!-- Footer -->
+  <footer class="bg-light text-center text-lg-start mt-5">
+      <div class="container p-4">
+          <p>&copy; 2024 Puente Mágico. Reservados todos los derechos.</p>
+      </div>
+  </footer>
+  
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="d-flex justify-content-center align-items-center">
+      <div class="loader"></div>
+  </div>
   

@@ -167,34 +167,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="interfaces/Contact.html" data-type="entity-link" >Contact</a>
                             </li>
                             <li class="link">
-                                <a href="interfaces/Contact-1.html" data-type="entity-link" >Contact</a>
-                            </li>
-                            <li class="link">
                                 <a href="interfaces/Customer.html" data-type="entity-link" >Customer</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/Order.html" data-type="entity-link" >Order</a>
                             </li>
                             <li class="link">
-                                <a href="interfaces/Order-1.html" data-type="entity-link" >Order</a>
-                            </li>
-                            <li class="link">
                                 <a href="interfaces/OrderDetail.html" data-type="entity-link" >OrderDetail</a>
                             </li>
                             <li class="link">
-                                <a href="interfaces/Orderdetail.html" data-type="entity-link" >Orderdetail</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/Profile.html" data-type="entity-link" >Profile</a>
-                            </li>
-                            <li class="link">
                                 <a href="interfaces/User.html" data-type="entity-link" >User</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/User-1.html" data-type="entity-link" >User</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/Users.html" data-type="entity-link" >Users</a>
                             </li>
                         </ul>
                     </li>

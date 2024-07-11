@@ -4,6 +4,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
+/**
+ * @description 
+ * Interface de Clientes.
+ * 
+ */
 export interface Customer {
   id: number;
   clientName: string;
@@ -27,9 +32,6 @@ export class CustomersService {
 
   private jsonUrl = 'https://firebasestorage.googleapis.com/v0/b/puentemagicojson.appspot.com/o/customers.json?alt=media&token=54d1a9fa-d9cc-455c-8c64-a898aa7eb3a4'; 
 
-  //private storageKey = 'customers';
-  //private customers: Customer[] = [];
-
   /**
    * @description 
    * Constructor del servicio. Inicializa el servicio HTTP y el servicio de encriptación.
@@ -49,10 +51,10 @@ export class CustomersService {
     console.log('listaClientes', listaClientes);
     this.http.post(this.jsonUrl, listaClientes, this.httpOptions).subscribe(
       response => {
-        console.log('Archivo JSON sobrescrito con éxito', response);
+        console.log('MetodoCliente: Archivo JSON sobrescrito con éxito', response);
       },
       error => {
-        console.error('Error al sobrescribir el archivo JSON', error);
+        console.error('MetodoCliente: Error al sobrescribir el archivo JSON', error);
       }
     );
   }

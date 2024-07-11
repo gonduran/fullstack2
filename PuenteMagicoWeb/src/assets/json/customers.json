@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "clientName": "Paula",
+        "clientSurname": "González Ovando",
+        "email": "paula.snoop13@gmail.com",
+        "password": "U2FsdGVkX18FOTOjcR9elVzKOr0Y6CO4A/zEuGTpRWU=",
+        "birthdate": "13-11-1975",
+        "dispatchAddress": "Pasaje Araucaria 8417 La Florida"
+    },
+    {
+        "id": 2,
+        "clientName": "Gonzalo",
+        "clientSurname": "Durán Adasme",
+        "email": "gon.duran@duocuc.cl",
+        "password": "U2FsdGVkX19v3FyqV+rnzZw4TyJ//g8T6/iZSZUpnJk=",
+        "birthdate": "21-11-1976",
+        "dispatchAddress": "Pasaje Araucaria 8417 La Florida"
+    },
+    {
+        "id": 3,
+        "clientName": "Luis",
+        "clientSurname": "Gonzalez",
+        "email": "lgonzalez@gmail.com",
+        "password": "U2FsdGVkX19eSr++fsxMT2q3IAbLGlRU6JZM+RZbU+A=",
+        "birthdate": "23-02-1977",
+        "dispatchAddress": "Maipú"
+    }
+]

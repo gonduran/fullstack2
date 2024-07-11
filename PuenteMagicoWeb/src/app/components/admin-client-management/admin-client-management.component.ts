@@ -120,6 +120,7 @@ export class AdminClientManagementComponent implements OnInit, AfterViewInit {
    */
   editClient(index: number): void {
     this.selectedClient = { ...this.clients[index] };
+    this.selectedClient.password = this.cryptoService.decrypt(this.selectedClient.password);
     this.selectedIndex = index;
     // Show modal
     const editClientModal = new bootstrap.Modal(document.getElementById('editClientModal'));

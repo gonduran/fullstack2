@@ -554,8 +554,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="180"
-                                    class="link-to-prism">src/app/components/register/register.component.ts:180</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="182"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:182</a></div>
                         </td>
                     </tr>
 
@@ -596,8 +596,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="209"
-                                    class="link-to-prism">src/app/components/register/register.component.ts:209</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="211"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:211</a></div>
                         </td>
                     </tr>
 
@@ -675,8 +675,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="221"
-                                    class="link-to-prism">src/app/components/register/register.component.ts:221</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="223"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:223</a></div>
                         </td>
                     </tr>
 
@@ -838,8 +838,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="162"
-                                    class="link-to-prism">src/app/components/register/register.component.ts:162</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="164"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:164</a></div>
                         </td>
                     </tr>
 
@@ -1156,12 +1156,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         clientSurname: this.registerForm.value.clientSurname,
         email: this.registerForm.value.email,
         password: this.cryptoService.encrypt(this.registerForm.value.password),
-        birthdate: this.registerForm.value.birthdate,
+        birthdate: this.formatToStorageDate(this.registerForm.value.birthdate),
         dispatchAddress: this.registerForm.value.dispatchAddress
       };
 
       this.customersService.addCustomer(newCustomer).subscribe(
         () &#x3D;&gt; {
+          this.customersService.mostrarAlerta(&#x27;Contacto cliente registrado exitosamente.&#x27;, &#x27;success&#x27;);
+          console.log(&#x27;Contacto cliente registrado exitosamente:&#x27;, newCustomer);
           alert(&#x27;Registro exitoso!&#x27;);
           this.registerForm.reset();
         },

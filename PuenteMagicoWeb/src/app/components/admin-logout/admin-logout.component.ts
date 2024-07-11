@@ -15,6 +15,15 @@ import { Router } from '@angular/router';
 })
 export class AdminLogoutComponent implements OnInit, AfterViewInit {
 
+  /**
+   * @description
+   * Constructor del componente AdminLogoutComponent.
+   * 
+   * @param {NavigationService} navigationService - Servicio de navegación.
+   * @param {Object} platformId - Identificador de la plataforma.
+   * @param {UsersService} usersService - Servicio de usuarios.
+   * @param {Router} router - Servicio de enrutamiento.
+   */
   constructor(
     private navigationService: NavigationService,
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -22,10 +31,22 @@ export class AdminLogoutComponent implements OnInit, AfterViewInit {
     private router: Router
   ) { }
 
+  /**
+   * @description
+   * Hook de inicialización del componente. Verifica el estado de inicio de sesión.
+   * 
+   * @return {void}
+   */
   ngOnInit(): void {
     this.checkLoginState();
   }
 
+  /**
+   * @description
+   * Hook que se ejecuta después de que la vista ha sido inicializada. Configura la navegación con retardo para los enlaces y realiza el cierre de sesión.
+   * 
+   * @return {void}
+   */
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const links = document.querySelectorAll('a');
@@ -44,15 +65,21 @@ export class AdminLogoutComponent implements OnInit, AfterViewInit {
     this.checkLoginState();
   }
 
+  /**
+   * @description
+   * Verifica el estado de inicio de sesión del usuario y redirige según el estado.
+   * 
+   * @return {void}
+   */
   checkLoginState(): void {
     if (isPlatformBrowser(this.platformId)) {
       if (this.usersService.checkLoginState()) {
         // Redirigir al administrador
-        //this.router.navigate(['/admin-user-management']);
+        // this.router.navigate(['/admin-user-management']);
         console.log('Usuario logueado.');
       } else {
         // Redirigir al administrador
-        //this.router.navigate(['/admin-login']);
+        // this.router.navigate(['/admin-login']);
         console.log('Usuario no logueado.');
       }
     }

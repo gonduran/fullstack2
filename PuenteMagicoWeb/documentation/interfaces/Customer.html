@@ -126,6 +126,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Interface de Clientes.</p>
+
+            </p>
 
 
         <section data-compodoc="block-index">
@@ -435,6 +442,11 @@ import { HttpClient, HttpHeaders } from &#x27;@angular/common/http&#x27;;
 import { Observable, throwError } from &#x27;rxjs&#x27;;
 import { map, catchError } from &#x27;rxjs/operators&#x27;;
 
+/**
+ * @description 
+ * Interface de Clientes.
+ * 
+ */
 export interface Customer {
   id: number;
   clientName: string;
@@ -458,9 +470,6 @@ export class CustomersService {
 
   private jsonUrl &#x3D; &#x27;https://firebasestorage.googleapis.com/v0/b/puentemagicojson.appspot.com/o/customers.json?alt&#x3D;media&amp;token&#x3D;54d1a9fa-d9cc-455c-8c64-a898aa7eb3a4&#x27;; 
 
-  //private storageKey &#x3D; &#x27;customers&#x27;;
-  //private customers: Customer[] &#x3D; [];
-
   /**
    * @description 
    * Constructor del servicio. Inicializa el servicio HTTP y el servicio de encriptación.
@@ -480,10 +489,10 @@ export class CustomersService {
     console.log(&#x27;listaClientes&#x27;, listaClientes);
     this.http.post(this.jsonUrl, listaClientes, this.httpOptions).subscribe(
       response &#x3D;&gt; {
-        console.log(&#x27;Archivo JSON sobrescrito con éxito&#x27;, response);
+        console.log(&#x27;MetodoCliente: Archivo JSON sobrescrito con éxito&#x27;, response);
       },
       error &#x3D;&gt; {
-        console.error(&#x27;Error al sobrescribir el archivo JSON&#x27;, error);
+        console.error(&#x27;MetodoCliente: Error al sobrescribir el archivo JSON&#x27;, error);
       }
     );
   }
