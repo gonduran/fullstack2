@@ -19,24 +19,50 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit, AfterViewInit {
   loginForm: FormGroup;
   
+  /**
+   * @description 
+   * Constructor del componente LoginComponent. Inicializa los servicios y el formulario reactivo.
+   * 
+   * @param {NavigationService} navigationService - Servicio de navegación.
+   * @param {Object} platformId - Identificador de la plataforma.
+   * @param {FormBuilder} fb - Constructor de formularios reactivos.
+   * @param {CustomersService} customersService - Servicio de clientes.
+   * @param {Renderer2} renderer - Servicio de renderizado.
+   * @param {ElementRef} el - Referencia al elemento HTML.
+   * @param {CryptoService} cryptoService - Servicio de encriptación.
+   * @param {Router} router - Servicio de enrutamiento.
+   */
   constructor(
     private navigationService: NavigationService,
     @Inject(PLATFORM_ID) private platformId: Object,
-	  private fb: FormBuilder,
+    private fb: FormBuilder,
     private customersService: CustomersService,
     private renderer: Renderer2,
     private el: ElementRef,
     private cryptoService: CryptoService,
     private router: Router) { 
       this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]});
-	}
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required]]
+      });
+  }
 
+  /**
+   * @description 
+   * Hook de inicialización del componente. Verifica el estado de inicio de sesión.
+   * 
+   * @return {void}
+   */
   ngOnInit(): void {
     this.checkLoginState();
   }
 
+  /**
+   * @description 
+   * Hook que se ejecuta después de que la vista ha sido inicializada. Configura la navegación con retardo para los enlaces.
+   * 
+   * @return {void}
+   */
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const links = document.querySelectorAll('a');
@@ -53,7 +79,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onSubmit() {
+  /**
+   * @description 
+   * Maneja el envío del formulario de inicio de sesión. Valida las credenciales y redirige al home si son válidas.
+   * 
+   * @return {void}
+   */
+  onSubmit(): void {
     if (this.loginForm.valid) {
       const email = this.loginForm.value.email;
       const password = this.loginForm.value.password;
@@ -70,10 +102,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
         }
       });
     } else {
-      console.log('Formulario invalido');
+      console.log('Formulario inválido');
     }
   }
 
+  /**
+   * @description 
+   * Verifica el estado de inicio de sesión del cliente y actualiza la interfaz de usuario en consecuencia.
+   * 
+   * @return {void}
+   */
   checkLoginState(): void {
     if (isPlatformBrowser(this.platformId)) {
       if (this.customersService.checkLoginState()) {

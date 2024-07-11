@@ -29,6 +29,12 @@ export class AdminContactManagementComponent implements OnInit, AfterViewInit {
     private router: Router
   ) { }
 
+  /**
+   * @description 
+   * Hook que se ejecuta después de que la vista ha sido inicializada. Configura la navegación con retardo para los enlaces.
+   * 
+   * @return {void}
+   */
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const links = document.querySelectorAll('a');
@@ -47,6 +53,12 @@ export class AdminContactManagementComponent implements OnInit, AfterViewInit {
   
   contacts: Contact[] = [];
 
+  /**
+   * @description 
+   * Hook de inicialización del componente. Carga la lista de clientes y verifica el estado de inicio de sesión.
+   * 
+   * @return {void}
+   */
   ngOnInit(): void {
     this.loadContacts();
     this.checkLoginState();

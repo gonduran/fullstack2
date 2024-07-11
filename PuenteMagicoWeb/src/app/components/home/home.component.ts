@@ -14,16 +14,36 @@ import { CustomersService } from '../../services/customers.service';
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
+  /**
+   * @description 
+   * Constructor del componente. Inicializa los servicios necesarios.
+   * 
+   * @param {NavigationService} navigationService - Servicio de navegación.
+   * @param {Object} platformId - Identificador de la plataforma.
+   * @param {CustomersService} customersService - Servicio de clientes.
+   */
   constructor(
     private navigationService: NavigationService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private customersService: CustomersService) { }
 
-    ngOnInit(): void {
+  /**
+   * @description
+   * Hook de inicialización del componente. Verifica el estado de inicio de sesión y carga el carrito.
+   * 
+   * @return {void}
+   */
+  ngOnInit(): void {
       this.checkLoginState();
     }
   
-    checkLoginState(): void {
+  /**
+   * @description
+   * Verifica el estado de inicio de sesión del cliente y actualiza la interfaz de usuario en consecuencia.
+   * 
+   * @return {void}
+   */
+  checkLoginState(): void {
       if (isPlatformBrowser(this.platformId)) {
         if (this.customersService.checkLoginState()) {
           // Ocultar el menú "Iniciar Sesión" y "Registro Cliente"
@@ -43,7 +63,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
       }
     }
 
-    ngAfterViewInit(): void {
+  /**
+   * @description
+   * Hook que se ejecuta después de que la vista ha sido inicializada. Configura la navegación con retardo para los enlaces.
+   * 
+   * @return {void}
+   */
+  ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const links = document.querySelectorAll('a');
       links.forEach(link => {

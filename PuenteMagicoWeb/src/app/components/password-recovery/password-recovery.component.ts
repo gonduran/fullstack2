@@ -18,6 +18,18 @@ import { Router } from '@angular/router';
 export class PasswordRecoveryComponent implements OnInit, AfterViewInit {
   passwordRecoveryForm: FormGroup;
 
+  /**
+   * @description 
+   * Constructor del componente PasswordRecoveryComponent. Inicializa los servicios necesarios y configura el formulario reactivo.
+   * 
+   * @param {NavigationService} navigationService - Servicio de navegación.
+   * @param {Object} platformId - Identificador de la plataforma.
+   * @param {FormBuilder} fb - Constructor de formularios reactivos.
+   * @param {CustomersService} customersService - Servicio de clientes.
+   * @param {Renderer2} renderer - Servicio de renderizado.
+   * @param {ElementRef} el - Referencia al elemento HTML.
+   * @param {Router} router - Servicio de enrutamiento.
+   */
   constructor(
     private navigationService: NavigationService,
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -30,10 +42,22 @@ export class PasswordRecoveryComponent implements OnInit, AfterViewInit {
       email: ['', [Validators.required, Validators.email]]});
 	}
 
+  /**
+   * @description 
+   * Hook de inicialización del componente. Verifica el estado de inicio de sesión.
+   * 
+   * @return {void}
+   */
   ngOnInit(): void {
     this.checkLoginState();
   }
 
+  /**
+   * @description 
+   * Hook que se ejecuta después de que la vista ha sido inicializada. Configura la navegación con retardo para los enlaces.
+   * 
+   * @return {void}
+   */
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const links = document.querySelectorAll('a');
@@ -50,6 +74,12 @@ export class PasswordRecoveryComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * @description 
+   * Maneja el envío del formulario de recuperación de contraseña. Valida el correo electrónico y, si es válido, simula el envío de un enlace de recuperación de contraseña.
+   * 
+   * @return {void}
+   */
   onSubmit() {
     if (this.passwordRecoveryForm.valid) {
       const email = this.passwordRecoveryForm.value.email;
@@ -76,6 +106,12 @@ export class PasswordRecoveryComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * @description 
+   * Verifica el estado de inicio de sesión del cliente y actualiza la interfaz de usuario en consecuencia.
+   * 
+   * @return {void}
+   */
   checkLoginState(): void {
     if (isPlatformBrowser(this.platformId)) {
       if (this.customersService.checkLoginState()) {

@@ -379,8 +379,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="104"
-                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:104</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="116"
+                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:116</a></div>
                         </td>
                     </tr>
 
@@ -421,8 +421,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="90"
-                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:90</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="102"
+                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:102</a></div>
                         </td>
                     </tr>
 
@@ -497,8 +497,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="61"
-                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:61</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="73"
+                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:73</a></div>
                         </td>
                     </tr>
 
@@ -539,19 +539,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="32"
-                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:32</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="38"
+                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:38</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Hook que se ejecuta después de que la vista ha sido inicializada. Configura la navegación con retardo para los enlaces.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -576,19 +581,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="50"
-                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:50</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="62"
+                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:62</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Hook de inicialización del componente. Carga la lista de clientes y verifica el estado de inicio de sesión.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -613,8 +623,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="74"
-                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:74</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="86"
+                                    class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:86</a></div>
                         </td>
                     </tr>
 
@@ -699,7 +709,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:48</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/components/admin-contact-management/admin-contact-management.component.ts:54</a></div>
                         </td>
                     </tr>
 
@@ -743,6 +753,12 @@ export class AdminContactManagementComponent implements OnInit, AfterViewInit {
     private router: Router
   ) { }
 
+  /**
+   * @description 
+   * Hook que se ejecuta después de que la vista ha sido inicializada. Configura la navegación con retardo para los enlaces.
+   * 
+   * @return {void}
+   */
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const links &#x3D; document.querySelectorAll(&#x27;a&#x27;);
@@ -761,6 +777,12 @@ export class AdminContactManagementComponent implements OnInit, AfterViewInit {
   
   contacts: Contact[] &#x3D; [];
 
+  /**
+   * @description 
+   * Hook de inicialización del componente. Carga la lista de clientes y verifica el estado de inicio de sesión.
+   * 
+   * @return {void}
+   */
   ngOnInit(): void {
     this.loadContacts();
     this.checkLoginState();

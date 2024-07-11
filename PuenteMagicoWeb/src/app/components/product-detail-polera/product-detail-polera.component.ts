@@ -22,6 +22,17 @@ export class ProductDetailPoleraComponent implements OnInit, AfterViewInit {
   minQuantity: number = 1;
   maxQuantity: number = 10;
 
+  /**
+   * @description 
+   * Constructor del componente ProductDetailPoleraComponent. Inicializa los servicios necesarios y configura el formulario reactivo.
+   * 
+   * @param {NavigationService} navigationService - Servicio de navegación.
+   * @param {Object} platformId - Identificador de la plataforma.
+   * @param {CustomersService} customersService - Servicio de clientes.
+   * @param {Router} router - Servicio de enrutamiento.
+   * @param {OrdersService} ordersService - Servicio de órdenes.
+   * @param {FormBuilder} fb - Constructor de formularios reactivos.
+   */
   constructor(
     private navigationService: NavigationService,
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -33,30 +44,48 @@ export class ProductDetailPoleraComponent implements OnInit, AfterViewInit {
       quantity: ['', [Validators.required]]}); 
   }
 
-    ngOnInit(): void {
-      this.checkLoginState();
-    }
+  /**
+   * @description 
+   * Hook de inicialización del componente. Verifica el estado de inicio de sesión.
+   * 
+   * @return {void}
+   */
+  ngOnInit(): void {
+    this.checkLoginState();
+  }
   
-    checkLoginState(): void {
-      if (isPlatformBrowser(this.platformId)) {
-        if (this.customersService.checkLoginState()) {
-          // Ocultar el menú "Iniciar Sesión" y "Registro Cliente"
-          document.getElementById('loginMenu')!.style.display = 'none';
-          document.getElementById('registerMenu')!.style.display = 'none';
-          // Mostrar el menú "Perfil Cliente" y "Cerrar Sesión"
-          document.getElementById('profileMenu')!.style.display = 'block';
-          document.getElementById('logoutMenu')!.style.display = 'block';
-        } else {
-          // Ocultar el menú "Perfil Cliente" y "Cerrar Sesión"
-          document.getElementById('profileMenu')!.style.display = 'none';
-          document.getElementById('logoutMenu')!.style.display = 'none';
-          // Mostrar el menú "Iniciar Sesión" y "Registro Cliente"
-          document.getElementById('loginMenu')!.style.display = 'block';
-          document.getElementById('registerMenu')!.style.display = 'block';
-        }
+  /**
+   * @description 
+   * Verifica el estado de inicio de sesión del cliente y actualiza la interfaz de usuario en consecuencia.
+   * 
+   * @return {void}
+   */
+  checkLoginState(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.customersService.checkLoginState()) {
+        // Ocultar el menú "Iniciar Sesión" y "Registro Cliente"
+        document.getElementById('loginMenu')!.style.display = 'none';
+        document.getElementById('registerMenu')!.style.display = 'none';
+        // Mostrar el menú "Perfil Cliente" y "Cerrar Sesión"
+        document.getElementById('profileMenu')!.style.display = 'block';
+        document.getElementById('logoutMenu')!.style.display = 'block';
+      } else {
+        // Ocultar el menú "Perfil Cliente" y "Cerrar Sesión"
+        document.getElementById('profileMenu')!.style.display = 'none';
+        document.getElementById('logoutMenu')!.style.display = 'none';
+        // Mostrar el menú "Iniciar Sesión" y "Registro Cliente"
+        document.getElementById('loginMenu')!.style.display = 'block';
+        document.getElementById('registerMenu')!.style.display = 'block';
       }
     }
+  }
 
+  /**
+   * @description 
+   * Hook que se ejecuta después de que la vista ha sido inicializada. Configura la navegación con retardo para los enlaces e inicializa el carrusel de imágenes del producto.
+   * 
+   * @return {void}
+   */
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const links = document.querySelectorAll('a');
@@ -83,10 +112,22 @@ export class ProductDetailPoleraComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * @description 
+   * Navega de regreso al catálogo de productos.
+   * 
+   * @return {void}
+   */
   goBack(): void {
     this.router.navigate(['/product-catalog']);
   }
 
+  /**
+   * @description 
+   * Agrega el producto al carrito de compras.
+   * 
+   * @return {void}
+   */
   addToCart(): void {
     let quantity: number = 1;
     if (this.addToCartForm.valid) {
